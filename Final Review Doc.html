@@ -1,0 +1,2096 @@
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Review on Object-Oriented Design of Expert System Software for the Maintenance of Lined Equipment </title>
+	<style>
+		/* cspell:disable-file */
+		/* webkit printing magic: print all background colors */
+		html {
+			-webkit-print-color-adjust: exact;
+		}
+
+		* {
+			box-sizing: border-box;
+			-webkit-print-color-adjust: exact;
+		}
+
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		@media only screen {
+			body {
+				margin: 2em auto;
+				max-width: 900px;
+				color: rgb(55, 53, 47);
+			}
+		}
+
+		body {
+			line-height: 1.5;
+			white-space: pre-wrap;
+		}
+
+		a,
+		a.visited {
+			color: inherit;
+			text-decoration: underline;
+		}
+
+		.pdf-relative-link-path {
+			font-size: 80%;
+			color: #444;
+		}
+
+		h1,
+		h2,
+		h3 {
+			letter-spacing: -0.01em;
+			line-height: 1.2;
+			font-weight: 600;
+			margin-bottom: 0;
+		}
+
+		.page-title {
+			font-size: 2.5rem;
+			font-weight: 700;
+			margin-top: 0;
+			margin-bottom: 0.75em;
+		}
+
+		h1 {
+			font-size: 1.875rem;
+			margin-top: 1.875rem;
+		}
+
+		h2 {
+			font-size: 1.5rem;
+			margin-top: 1.5rem;
+		}
+
+		h3 {
+			font-size: 1.25rem;
+			margin-top: 1.25rem;
+		}
+
+		.source {
+			border: 1px solid #ddd;
+			border-radius: 3px;
+			padding: 1.5em;
+			word-break: break-all;
+		}
+
+		.callout {
+			border-radius: 3px;
+			padding: 1rem;
+		}
+
+		figure {
+			margin: 1.25em 0;
+			page-break-inside: avoid;
+		}
+
+		figcaption {
+			opacity: 0.5;
+			font-size: 85%;
+			margin-top: 0.5em;
+		}
+
+		mark {
+			background-color: transparent;
+		}
+
+		.indented {
+			padding-left: 1.5em;
+		}
+
+		hr {
+			background: transparent;
+			display: block;
+			width: 100%;
+			height: 1px;
+			visibility: visible;
+			border: none;
+			border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+		}
+
+		img {
+			max-width: 100%;
+		}
+
+		@media only print {
+			img {
+				max-height: 100vh;
+				object-fit: contain;
+			}
+		}
+
+		@page {
+			margin: 1in;
+		}
+
+		.collection-content {
+			font-size: 0.875rem;
+		}
+
+		.column-list {
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.column {
+			padding: 0 1em;
+		}
+
+		.column:first-child {
+			padding-left: 0;
+		}
+
+		.column:last-child {
+			padding-right: 0;
+		}
+
+		.table_of_contents-item {
+			display: block;
+			font-size: 0.875rem;
+			line-height: 1.3;
+			padding: 0.125rem;
+		}
+
+		.table_of_contents-indent-1 {
+			margin-left: 1.5rem;
+		}
+
+		.table_of_contents-indent-2 {
+			margin-left: 3rem;
+		}
+
+		.table_of_contents-indent-3 {
+			margin-left: 4.5rem;
+		}
+
+		.table_of_contents-link {
+			text-decoration: none;
+			opacity: 0.7;
+			border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+		}
+
+		table,
+		th,
+		td {
+			border: 1px solid rgba(55, 53, 47, 0.09);
+			border-collapse: collapse;
+		}
+
+		table {
+			border-left: none;
+			border-right: none;
+		}
+
+		th,
+		td {
+			font-weight: normal;
+			padding: 0.25em 0.5em;
+			line-height: 1.5;
+			min-height: 1.5em;
+			text-align: left;
+		}
+
+		th {
+			color: rgba(55, 53, 47, 0.6);
+		}
+
+		ol,
+		ul {
+			margin: 0;
+			margin-block-start: 0.6em;
+			margin-block-end: 0.6em;
+		}
+
+		li>ol:first-child,
+		li>ul:first-child {
+			margin-block-start: 0.6em;
+		}
+
+		ul>li {
+			list-style: disc;
+		}
+
+		ul.to-do-list {
+			padding-inline-start: 0;
+		}
+
+		ul.to-do-list>li {
+			list-style: none;
+		}
+
+		.to-do-children-checked {
+			text-decoration: line-through;
+			opacity: 0.375;
+		}
+
+		ul.toggle>li {
+			list-style: none;
+		}
+
+		ul {
+			padding-inline-start: 1.7em;
+		}
+
+		ul>li {
+			padding-left: 0.1em;
+		}
+
+		ol {
+			padding-inline-start: 1.6em;
+		}
+
+		ol>li {
+			padding-left: 0.2em;
+		}
+
+		.mono ol {
+			padding-inline-start: 2em;
+		}
+
+		.mono ol>li {
+			text-indent: -0.4em;
+		}
+
+		.toggle {
+			padding-inline-start: 0em;
+			list-style-type: none;
+		}
+
+		/* Indent toggle children */
+		.toggle>li>details {
+			padding-left: 1.7em;
+		}
+
+		.toggle>li>details>summary {
+			margin-left: -1.1em;
+		}
+
+		.selected-value {
+			display: inline-block;
+			padding: 0 0.5em;
+			background: rgba(206, 205, 202, 0.5);
+			border-radius: 3px;
+			margin-right: 0.5em;
+			margin-top: 0.3em;
+			margin-bottom: 0.3em;
+			white-space: nowrap;
+		}
+
+		.collection-title {
+			display: inline-block;
+			margin-right: 1em;
+		}
+
+		.page-description {
+			margin-bottom: 2em;
+		}
+
+		.simple-table {
+			margin-top: 1em;
+			font-size: 0.875rem;
+			empty-cells: show;
+		}
+
+		.simple-table td {
+			height: 29px;
+			min-width: 120px;
+		}
+
+		.simple-table th {
+			height: 29px;
+			min-width: 120px;
+		}
+
+		.simple-table-header-color {
+			background: rgb(247, 246, 243);
+			color: black;
+		}
+
+		.simple-table-header {
+			font-weight: 500;
+		}
+
+		time {
+			opacity: 0.5;
+		}
+
+		.icon {
+			display: inline-block;
+			max-width: 1.2em;
+			max-height: 1.2em;
+			text-decoration: none;
+			vertical-align: text-bottom;
+			margin-right: 0.5em;
+		}
+
+		img.icon {
+			border-radius: 3px;
+		}
+
+		.user-icon {
+			width: 1.5em;
+			height: 1.5em;
+			border-radius: 100%;
+			margin-right: 0.5rem;
+		}
+
+		.user-icon-inner {
+			font-size: 0.8em;
+		}
+
+		.text-icon {
+			border: 1px solid #000;
+			text-align: center;
+		}
+
+		.page-cover-image {
+			display: block;
+			object-fit: cover;
+			width: 100%;
+			max-height: 30vh;
+		}
+
+		.page-header-icon {
+			font-size: 3rem;
+			margin-bottom: 1rem;
+		}
+
+		.page-header-icon-with-cover {
+			margin-top: -0.72em;
+			margin-left: 0.07em;
+		}
+
+		.page-header-icon img {
+			border-radius: 3px;
+		}
+
+		.link-to-page {
+			margin: 1em 0;
+			padding: 0;
+			border: none;
+			font-weight: 500;
+		}
+
+		p>.user {
+			opacity: 0.5;
+		}
+
+		td>.user,
+		td>time {
+			white-space: nowrap;
+		}
+
+		input[type="checkbox"] {
+			transform: scale(1.5);
+			margin-right: 0.6em;
+			vertical-align: middle;
+		}
+
+		p {
+			margin-top: 0.5em;
+			margin-bottom: 0.5em;
+		}
+
+		.image {
+			border: none;
+			margin: 1.5em 0;
+			padding: 0;
+			border-radius: 0;
+			text-align: center;
+		}
+
+		.code,
+		code {
+			background: rgba(135, 131, 120, 0.15);
+			border-radius: 3px;
+			padding: 0.2em 0.4em;
+			border-radius: 3px;
+			font-size: 85%;
+			tab-size: 2;
+		}
+
+		code {
+			color: #eb5757;
+		}
+
+		.code {
+			padding: 1.5em 1em;
+		}
+
+		.code-wrap {
+			white-space: pre-wrap;
+			word-break: break-all;
+		}
+
+		.code>code {
+			background: none;
+			padding: 0;
+			font-size: 100%;
+			color: inherit;
+		}
+
+		blockquote {
+			font-size: 1.25em;
+			margin: 1em 0;
+			padding-left: 1em;
+			border-left: 3px solid rgb(55, 53, 47);
+		}
+
+		.bookmark {
+			text-decoration: none;
+			max-height: 8em;
+			padding: 0;
+			display: flex;
+			width: 100%;
+			align-items: stretch;
+		}
+
+		.bookmark-title {
+			font-size: 0.85em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			height: 1.75em;
+			white-space: nowrap;
+		}
+
+		.bookmark-text {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.bookmark-info {
+			flex: 4 1 180px;
+			padding: 12px 14px 14px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+
+		.bookmark-image {
+			width: 33%;
+			flex: 1 1 180px;
+			display: block;
+			position: relative;
+			object-fit: cover;
+			border-radius: 1px;
+		}
+
+		.bookmark-description {
+			color: rgba(55, 53, 47, 0.6);
+			font-size: 0.75em;
+			overflow: hidden;
+			max-height: 4.5em;
+			word-break: break-word;
+		}
+
+		.bookmark-href {
+			font-size: 0.75em;
+			margin-top: 0.25em;
+		}
+
+		.sans {
+			font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+		}
+
+		.code {
+			font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace;
+		}
+
+		.serif {
+			font-family: Lyon-Text, Georgia, ui-serif, serif;
+		}
+
+		.mono {
+			font-family: iawriter-mono, Nitti, Menlo, Courier, monospace;
+		}
+
+		.pdf .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .sans {
+			font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR';
+		}
+
+		.pdf .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .code {
+			font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
+		}
+
+		.pdf .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .serif {
+			font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR';
+		}
+
+		.pdf .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP';
+		}
+
+		.pdf:lang(zh-CN) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC';
+		}
+
+		.pdf:lang(zh-TW) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC';
+		}
+
+		.pdf:lang(ko-KR) .mono {
+			font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR';
+		}
+
+		.highlight-default {
+			color: rgba(55, 53, 47, 1);
+		}
+
+		.highlight-gray {
+			color: rgba(120, 119, 116, 1);
+			fill: rgba(120, 119, 116, 1);
+		}
+
+		.highlight-brown {
+			color: rgba(159, 107, 83, 1);
+			fill: rgba(159, 107, 83, 1);
+		}
+
+		.highlight-orange {
+			color: rgba(217, 115, 13, 1);
+			fill: rgba(217, 115, 13, 1);
+		}
+
+		.highlight-yellow {
+			color: rgba(203, 145, 47, 1);
+			fill: rgba(203, 145, 47, 1);
+		}
+
+		.highlight-teal {
+			color: rgba(68, 131, 97, 1);
+			fill: rgba(68, 131, 97, 1);
+		}
+
+		.highlight-blue {
+			color: rgba(51, 126, 169, 1);
+			fill: rgba(51, 126, 169, 1);
+		}
+
+		.highlight-purple {
+			color: rgba(144, 101, 176, 1);
+			fill: rgba(144, 101, 176, 1);
+		}
+
+		.highlight-pink {
+			color: rgba(193, 76, 138, 1);
+			fill: rgba(193, 76, 138, 1);
+		}
+
+		.highlight-red {
+			color: rgba(212, 76, 71, 1);
+			fill: rgba(212, 76, 71, 1);
+		}
+
+		.highlight-gray_background {
+			background: rgba(241, 241, 239, 1);
+		}
+
+		.highlight-brown_background {
+			background: rgba(244, 238, 238, 1);
+		}
+
+		.highlight-orange_background {
+			background: rgba(251, 236, 221, 1);
+		}
+
+		.highlight-yellow_background {
+			background: rgba(251, 243, 219, 1);
+		}
+
+		.highlight-teal_background {
+			background: rgba(237, 243, 236, 1);
+		}
+
+		.highlight-blue_background {
+			background: rgba(231, 243, 248, 1);
+		}
+
+		.highlight-purple_background {
+			background: rgba(244, 240, 247, 0.8);
+		}
+
+		.highlight-pink_background {
+			background: rgba(249, 238, 243, 0.8);
+		}
+
+		.highlight-red_background {
+			background: rgba(253, 235, 236, 1);
+		}
+
+		.block-color-default {
+			color: inherit;
+			fill: inherit;
+		}
+
+		.block-color-gray {
+			color: rgba(120, 119, 116, 1);
+			fill: rgba(120, 119, 116, 1);
+		}
+
+		.block-color-brown {
+			color: rgba(159, 107, 83, 1);
+			fill: rgba(159, 107, 83, 1);
+		}
+
+		.block-color-orange {
+			color: rgba(217, 115, 13, 1);
+			fill: rgba(217, 115, 13, 1);
+		}
+
+		.block-color-yellow {
+			color: rgba(203, 145, 47, 1);
+			fill: rgba(203, 145, 47, 1);
+		}
+
+		.block-color-teal {
+			color: rgba(68, 131, 97, 1);
+			fill: rgba(68, 131, 97, 1);
+		}
+
+		.block-color-blue {
+			color: rgba(51, 126, 169, 1);
+			fill: rgba(51, 126, 169, 1);
+		}
+
+		.block-color-purple {
+			color: rgba(144, 101, 176, 1);
+			fill: rgba(144, 101, 176, 1);
+		}
+
+		.block-color-pink {
+			color: rgba(193, 76, 138, 1);
+			fill: rgba(193, 76, 138, 1);
+		}
+
+		.block-color-red {
+			color: rgba(212, 76, 71, 1);
+			fill: rgba(212, 76, 71, 1);
+		}
+
+		.block-color-gray_background {
+			background: rgba(241, 241, 239, 1);
+		}
+
+		.block-color-brown_background {
+			background: rgba(244, 238, 238, 1);
+		}
+
+		.block-color-orange_background {
+			background: rgba(251, 236, 221, 1);
+		}
+
+		.block-color-yellow_background {
+			background: rgba(251, 243, 219, 1);
+		}
+
+		.block-color-teal_background {
+			background: rgba(237, 243, 236, 1);
+		}
+
+		.block-color-blue_background {
+			background: rgba(231, 243, 248, 1);
+		}
+
+		.block-color-purple_background {
+			background: rgba(244, 240, 247, 0.8);
+		}
+
+		.block-color-pink_background {
+			background: rgba(249, 238, 243, 0.8);
+		}
+
+		.block-color-red_background {
+			background: rgba(253, 235, 236, 1);
+		}
+
+		.select-value-color-interactiveBlue {
+			background-color: rgba(35, 131, 226, .07);
+		}
+
+		.select-value-color-pink {
+			background-color: rgba(245, 224, 233, 1);
+		}
+
+		.select-value-color-purple {
+			background-color: rgba(232, 222, 238, 1);
+		}
+
+		.select-value-color-green {
+			background-color: rgba(219, 237, 219, 1);
+		}
+
+		.select-value-color-gray {
+			background-color: rgba(227, 226, 224, 1);
+		}
+
+		.select-value-color-translucentGray {
+			background-color: rgba(255, 255, 255, 0.0375);
+		}
+
+		.select-value-color-orange {
+			background-color: rgba(250, 222, 201, 1);
+		}
+
+		.select-value-color-brown {
+			background-color: rgba(238, 224, 218, 1);
+		}
+
+		.select-value-color-red {
+			background-color: rgba(255, 226, 221, 1);
+		}
+
+		.select-value-color-yellow {
+			background-color: rgba(253, 236, 200, 1);
+		}
+
+		.select-value-color-blue {
+			background-color: rgba(211, 229, 239, 1);
+		}
+
+		.select-value-color-pageGlass {
+			background-color: undefined;
+		}
+
+		.select-value-color-washGlass {
+			background-color: undefined;
+		}
+
+		.checkbox {
+			display: inline-flex;
+			vertical-align: text-bottom;
+			width: 16;
+			height: 16;
+			background-size: 16px;
+			margin-left: 2px;
+			margin-right: 5px;
+		}
+
+		.checkbox-on {
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+		}
+
+		.checkbox-off {
+			background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+		}
+	</style>
+</head>
+
+<body>
+	<article id="b3a04404-1c5b-43fb-84a4-2d385675012f" class="page sans">
+		<header><img class="page-cover-image"
+				src="Review_Images/12.jpg"
+				style="object-position:center 50%" />
+			<h1 class="page-title">Review on Object-Oriented Design of Expert System Software for the Maintenance of
+				Lined Equipment </h1>
+			<p class="page-description"></p>
+		</header>
+		<div class="page-body">
+			<h2 id="c26fecdd-5cf9-4512-827d-24ca170bd011" class="">G<strong>roup 1</strong></h2>
+			<div id="e9bc7afc-85d1-4a83-9f69-ef9892cc5563" class="column-list">
+				<div id="b5de1f3b-5e62-4bed-ae95-f277ff5782a0" style="width:31.25%" class="column">
+					<p id="3950e428-d546-4625-8de2-b5a268119fc4" class=""><strong>Name</strong></p>
+					<p id="bc7fe28f-22ea-4586-94b4-044614a4f8e2" class="">Anant Jain </p>
+					<p id="113970bb-1b6d-436b-8f22-2b0b5d8604ba" class="">22114005</p>
+					<p id="f12c14d6-7928-4eac-8311-1050af2b2765" class="">
+					</p>
+					<p id="11aa649a-2ae0-42b3-8d3f-343d92e14e89" class="">Dhas Aryan Satish</p>
+					<p id="d9b3feaf-366e-4672-a94b-106d961f6b95" class="">22117046</p>
+					<p id="9f3b332a-4459-49e0-b26a-29b4577d86b4" class="">Divij Rawal</p>
+					<p id="83d22af9-a342-47a6-8eed-29e2657ec231" class="">22114031</p>
+					<p id="b02620c1-eafb-4ede-88ac-f6e2a4df42c3" class="">Parit Gupta</p>
+					<p id="37f15a53-cf98-416b-b5f4-57e4240ffa44" class="">22117100</p>
+					<p id="8397f25f-e953-41a9-a71f-8a35f41af3ee" class="">Pratyaksh Bhalla</p>
+					<p id="d88ff977-ba8d-4db3-92dc-1268ade21e6c" class="">22115119</p>
+					<p id="5d2cac64-9c6d-436e-80b7-31041b8e00d8" class="">Roopam Taneja</p>
+					<p id="5819dfc4-f227-4908-89b8-2fad1644a61a" class="">22115030</p>
+				</div>
+				<div id="d3745998-c636-494f-aff8-5388a1b38bfc" style="width:74.99999999999999%" class="column">
+					<p id="f20a9986-3cbf-4eac-8411-9115d5a2fc9d" class=""><strong>Contribution</strong></p>
+					<p id="05e244ce-59cc-4293-a4bc-d5227546bd7e" class="">Application Domains, Positives, Negatives,
+						Implementation(Neural Net Part)</p>
+					<p id="43287a5b-682b-486d-ab9f-5abcdb745bb7" class="">
+					</p>
+					<p id="d2380cee-af02-49e1-bcbf-21ee93b55875" class="">Summary, Positives, Negatives</p>
+					<p id="e0426404-8e5f-41ac-a239-69c7ea338982" class="">
+					</p>
+					<p id="f965a9c0-1d01-4f44-be13-2c9f955b58d3" class="">Implementation(Design Part), Positives,
+						Negatives</p>
+					<p id="80701f02-eebc-430f-842c-23502accecb0" class="">
+					</p>
+					<p id="8a90a8cc-f0c8-491f-bc1f-9c7fc5abf439" class="">Application Domains, Positives, Negatives</p>
+					<p id="9bac99c2-abf2-45e4-a50d-9f54f3748ce8" class="">
+					</p>
+					<p id="e75e8ae4-f153-4299-a6fb-c21580e728f0" class="">Summary, Positives, Negatives</p>
+					<p id="5b5fda45-8b4e-45fb-8a56-5563fa32470d" class="">
+					</p>
+					<p id="fc7550e3-962f-4ec3-adaa-fd4baa420a90" class="">Summary, Positives, Negatives</p>
+					<p id="98711001-898f-4bec-b6c3-7b12058533a3" class="">
+					</p>
+				</div>
+			</div>
+			<div id="c4190a13-3912-4350-b038-2d5589a5618f" class="column-list"></div>
+			<h2 id="0c9b924e-17d4-4f29-90f0-f0339808f9db" class=""><strong>Paper details</strong></h2>
+			<p id="a92f0961-2fa4-424a-8ae2-55194f4ea917" class="">An Object-Oriented Design of Expert System Software
+				for Evaluating the Maintenance of Lined Equipment</p>
+			<div id="c9806248-2530-4d3c-9f2c-9dc455d09c68" class="column-list">
+				<div id="b5e3e71e-5592-4290-aa14-e6521b77aaa0" style="width:100%" class="column">
+					<p id="3d7e1e4f-2a61-4021-8b5b-a8a8e00ea57e" class="">Yemelyanov V.A.
+						Department of Business Informatics
+						Financial University under the Government of the Russian
+						Federation
+						Moscow, Russia
+						<a href="mailto:v.yemelyanov@gmail.com">v.yemelyanov@gmail.com</a>,
+					</p>
+				</div>
+				<div id="1270003a-ef55-46b1-958f-687a8ccb5a24" style="width:100%" class="column">
+					<p id="67328546-58fe-4347-a394-68bf580e7ce2" class="">Olenev L.A.
+						Laboratory of applied research and business engineering
+						Plekhanov Russian University of Economics
+						Moscow, Russia
+						<a href="mailto:aa@nedelk.in">aa@nedelk.in</a>
+					</p>
+				</div>
+				<div id="cf3cc4fd-f8c8-46f2-b7d0-1fbb3f90b542" style="width:100%" class="column">
+					<p id="f11c2fe3-ee21-4aac-8b0b-66ba135f41ef" class="">Nedelkin A.A.
+						Department of Informatics
+						Plekhanov Russian University of Economics
+						Moscow, Russia
+						<a href="mailto:aa@nedelk.in">aa@nedelk.in</a>
+					</p>
+				</div>
+			</div>
+			<p id="8bcb30de-3880-4dd8-a329-78728a052910" class="">Published in 2019 International Multi-Conference on
+				Industrial Engineering and Modern Technologies (FarEastCon)</p>
+			<h2 id="08078f44-c5ae-4372-ae7f-c86cc8f9434d" class=""><strong>Summary</strong></h2>
+			<h3 id="340cd39f-51e2-4cdf-aa62-8448b4366417" class=""><strong>Problem Statement</strong>:</h3>
+			<ul id="eaec486b-a172-4ea4-8ab4-14e32d32c27e" class="bulleted-list">
+				<li style="list-style-type:disc">One of the types of critical equipment at metallurgical and machine
+					building enterprises is lined equipment, which includes stationary and torpedo ladle cars,
+					steel-teeming ladles.<ul id="198410a3-355d-411d-9e4b-384727d8e7a3" class="bulleted-list">
+						<li style="list-style-type:circle"><strong>Lined equipment:</strong> Refers to industrial
+							equipment that has some form of internal lining or coating to protect it from the substances
+							or processes it comes into contact with.</li>
+					</ul>
+				</li>
+			</ul>
+			<ul id="8c17a76a-6422-44fd-bee8-56006c75286e" class="bulleted-list">
+				<li style="list-style-type:disc">Lined equipment is used for critical tasks like weighing the cast iron
+					being used in the industry.</li>
+			</ul>
+			<ul id="eceea54f-ddb8-4cfc-8b22-7f2ea9055359" class="bulleted-list">
+				<li style="list-style-type:disc">The estimation of steel weight is an important task for the design and
+					cost calculation of merchant ships since the steel weight is the main component of the weight of a
+					light ship and hence this measurement is very critical.</li>
+			</ul>
+			<ul id="51c6892a-3edf-4c07-bc33-ba5768616a5c" class="bulleted-list">
+				<li style="list-style-type:disc">The author identified that the operation of critical lined equipment
+					was characterized by an unacceptable level of measurement error and subjectivity.</li>
+			</ul>
+			<ul id="a7203f5a-ea3b-4822-a4d4-60fafc207fb4" class="bulleted-list">
+				<li style="list-style-type:disc">For example:<ul id="6156e5fa-12f8-4734-8024-0a7eede99fdd"
+						class="bulleted-list">
+						<li style="list-style-type:circle">The curvature of railroad among other factors leads to
+							sampling of unreliable data and measurement error.</li>
+					</ul>
+					<ul id="d5c7f7c8-ef41-4fbb-88ca-e932f0e38f1f" class="bulleted-list">
+						<li style="list-style-type:circle">When inserting cast iron into lined equipment, measuring mass
+							before and after is characterized by high error due to different intensities of filling.
+						</li>
+					</ul>
+					<ul id="f25eca7c-197e-4e3b-888a-bad81c2db6cb" class="bulleted-list">
+						<li style="list-style-type:circle">Subjectivity of technologists also incorporates errors in
+							measurements.</li>
+					</ul>
+				</li>
+			</ul>
+			<ul id="f0b9699e-7324-47c0-a370-68c7cce1d670" class="bulleted-list">
+				<li style="list-style-type:disc">Also a need for diagnostics, monitoring and evaluation of the technical
+					condition of lined equipment was strongly felt.</li>
+			</ul>
+			<ul id="6cb6b7fd-233d-4afa-9329-a78aa686955c" class="bulleted-list">
+				<li style="list-style-type:disc">The author tried to address this problem by automating the process of
+					assessing the condition of critical lined equipment by an object software model.</li>
+			</ul>
+			<h3 id="4d3ddb0b-1452-4804-8ebc-90df8335936f" class=""><strong>Solution Approach:</strong></h3>
+			<ul id="215be917-309c-43e1-9275-3582598a22ce" class="bulleted-list">
+				<li style="list-style-type:disc">The proposed solution is an improvement over the traditional method
+					marred by errors. Neural networks are employed to assess the condition of equipment.</li>
+			</ul>
+			<ul id="88e36fff-9ef2-433c-a90b-d0073c43a1df" class="bulleted-list">
+				<li style="list-style-type:disc">The author has developed a client-server software model that implements
+					a graphical user interface for providing input of initial data, parameters for calculating and
+					displaying obtained results.</li>
+			</ul>
+			<ul id="6b39ae14-ad9b-41e3-a04c-0d8c0df6ef70" class="bulleted-list">
+				<li style="list-style-type:disc">An object oriented approach was used and the object model was created
+					using UML (Unified Modeling Language).</li>
+			</ul>
+			<ul id="8d2d2789-0ab9-481d-8f85-a0506405242d" class="bulleted-list">
+				<li style="list-style-type:disc">The solution combines three models as explained below:</li>
+			</ul>
+			<h3 id="46df96bd-1823-49d5-a09b-d6b231e471ed" class=""><strong>Models Employed</strong>:</h3>
+			<ul id="4b9c6963-ebae-46bb-aeb7-aed6c2b6e83a" class="bulleted-list">
+				<li style="list-style-type:disc"><strong>Use Model:</strong>
+					<ul id="0200928e-5efe-4743-b84d-44eff30026b9" class="bulleted-list">
+						<li style="list-style-type:circle">Includes software functionality from POV of the technologist
+							responsible for monitoring the condition of lined equipment.</li>
+					</ul>
+					<figure id="f93df2bd-1243-4a1f-844a-023c3872ecf6" class="image"><a
+							href="Review_Images/Untitled.png"><img
+								style="width:384px"
+								src="Review_Images/Untitled.png" /></a>
+					</figure>
+					<ul id="2d23de9d-c03e-49f2-8ce2-b9dbdebd3fe0" class="bulleted-list">
+						<li style="list-style-type:circle">The use model has 10 use cases and 1 actor (the
+							technologist).</li>
+					</ul>
+					<ul id="69f746d3-5440-4767-b860-f0e0a2c63c12" class="bulleted-list">
+						<li style="list-style-type:circle">The “includes” relationship indicates the use cases which
+							must be executed as part of some other use case. It is helpful when there is common
+							functionality across multiple use cases.</li>
+					</ul>
+					<ul id="ce85a3e3-23ca-48b5-a8e0-ba2b4401ca20" class="bulleted-list">
+						<li style="list-style-type:circle">The “extends” relationship allows one to show activities that
+							are optional to perform for successful execution of a particular use case.</li>
+					</ul>
+					<ul id="3029904a-2bfa-42ab-a9bc-c843034d1b8d" class="bulleted-list">
+						<li style="list-style-type:circle">The functionality of use cases are described in upcoming
+							sections.</li>
+					</ul>
+				</li>
+			</ul>
+			<ul id="e4468cc4-ed41-468f-9baa-fd0bca4ec5ff" class="bulleted-list">
+				<li style="list-style-type:disc"><strong>Logical Model:</strong>
+					<ul id="337cb5d8-8fe2-4a3e-bee7-2e853920ef7f" class="bulleted-list">
+						<li style="list-style-type:circle">Includes diagnostic processes and logical components to
+							assess technical condition of the lined equipment (including components not visible to the
+							technologist)</li>
+					</ul>
+					<ul id="9208759e-5fcb-4723-8c6e-03c5db79f797" class="bulleted-list">
+						<li style="list-style-type:circle">These diagnostic processes were abstracted and modeled as
+							different classes for implementing required functionality.</li>
+					</ul>
+					<ul id="d83d6ed6-dcab-408a-8c13-4d37f8dac4f9" class="bulleted-list">
+						<li style="list-style-type:circle">The class diagram explains the structural and functional
+							relationships of the software.</li>
+					</ul>
+					<ul id="1853d720-07da-4db9-8ee2-daa2eabe9837" class="bulleted-list">
+						<li style="list-style-type:circle">The details of the class diagram and processes are described
+							in upcoming sections.</li>
+					</ul>
+				</li>
+			</ul>
+			<ul id="e3b7a1b7-b3b5-481d-bb57-756779c06be6" class="bulleted-list">
+				<li style="list-style-type:disc"><strong>Implementation Model:</strong>
+					<ul id="657d9b8f-cea7-40cc-8c3d-d609ae07dd45" class="bulleted-list">
+						<li style="list-style-type:circle">Includes the actual organization of software and its files.
+						</li>
+					</ul>
+					<ul id="7612491c-b4f5-4664-8cf6-cc3496ffceb3" class="bulleted-list">
+						<li style="list-style-type:circle">Based on the proposed use model, a system software was
+							developed (in C# language) using Visual Studio 2010.</li>
+					</ul>
+					<ul id="2263b304-9081-4c92-b37e-d0734bf6c140" class="bulleted-list">
+						<li style="list-style-type:circle">It implemented the functions of its individual subsystems,
+							which allowed quantitative assessment of the lining condition using the neural network
+							approach mentioned earlier.</li>
+					</ul>
+					<ul id="4a5e3b1f-bfe3-4b98-9294-095d8839c46b" class="bulleted-list">
+						<li style="list-style-type:circle">It also allowed generating control recommendations regarding
+							the technical condition of the critical lined equipment and the modes of its operation.</li>
+					</ul>
+					<ul id="f59945ea-430b-4568-b502-5b24100acf43" class="bulleted-list">
+						<li style="list-style-type:circle">The developed software was tested at the facilities of
+							Alchevsk Iron and Steel Works which uses torpedo ladle cars of the PM350 type to transport
+							liquid iron from the blast furnace shop to the converter shop.</li>
+					</ul>
+				</li>
+			</ul>
+			<ul id="d669cc2a-2a69-45df-9ccf-91dd3002b63e" class="bulleted-list">
+				<li style="list-style-type:disc"><strong>Comparison table:</strong>
+					<figure id="d7bb8561-05db-4bc4-a8fd-bf76df379cc0" class="image"><a
+							href="Review_Images/image6.png"><img
+								style="width:432px"
+								src="Review_Images/image6.png" /></a>
+					</figure>
+				</li>
+			</ul>
+			<ul id="27a4ab7c-6cbd-4e15-9752-c8b3abe421a4" class="bulleted-list">
+				<li style="list-style-type:disc"><strong>Inference</strong>: Increased operativeness along with
+					effectiveness of critical lined equipment diagnostics in comparison with the standard diagnostic
+					system, which is expressed in increased reliability and efficiency of determining faults in the
+					course of diagnostics.</li>
+			</ul>
+			<h2 id="307e59e0-a685-40d6-b263-1ef880f04e93" class=""><strong>Implementation</strong></h2>
+			<p id="ef6b9c22-5bbc-4a86-a40c-6812cd6271a8" class="">When designing the structure of the expert system
+				software, an object-oriented approach was used. Unified Modeling Language was used to create an object
+				model of the software being developed.</p>
+			<p id="6c712047-43ab-4cba-8e3e-a892c481f08f" class="">There were three models which were discussed and
+				eventually formed the basis for project namely:</p>
+			<ol type="1" id="7d94cc34-35b8-4ad3-8c5d-9531761bddcc" class="numbered-list" start="1">
+				<li><strong>USE MODEL:</strong> Deals with the utility of the product from viewpoint of the equipment
+					monitor and technologist. (Refer to the use model diagram in the preceding section.)<ul
+						id="3b9d538e-9a4a-40aa-92e7-313d939b3ea1" class="bulleted-list">
+						<li style="list-style-type:disc"><strong>&lt;&lt;EXTENDS&gt;&gt;:</strong> Displays relationship
+							between two events that one event is followed by another event and second event is extension
+							of first event.</li>
+					</ul>
+					<ul id="cc330040-c4ab-4270-bddd-e8600d207949" class="bulleted-list">
+						<li style="list-style-type:disc"><strong>&lt;&lt;INCLUDES&gt;&gt;:</strong> Displays
+							relationship between two events that one event is the super event(first event) of another
+							event and child event(second event) is further implementation of super event.</li>
+					</ul>
+				</li>
+			</ol>
+			<ul id="d4452ef3-c60d-4afc-b9de-c66cb448207f" class="bulleted-list">
+				<li style="list-style-type:disc">There are following basic use cases :<ol type="1"
+						id="d2a8ed98-04ae-4d45-ae8e-5da6dbf0053e" class="numbered-list" start="1">
+						<li>“To input of the lined equipment parameters (image)”</li>
+					</ol>
+					<ol type="1" id="23e4b124-bf9e-43d4-ad31-ae58f2f2131e" class="numbered-list" start="2">
+						<li>“To evaluate the current state of the lined equipment”,</li>
+					</ol>
+					<ol type="1" id="b0e7de68-2c60-4996-a5c9-c867583f3d4b" class="numbered-list" start="3">
+						<li>“To make a forecast of changes in the lined equipment state”,</li>
+					</ol>
+					<ol type="1" id="76729d14-fb2a-4a5b-9d38-0edf7b12ce61" class="numbered-list" start="4">
+						<li>“To carry out preventive and predictive maintenance” ,</li>
+					</ol>
+					<ol type="1" id="b3229e5f-3b25-4af4-9d57-bd10e324ee5a" class="numbered-list" start="5">
+						<li>“To output the results”</li>
+					</ol>
+				</li>
+			</ul>
+			<p id="df83513a-112b-4aa6-88dd-df3bd8837b94" class="">The “To evaluate the current state of the lined
+				equipment” use case includes the follows operations:
+			<div class="indented">
+				<ul id="e2bbaca0-89f1-4d3a-9bae-c263a87c4deb" class="bulleted-list">
+					<li style="list-style-type:disc">To recognize the image of the lined equipment.</li>
+				</ul>
+				<ul id="58b457da-b213-4fee-8f5d-205046fa90d0" class="bulleted-list">
+					<li style="list-style-type:disc">To identify burnout zones.</li>
+				</ul>
+			</div>
+			</p>
+			<p id="0d3d4baa-2d09-4681-b857-a321ed1acecb" class="">The “Weight Estimation” use case is extended by the
+				operations:
+			<div class="indented">
+				<ul id="4e50921a-5100-4ba0-9e76-54294005f023" class="bulleted-list">
+					<li style="list-style-type:disc">To select the operating mode for the lined equipment.</li>
+				</ul>
+				<ul id="7a8fc06e-fc49-465c-b120-2d4598176c1c" class="bulleted-list">
+					<li style="list-style-type:disc">To generate the recommendations to change the lining.</li>
+				</ul>
+				<ul id="fca7f852-fae6-44f1-8908-3a4a3aa3c451" class="bulleted-list">
+					<li style="list-style-type:disc">To generate recommendations to repair the casing.</li>
+				</ul>
+			</div>
+			</p>
+			<ol type="1" id="d26b57a1-11a4-4b0c-83c4-b6b95df92d8f" class="numbered-list" start="2">
+				<li><strong>LOGICAL MODEL:</strong> Describes main abstraction and functions of the diagnostic processes
+					and the assessment of the technical condition of lined equipment. In simple words, this model is
+					concerned with the functionality of software.<p id="c47687d1-4069-461a-996c-c2f16543a733" class="">
+						The class diagram of the logical model includes diagrammatic representation of different
+						classes, their properties and methods along with an interface for accessing their functionality.
+					</p>
+					<figure id="8a325964-8d93-4fce-92bc-20c608eba19e" class="image" style="text-align:center"><a
+							href="Review_Images/image2.png"><img
+								style="width:336px"
+								src="Review_Images/image2.png" /></a>
+						<figcaption> The class diagram of the designed software depicting abstraction and levels.
+						</figcaption>
+					</figure>
+					<ul id="13c7703a-e8ee-4abe-828b-8530591f54b2" class="bulleted-list">
+						<li style="list-style-type:disc">The <strong>“SSPrecedents”</strong> class includes methods and
+							properties for implementing the method of finding solutions for diagnostic situations with
+							lined equipment proposed.</li>
+					</ul>
+					<ul id="7c087ad4-e154-4b94-a1c1-48df0824a907" class="bulleted-list">
+						<li style="list-style-type:disc">The <strong>” SSProductionModel”</strong> class implements the
+							production method for solving diagnostic situations with the lined equipment.</li>
+					</ul>
+					<ul id="85c790d8-b07c-4616-a19b-f55399ba69f0" class="bulleted-list">
+						<li style="list-style-type:disc">The <strong>“SSNeuralDSS”</strong> class implements methods and
+							properties for creating and training neural networks to support decision making in the
+							diagnosis of the lined equipment.</li>
+					</ul>
+					<ul id="2ac1ce0e-c8a6-4297-90e7-42cd6ff0f4e7" class="bulleted-list">
+						<li style="list-style-type:disc">The <strong>”SSPredicating”</strong> class contains fields for
+							implementing the method for predicting changes in the condition of the lined equipment
+							proposed.</li>
+					</ul>
+				</li>
+			</ol>
+			<p id="a4ff68ef-7258-4644-a9f8-c2d8d38d43cf" class="">The question arises why only 4 classes and 1 interface
+				were sufficient despite 10 use cases. This was answered by beauty of object oriented programming. The
+				neural network related use cases “To make a forecast of changes in the lined equipment state”, “To carry
+				out preventive and predictive maintenance” and “To output the results” were included in one class
+				“<strong>SSNeuralDSS</strong>” while prediction part was included in “<strong>SSPredicating</strong>” .
+			</p>
+			<p id="f9f65948-0f87-4e84-b0ef-a71991349b61" class="">This results in much better grouping and instead of 5
+				basic use cases classes classes were only reduced to 4 and the code became much more readable and
+				comprehensible.</p>
+			<p id="ebfb1cb7-90a1-425d-a1d3-bd870e87cdce" class=""><strong>Additional Details of the Logical
+					Model:</strong></p>
+			<figure id="ed2b01e2-c74f-4ce3-aaf0-62ff37ecf4f4" class="image"><a
+					href="Review_Images/image7.png"><img
+						style="width:384px"
+						src="Review_Images/image7.png" /></a>
+				<figcaption>Proposed structure of specialized system to diagnose critical lined equipment.[1]
+				</figcaption>
+			</figure>
+			<ul id="f6293b84-56ec-4b43-a795-8bd2e0aaee76" class="bulleted-list">
+				<li style="list-style-type:disc">Quantitative assessment of burnout zones of lining: It was done by
+					making thermograms using thermal imagers.[1]</li>
+			</ul>
+			<ul id="22ede3de-7bc7-4577-be6f-85d5998b98e1" class="bulleted-list">
+				<li style="list-style-type:disc">Evaluation of effectiveness of the developed specialized computer
+					system: The index of statistical reliability of lining condition diagnostics was calculated as a
+					degree of correspondence between the number of identified lining burnout zones according to the
+					thermal image and the number of really existing lining burnout zones, proved in the course of the
+					experiment. <p id="48206df9-4bea-4a07-8106-617f6c1c00f3" class="">Here N, N<style>
+							@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')
+						</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token"
+							style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span
+									class="katex"><span class="katex-mathml"><math
+											xmlns="http://www.w3.org/1998/Math/MathML">
+											<semantics>
+												<mrow>
+													<msub>
+														<mrow></mrow>
+														<mrow>
+															<mi mathvariant="normal">Σ</mi>
+															<mi>r</mi>
+															<mi>e</mi>
+															<mi>a</mi>
+															<mi>l</mi>
+														</mrow>
+													</msub>
+												</mrow>
+												<annotation encoding="application/x-tex">_{\Sigma real}</annotation>
+											</semantics>
+										</math></span><span class="katex-html" aria-hidden="true"><span
+											class="base"><span class="strut"
+												style="height:0.486108em;vertical-align:-0.15em;"></span><span
+												class="mord"><span></span><span class="msupsub"><span
+														class="vlist-t vlist-t2"><span class="vlist-r"><span
+																class="vlist"
+																style="height:0.33610799999999996em;"><span
+																	style="top:-2.5500000000000003em;margin-right:0.05em;"><span
+																		class="pstrut"
+																		style="height:2.7em;"></span><span
+																		class="sizing reset-size6 size3 mtight"><span
+																			class="mord mtight"><span
+																				class="mord mtight">Σ</span><span
+																				class="mord mathnormal mtight">re</span><span
+																				class="mord mathnormal mtight">a</span><span
+																				class="mord mathnormal mtight"
+																				style="margin-right:0.01968em;">l</span></span></span></span></span><span
+																class="vlist-s">​</span></span><span
+															class="vlist-r"><span class="vlist"
+																style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>
+						- the number of identified burnout zones according to the thermal images which were proved in
+						the course of the experiment.[1]</p>
+				</li>
+			</ul>
+			<figure id="c220d53a-e176-46d3-8fc2-68c2a904ce45" class="equation">
+				<style>
+					@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')
+				</style>
+				<div class="equation-container"><span class="katex-display"><span class="katex"><span
+								class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+									<semantics>
+										<mrow>
+											<msub>
+												<mi>D</mi>
+												<mrow>
+													<mi>d</mi>
+													<mi>p</mi>
+												</mrow>
+											</msub>
+											<mo>=</mo>
+											<mfrac>
+												<mi>N</mi>
+												<msub>
+													<mi>N</mi>
+													<mrow>
+														<mi mathvariant="normal">Σ</mi>
+														<mi>r</mi>
+														<mi>e</mi>
+														<mi>a</mi>
+														<mi>l</mi>
+													</mrow>
+												</msub>
+											</mfrac>
+										</mrow>
+										<annotation encoding="application/x-tex">D_{dp}=\frac{N}{N_{\Sigma real}}
+										</annotation>
+									</semantics>
+								</math></span><span class="katex-html" aria-hidden="true"><span class="base"><span
+										class="strut" style="height:0.969438em;vertical-align:-0.286108em;"></span><span
+										class="mord"><span class="mord mathnormal"
+											style="margin-right:0.02778em;">D</span><span class="msupsub"><span
+												class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+														style="height:0.3361079999999999em;"><span
+															style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span
+																class="pstrut" style="height:2.7em;"></span><span
+																class="sizing reset-size6 size3 mtight"><span
+																	class="mord mtight"><span
+																		class="mord mathnormal mtight">d</span><span
+																		class="mord mathnormal mtight">p</span></span></span></span></span><span
+														class="vlist-s">​</span></span><span class="vlist-r"><span
+														class="vlist"
+														style="height:0.286108em;"><span></span></span></span></span></span></span><span
+										class="mspace" style="margin-right:0.2777777777777778em;"></span><span
+										class="mrel">=</span><span class="mspace"
+										style="margin-right:0.2777777777777778em;"></span></span><span
+									class="base"><span class="strut"
+										style="height:2.19633em;vertical-align:-0.8360000000000001em;"></span><span
+										class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span
+												class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+														style="height:1.36033em;"><span
+															style="top:-2.3139999999999996em;"><span class="pstrut"
+																style="height:3em;"></span><span class="mord"><span
+																	class="mord"><span class="mord mathnormal"
+																		style="margin-right:0.10903em;">N</span><span
+																		class="msupsub"><span
+																			class="vlist-t vlist-t2"><span
+																				class="vlist-r"><span class="vlist"
+																					style="height:0.33610799999999996em;"><span
+																						style="top:-2.5500000000000003em;margin-left:-0.10903em;margin-right:0.05em;"><span
+																							class="pstrut"
+																							style="height:2.7em;"></span><span
+																							class="sizing reset-size6 size3 mtight"><span
+																								class="mord mtight"><span
+																									class="mord mtight">Σ</span><span
+																									class="mord mathnormal mtight">re</span><span
+																									class="mord mathnormal mtight">a</span><span
+																									class="mord mathnormal mtight"
+																									style="margin-right:0.01968em;">l</span></span></span></span></span><span
+																					class="vlist-s">​</span></span><span
+																				class="vlist-r"><span class="vlist"
+																					style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span
+															style="top:-3.23em;"><span class="pstrut"
+																style="height:3em;"></span><span class="frac-line"
+																style="border-bottom-width:0.04em;"></span></span><span
+															style="top:-3.677em;"><span class="pstrut"
+																style="height:3em;"></span><span class="mord"><span
+																	class="mord mathnormal"
+																	style="margin-right:0.10903em;">N</span></span></span></span><span
+														class="vlist-s">​</span></span><span class="vlist-r"><span
+														class="vlist"
+														style="height:0.8360000000000001em;"><span></span></span></span></span></span><span
+											class="mclose nulldelimiter"></span></span></span></span></span></span>
+				</div>
+			</figure>
+			<ul id="7f77bf84-92f5-4e48-9af4-faa941adbaab" class="bulleted-list">
+				<li style="list-style-type:disc">Measurement of fault tolerance of the equipment: It was done using a
+					probabilistic approach (probability of failure of i-th component out of M elements and N components
+					of a system).</li>
+			</ul>
+			<p id="36edca8b-eff9-4577-96b4-b942594c9267" class=""><strong>Expected Time Duration of trouble-free
+					operation:</strong>
+			<div class="indented">
+				<figure id="4e084b6c-0782-4918-91f5-c3c121ff1c01" class="equation">
+					<style>
+						@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')
+					</style>
+					<div class="equation-container"><span class="katex-display"><span class="katex"><span
+									class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"
+										display="block">
+										<semantics>
+											<mrow>
+												<msub>
+													<mi>P</mi>
+													<mi>c</mi>
+												</msub>
+												<mo stretchy="false">(</mo>
+												<mi>t</mi>
+												<mo stretchy="false">)</mo>
+												<mo>=</mo>
+												<mo stretchy="false">[</mo>
+												<mn>1</mn>
+												<mo>−</mo>
+												<mo stretchy="false">(</mo>
+												<msub>
+													<mi>λ</mi>
+													<mi>i</mi>
+												</msub>
+												<mi>t</mi>
+												<msup>
+													<mo stretchy="false">)</mo>
+													<mrow>
+														<mi>m</mi>
+														<mo>+</mo>
+														<mn>1</mn>
+													</mrow>
+												</msup>
+												<msup>
+													<mo stretchy="false">]</mo>
+													<mi>N</mi>
+												</msup>
+											</mrow>
+											<annotation encoding="application/x-tex">P_c(t)=[1-(\lambda_it)^{m+1}]^N
+											</annotation>
+										</semantics>
+									</math></span><span class="katex-html" aria-hidden="true"><span class="base"><span
+											class="strut" style="height:1em;vertical-align:-0.25em;"></span><span
+											class="mord"><span class="mord mathnormal"
+												style="margin-right:0.13889em;">P</span><span class="msupsub"><span
+													class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+															style="height:0.151392em;"><span
+																style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span
+																	class="pstrut" style="height:2.7em;"></span><span
+																	class="sizing reset-size6 size3 mtight"><span
+																		class="mord mathnormal mtight">c</span></span></span></span><span
+															class="vlist-s">​</span></span><span class="vlist-r"><span
+															class="vlist"
+															style="height:0.15em;"><span></span></span></span></span></span></span><span
+											class="mopen">(</span><span class="mord mathnormal">t</span><span
+											class="mclose">)</span><span class="mspace"
+											style="margin-right:0.2777777777777778em;"></span><span
+											class="mrel">=</span><span class="mspace"
+											style="margin-right:0.2777777777777778em;"></span></span><span
+										class="base"><span class="strut"
+											style="height:1em;vertical-align:-0.25em;"></span><span
+											class="mopen">[</span><span class="mord">1</span><span class="mspace"
+											style="margin-right:0.2222222222222222em;"></span><span
+											class="mbin">−</span><span class="mspace"
+											style="margin-right:0.2222222222222222em;"></span></span><span
+										class="base"><span class="strut"
+											style="height:1.1413309999999999em;vertical-align:-0.25em;"></span><span
+											class="mopen">(</span><span class="mord"><span
+												class="mord mathnormal">λ</span><span class="msupsub"><span
+													class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+															style="height:0.31166399999999994em;"><span
+																style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span
+																	class="pstrut" style="height:2.7em;"></span><span
+																	class="sizing reset-size6 size3 mtight"><span
+																		class="mord mathnormal mtight">i</span></span></span></span><span
+															class="vlist-s">​</span></span><span class="vlist-r"><span
+															class="vlist"
+															style="height:0.15em;"><span></span></span></span></span></span></span><span
+											class="mord mathnormal">t</span><span class="mclose"><span
+												class="mclose">)</span><span class="msupsub"><span class="vlist-t"><span
+														class="vlist-r"><span class="vlist"
+															style="height:0.864108em;"><span
+																style="top:-3.113em;margin-right:0.05em;"><span
+																	class="pstrut" style="height:2.7em;"></span><span
+																	class="sizing reset-size6 size3 mtight"><span
+																		class="mord mtight"><span
+																			class="mord mathnormal mtight">m</span><span
+																			class="mbin mtight">+</span><span
+																			class="mord mtight">1</span></span></span></span></span></span></span></span></span><span
+											class="mclose"><span class="mclose">]</span><span class="msupsub"><span
+													class="vlist-t"><span class="vlist-r"><span class="vlist"
+															style="height:0.8913309999999999em;"><span
+																style="top:-3.113em;margin-right:0.05em;"><span
+																	class="pstrut" style="height:2.7em;"></span><span
+																	class="sizing reset-size6 size3 mtight"><span
+																		class="mord mathnormal mtight"
+																		style="margin-right:0.10903em;">N</span></span></span></span></span></span></span></span></span></span></span></span>
+					</div>
+				</figure>
+				<figure id="5ace6edc-7ed2-48cc-8941-f1179fb53ef4" class="equation">
+					<style>
+						@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')
+					</style>
+					<div class="equation-container"><span class="katex-display"><span class="katex"><span
+									class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"
+										display="block">
+										<semantics>
+											<mrow>
+												<msub>
+													<mi>T</mi>
+													<mi>c</mi>
+												</msub>
+												<mo>=</mo>
+												<msubsup>
+													<mo>∫</mo>
+													<mn>0</mn>
+													<mi mathvariant="normal">∞</mi>
+												</msubsup>
+												<msub>
+													<mi>P</mi>
+													<mi>c</mi>
+												</msub>
+												<mo stretchy="false">(</mo>
+												<mi>t</mi>
+												<mo stretchy="false">)</mo>
+												<mi>d</mi>
+												<mi>t</mi>
+												<mo>=</mo>
+												<msubsup>
+													<mo>∫</mo>
+													<mn>0</mn>
+													<mn>1</mn>
+												</msubsup>
+												<mfrac>
+													<mrow>
+														<mo stretchy="false">(</mo>
+														<mn>1</mn>
+														<mo>−</mo>
+														<msup>
+															<mi>x</mi>
+															<mrow>
+																<mi>m</mi>
+																<mo>+</mo>
+																<mn>1</mn>
+															</mrow>
+														</msup>
+														<msup>
+															<mo stretchy="false">)</mo>
+															<mi>N</mi>
+														</msup>
+														<mi>d</mi>
+														<mi>x</mi>
+													</mrow>
+													<mrow>
+														<mi>λ</mi>
+														<mo stretchy="false">(</mo>
+														<mn>1</mn>
+														<mo>−</mo>
+														<mi>x</mi>
+														<mo stretchy="false">)</mo>
+													</mrow>
+												</mfrac>
+											</mrow>
+											<annotation encoding="application/x-tex">T_c=\int_0^\infty
+												P_c(t)dt=\int_0^1\frac{(1-x^{m+1})^Ndx}{\lambda(1-x)}</annotation>
+										</semantics>
+									</math></span><span class="katex-html" aria-hidden="true"><span class="base"><span
+											class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span
+											class="mord"><span class="mord mathnormal"
+												style="margin-right:0.13889em;">T</span><span class="msupsub"><span
+													class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+															style="height:0.151392em;"><span
+																style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span
+																	class="pstrut" style="height:2.7em;"></span><span
+																	class="sizing reset-size6 size3 mtight"><span
+																		class="mord mathnormal mtight">c</span></span></span></span><span
+															class="vlist-s">​</span></span><span class="vlist-r"><span
+															class="vlist"
+															style="height:0.15em;"><span></span></span></span></span></span></span><span
+											class="mspace" style="margin-right:0.2777777777777778em;"></span><span
+											class="mrel">=</span><span class="mspace"
+											style="margin-right:0.2777777777777778em;"></span></span><span
+										class="base"><span class="strut"
+											style="height:2.326242em;vertical-align:-0.9119499999999999em;"></span><span
+											class="mop"><span class="mop op-symbol large-op"
+												style="margin-right:0.44445em;position:relative;top:-0.0011249999999999316em;">∫</span><span
+												class="msupsub"><span class="vlist-t vlist-t2"><span
+														class="vlist-r"><span class="vlist"
+															style="height:1.414292em;"><span
+																style="top:-1.7880500000000001em;margin-left:-0.44445em;margin-right:0.05em;"><span
+																	class="pstrut" style="height:2.7em;"></span><span
+																	class="sizing reset-size6 size3 mtight"><span
+																		class="mord mtight">0</span></span></span><span
+																style="top:-3.8129000000000004em;margin-right:0.05em;"><span
+																	class="pstrut" style="height:2.7em;"></span><span
+																	class="sizing reset-size6 size3 mtight"><span
+																		class="mord mtight">∞</span></span></span></span><span
+															class="vlist-s">​</span></span><span class="vlist-r"><span
+															class="vlist"
+															style="height:0.9119499999999999em;"><span></span></span></span></span></span></span><span
+											class="mspace" style="margin-right:0.16666666666666666em;"></span><span
+											class="mord"><span class="mord mathnormal"
+												style="margin-right:0.13889em;">P</span><span class="msupsub"><span
+													class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+															style="height:0.151392em;"><span
+																style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span
+																	class="pstrut" style="height:2.7em;"></span><span
+																	class="sizing reset-size6 size3 mtight"><span
+																		class="mord mathnormal mtight">c</span></span></span></span><span
+															class="vlist-s">​</span></span><span class="vlist-r"><span
+															class="vlist"
+															style="height:0.15em;"><span></span></span></span></span></span></span><span
+											class="mopen">(</span><span class="mord mathnormal">t</span><span
+											class="mclose">)</span><span class="mord mathnormal">d</span><span
+											class="mord mathnormal">t</span><span class="mspace"
+											style="margin-right:0.2777777777777778em;"></span><span
+											class="mrel">=</span><span class="mspace"
+											style="margin-right:0.2777777777777778em;"></span></span><span
+										class="base"><span class="strut"
+											style="height:2.5000080000000002em;vertical-align:-0.936em;"></span><span
+											class="mop"><span class="mop op-symbol large-op"
+												style="margin-right:0.44445em;position:relative;top:-0.0011249999999999316em;">∫</span><span
+												class="msupsub"><span class="vlist-t vlist-t2"><span
+														class="vlist-r"><span class="vlist"
+															style="height:1.5640080000000003em;"><span
+																style="top:-1.7880500000000001em;margin-left:-0.44445em;margin-right:0.05em;"><span
+																	class="pstrut" style="height:2.7em;"></span><span
+																	class="sizing reset-size6 size3 mtight"><span
+																		class="mord mtight">0</span></span></span><span
+																style="top:-3.8129000000000004em;margin-right:0.05em;"><span
+																	class="pstrut" style="height:2.7em;"></span><span
+																	class="sizing reset-size6 size3 mtight"><span
+																		class="mord mtight">1</span></span></span></span><span
+															class="vlist-s">​</span></span><span class="vlist-r"><span
+															class="vlist"
+															style="height:0.9119499999999999em;"><span></span></span></span></span></span></span><span
+											class="mspace" style="margin-right:0.16666666666666666em;"></span><span
+											class="mord"><span class="mopen nulldelimiter"></span><span
+												class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span
+															class="vlist" style="height:1.5183309999999999em;"><span
+																style="top:-2.314em;"><span class="pstrut"
+																	style="height:3em;"></span><span class="mord"><span
+																		class="mord mathnormal">λ</span><span
+																		class="mopen">(</span><span
+																		class="mord">1</span><span class="mspace"
+																		style="margin-right:0.2222222222222222em;"></span><span
+																		class="mbin">−</span><span class="mspace"
+																		style="margin-right:0.2222222222222222em;"></span><span
+																		class="mord mathnormal">x</span><span
+																		class="mclose">)</span></span></span><span
+																style="top:-3.23em;"><span class="pstrut"
+																	style="height:3em;"></span><span class="frac-line"
+																	style="border-bottom-width:0.04em;"></span></span><span
+																style="top:-3.677em;"><span class="pstrut"
+																	style="height:3em;"></span><span class="mord"><span
+																		class="mopen">(</span><span
+																		class="mord">1</span><span class="mspace"
+																		style="margin-right:0.2222222222222222em;"></span><span
+																		class="mbin">−</span><span class="mspace"
+																		style="margin-right:0.2222222222222222em;"></span><span
+																		class="mord"><span
+																			class="mord mathnormal">x</span><span
+																			class="msupsub"><span class="vlist-t"><span
+																					class="vlist-r"><span class="vlist"
+																						style="height:0.8141079999999999em;"><span
+																							style="top:-3.063em;margin-right:0.05em;"><span
+																								class="pstrut"
+																								style="height:2.7em;"></span><span
+																								class="sizing reset-size6 size3 mtight"><span
+																									class="mord mtight"><span
+																										class="mord mathnormal mtight">m</span><span
+																										class="mbin mtight">+</span><span
+																										class="mord mtight">1</span></span></span></span></span></span></span></span></span><span
+																		class="mclose"><span
+																			class="mclose">)</span><span
+																			class="msupsub"><span class="vlist-t"><span
+																					class="vlist-r"><span class="vlist"
+																						style="height:0.8413309999999999em;"><span
+																							style="top:-3.063em;margin-right:0.05em;"><span
+																								class="pstrut"
+																								style="height:2.7em;"></span><span
+																								class="sizing reset-size6 size3 mtight"><span
+																									class="mord mathnormal mtight"
+																									style="margin-right:0.10903em;">N</span></span></span></span></span></span></span></span><span
+																		class="mord mathnormal">d</span><span
+																		class="mord mathnormal">x</span></span></span></span><span
+															class="vlist-s">​</span></span><span class="vlist-r"><span
+															class="vlist"
+															style="height:0.936em;"><span></span></span></span></span></span><span
+												class="mclose nulldelimiter"></span></span></span></span></span></span>
+					</div>
+				</figure>
+				<figure id="c6732ab1-110f-4db3-9c8a-a65eee0d9048" class="equation">
+					<style>
+						@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.2/katex.min.css')
+					</style>
+					<div class="equation-container"><span class="katex-display"><span class="katex"><span
+									class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"
+										display="block">
+										<semantics>
+											<mrow>
+												<msub>
+													<mi>T</mi>
+													<mi>c</mi>
+												</msub>
+												<mo>=</mo>
+												<mfrac>
+													<mn>1</mn>
+													<mi>λ</mi>
+												</mfrac>
+												<munderover>
+													<mo>∑</mo>
+													<mrow>
+														<mi>i</mi>
+														<mo>=</mo>
+														<mn>0</mn>
+													</mrow>
+													<mi>m</mi>
+												</munderover>
+												<mfrac>
+													<mn>1</mn>
+													<mrow>
+														<mi>m</mi>
+														<mo>+</mo>
+														<mn>1</mn>
+													</mrow>
+												</mfrac>
+												<mi>B</mi>
+												<mo stretchy="false">(</mo>
+												<mi>N</mi>
+												<mo separator="true">,</mo>
+												<mfrac>
+													<mrow>
+														<mi>i</mi>
+														<mo>+</mo>
+														<mn>1</mn>
+													</mrow>
+													<mrow>
+														<mi>m</mi>
+														<mo>+</mo>
+														<mn>1</mn>
+													</mrow>
+												</mfrac>
+												<mo stretchy="false">)</mo>
+											</mrow>
+											<annotation encoding="application/x-tex">
+												T_c=\frac{1}{\lambda}\sum_{i=0}^{m}\frac{1}{m+1}B(N,\frac{i+1}{m+1})
+											</annotation>
+										</semantics>
+									</math></span><span class="katex-html" aria-hidden="true"><span class="base"><span
+											class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span
+											class="mord"><span class="mord mathnormal"
+												style="margin-right:0.13889em;">T</span><span class="msupsub"><span
+													class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+															style="height:0.151392em;"><span
+																style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span
+																	class="pstrut" style="height:2.7em;"></span><span
+																	class="sizing reset-size6 size3 mtight"><span
+																		class="mord mathnormal mtight">c</span></span></span></span><span
+															class="vlist-s">​</span></span><span class="vlist-r"><span
+															class="vlist"
+															style="height:0.15em;"><span></span></span></span></span></span></span><span
+											class="mspace" style="margin-right:0.2777777777777778em;"></span><span
+											class="mrel">=</span><span class="mspace"
+											style="margin-right:0.2777777777777778em;"></span></span><span
+										class="base"><span class="strut"
+											style="height:2.929066em;vertical-align:-1.277669em;"></span><span
+											class="mord"><span class="mopen nulldelimiter"></span><span
+												class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span
+															class="vlist" style="height:1.32144em;"><span
+																style="top:-2.314em;"><span class="pstrut"
+																	style="height:3em;"></span><span class="mord"><span
+																		class="mord mathnormal">λ</span></span></span><span
+																style="top:-3.23em;"><span class="pstrut"
+																	style="height:3em;"></span><span class="frac-line"
+																	style="border-bottom-width:0.04em;"></span></span><span
+																style="top:-3.677em;"><span class="pstrut"
+																	style="height:3em;"></span><span class="mord"><span
+																		class="mord">1</span></span></span></span><span
+															class="vlist-s">​</span></span><span class="vlist-r"><span
+															class="vlist"
+															style="height:0.686em;"><span></span></span></span></span></span><span
+												class="mclose nulldelimiter"></span></span><span class="mspace"
+											style="margin-right:0.16666666666666666em;"></span><span
+											class="mop op-limits"><span class="vlist-t vlist-t2"><span
+													class="vlist-r"><span class="vlist"
+														style="height:1.6513970000000002em;"><span
+															style="top:-1.872331em;margin-left:0em;"><span
+																class="pstrut" style="height:3.05em;"></span><span
+																class="sizing reset-size6 size3 mtight"><span
+																	class="mord mtight"><span
+																		class="mord mathnormal mtight">i</span><span
+																		class="mrel mtight">=</span><span
+																		class="mord mtight">0</span></span></span></span><span
+															style="top:-3.050005em;"><span class="pstrut"
+																style="height:3.05em;"></span><span><span
+																	class="mop op-symbol large-op">∑</span></span></span><span
+															style="top:-4.3000050000000005em;margin-left:0em;"><span
+																class="pstrut" style="height:3.05em;"></span><span
+																class="sizing reset-size6 size3 mtight"><span
+																	class="mord mtight"><span
+																		class="mord mathnormal mtight">m</span></span></span></span></span><span
+														class="vlist-s">​</span></span><span class="vlist-r"><span
+														class="vlist"
+														style="height:1.277669em;"><span></span></span></span></span></span><span
+											class="mspace" style="margin-right:0.16666666666666666em;"></span><span
+											class="mord"><span class="mopen nulldelimiter"></span><span
+												class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span
+															class="vlist" style="height:1.32144em;"><span
+																style="top:-2.314em;"><span class="pstrut"
+																	style="height:3em;"></span><span class="mord"><span
+																		class="mord mathnormal">m</span><span
+																		class="mspace"
+																		style="margin-right:0.2222222222222222em;"></span><span
+																		class="mbin">+</span><span class="mspace"
+																		style="margin-right:0.2222222222222222em;"></span><span
+																		class="mord">1</span></span></span><span
+																style="top:-3.23em;"><span class="pstrut"
+																	style="height:3em;"></span><span class="frac-line"
+																	style="border-bottom-width:0.04em;"></span></span><span
+																style="top:-3.677em;"><span class="pstrut"
+																	style="height:3em;"></span><span class="mord"><span
+																		class="mord">1</span></span></span></span><span
+															class="vlist-s">​</span></span><span class="vlist-r"><span
+															class="vlist"
+															style="height:0.7693300000000001em;"><span></span></span></span></span></span><span
+												class="mclose nulldelimiter"></span></span><span class="mord mathnormal"
+											style="margin-right:0.05017em;">B</span><span class="mopen">(</span><span
+											class="mord mathnormal" style="margin-right:0.10903em;">N</span><span
+											class="mpunct">,</span><span class="mspace"
+											style="margin-right:0.16666666666666666em;"></span><span class="mord"><span
+												class="mopen nulldelimiter"></span><span class="mfrac"><span
+													class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist"
+															style="height:1.3365200000000002em;"><span
+																style="top:-2.314em;"><span class="pstrut"
+																	style="height:3em;"></span><span class="mord"><span
+																		class="mord mathnormal">m</span><span
+																		class="mspace"
+																		style="margin-right:0.2222222222222222em;"></span><span
+																		class="mbin">+</span><span class="mspace"
+																		style="margin-right:0.2222222222222222em;"></span><span
+																		class="mord">1</span></span></span><span
+																style="top:-3.23em;"><span class="pstrut"
+																	style="height:3em;"></span><span class="frac-line"
+																	style="border-bottom-width:0.04em;"></span></span><span
+																style="top:-3.677em;"><span class="pstrut"
+																	style="height:3em;"></span><span class="mord"><span
+																		class="mord mathnormal">i</span><span
+																		class="mspace"
+																		style="margin-right:0.2222222222222222em;"></span><span
+																		class="mbin">+</span><span class="mspace"
+																		style="margin-right:0.2222222222222222em;"></span><span
+																		class="mord">1</span></span></span></span><span
+															class="vlist-s">​</span></span><span class="vlist-r"><span
+															class="vlist"
+															style="height:0.7693300000000001em;"><span></span></span></span></span></span><span
+												class="mclose nulldelimiter"></span></span><span
+											class="mclose">)</span></span></span></span></span></div>
+				</figure>
+				<p id="070682c6-8770-4161-9cd9-94fcc9c64440" class="">Where B is the Beta function.</p>
+			</div>
+			</p>
+			<ol type="1" id="c15f6237-349d-4937-82f1-ca3ea2244d8e" class="numbered-list" start="3">
+				<li><strong>IMPLEMENTATION MODEL:</strong> This model defines the real organization of software modules
+					and files in the software developed. In other words, this model is responsible for structuration and
+					modularization of code.</li>
+			</ol>
+			<figure id="388da52a-795b-40b3-b8ef-230891e198a2" class="image"><a
+					href="Review_Images/Untitled%201.png"><img
+						style="width:384px"
+						src="Review_Images/Untitled%201.png" /></a>
+			</figure>
+			<figure id="633747eb-9019-4cb8-a101-8a275e9cc88b" class="image"><a
+					href="Review_Images/image11.jpg"><img
+						style="width:528px"
+						src="Review_Images/image11.jpg" /></a>
+			</figure>
+			<h3 id="675c9f62-cdce-40b2-832d-b0b9a5f70bcf" class=""><strong>DEVELOPMENT OF SOFTWARE</strong></h3>
+			<p id="b925a67f-8e48-4142-999c-c706f4ea3972" class="">Based on the proposed object model, an expert system
+				software was developed to evaluate the condition of lined equipment. The development was carried out in
+				Visual Studio 2010 using the C# programming language.</p>
+			<p id="505dff1f-55e1-4147-b808-833be0a73416" class="">The functions of the developed expert system software
+				are as follows:
+			<div class="indented">
+				<ul id="7a4a7c0b-580d-48fc-83f3-3b7d32cf0392" class="bulleted-list">
+					<li style="list-style-type:disc">Receiving and input the primary data on torpedo ladle cars required
+						to evaluate the condition of the ladle car.[<strong>ExpertInterface</strong>]</li>
+				</ul>
+				<ul id="544e192a-6c1e-4089-bdb9-f759ece63004" class="bulleted-list">
+					<li style="list-style-type:disc">Analysis and quantitative assessment of the lining condition of the
+						ladle cars based on the neural network approach.[<strong>SSNeuralDSS]</strong></li>
+				</ul>
+				<ul id="903494d4-5612-4cce-a137-499e09008273" class="bulleted-list">
+					<li style="list-style-type:disc">Quantitative assessment of the lining of the torpedo ladle car
+						based on the weight of the empty torpedo ladle car before and after the transport of liquid iron
+						(after each load) and the temperature of the body of the torpedo ladle car during transportation
+						of liquid iron.[<strong>SSProductionModel</strong>]</li>
+				</ul>
+				<ul id="2450abc1-0662-4416-bd15-970135a72c6a" class="bulleted-list">
+					<li style="list-style-type:disc">Generating control recommendations regarding the technical
+						condition of the lining and recommendations for repair and operating modes of torpedo ladle cars
+						[<strong>SSPredicating+SSNeuralDSS</strong>]</li>
+				</ul>
+				<ul id="90e1f1a2-c6a1-4542-84bb-a3fd334fdbef" class="bulleted-list">
+					<li style="list-style-type:disc">Estimation of the cast iron weight based on primary data.
+						[<strong>SSPredicating+SSNeuralDSS</strong>]</li>
+				</ul>
+				<ul id="d9da57fb-4830-476f-bc3e-7988c31038ac" class="bulleted-list">
+					<li style="list-style-type:disc">Creating operating and reporting documentation for the process of
+						transportation of liquid iron from the blast furnace shop to the converter shop and
+						documentation regarding the technical condition of torpedo ladle cars
+						.[<strong>SSProductionModel</strong>]</li>
+				</ul>
+				<ul id="36584609-1cba-4e5b-a95c-824cccb30a79" class="bulleted-list">
+					<li style="list-style-type:disc">Editing the knowledge base and the accumulation of gained
+						experience.[<strong>SSProductionModel</strong>]</li>
+				</ul>
+				<div id="e6d78fcf-5955-44ee-9b83-d289c8210260" class="column-list">
+					<div id="fbfac58f-02f4-4e57-985b-2f4594765e4b" style="width:93.75%" class="column">
+						<figure id="9e570f76-1622-4fb1-9274-1ea196cb6fb3" class="image"><a
+								href="Review_Images/image12.png"><img
+									style="width:336px"
+									src="Review_Images/image12.png" /></a>
+						</figure>
+					</div>
+					<div id="7eec6f53-b33e-4393-b10c-c48f6e4a4f45" style="width:99.99999999999999%" class="column">
+						<figure id="6cb3eb9b-0654-487c-8c1b-329eb7e513b4" class="image"><a
+								href="Review_Images/image3.png"><img
+									style="width:384px"
+									src="Review_Images/image3.png" /></a>
+						</figure>
+					</div>
+				</div>
+			</div>
+			</p>
+			<h3 id="fc1096f5-e09c-4d48-9492-cf612a5b02e0" class=""><strong>Neural network Implementation</strong></h3>
+			<ul id="acd96a99-ad28-4e17-b694-d6624a1bfc97" class="bulleted-list">
+				<li style="list-style-type:disc">As a result of the first operation of information technology, primary
+					information on the technical condition of the torpedo ladle cars was collected. It consists in the
+					formation of images of thermograms of torpedo ladle cars using thermal imagers.</li>
+			</ul>
+			<ul id="0cffa979-ecd5-490f-8cda-6d9d33425acd" class="bulleted-list">
+				<li style="list-style-type:disc">Primary data processing starts to be performed at the second stage of
+					information technology. The authors proposed a neural network method for automatic diagnostics of
+					the lining condition, the specific feature of which is neural network segmentation and recognition
+					of thermograms of torpedo ladle cars to determine the areas of the lining burnout. It allows
+					determining automatically the actual condition of torpedo ladle cars and, as a result, to prevent
+					their failure. The method of automated diagnostics of the lining condition of torpedo ladle cars
+					suggested by the authors makes it possible to increase the reliability of determining lining burnt
+					out zones in comparison with the existing methods for diagnosing lined equipment from 86% to 97%.
+				</li>
+			</ul>
+			<ul id="3d221c98-5f48-420a-937b-3dff58ea27a0" class="bulleted-list">
+				<li style="list-style-type:disc">The third and fifth operations of the proposed information technology
+					are designed to summarize information on the operation of torpedo ladle cars with the compilation of
+					reports concerning the technical condition of the torpedo ladle cars lining and the recommended
+					modes of their operation.</li>
+			</ul>
+			<ul id="b14b9dc8-c517-4558-90a1-2535470a5df5" class="bulleted-list">
+				<li style="list-style-type:disc">During the fourth operation of the information technology, processing
+					of the obtained information on the status of torpedo ladle cars continues to evaluate automatically
+					the mode of their operation. To provide the fourth operation of the information technology, the
+					authors in this paper propose a neural network method</li>
+			</ul>
+			<h2 id="e45544f5-ab1f-47c9-9a90-e2490f48c1b9" class=""><strong>Application domain of the paper</strong></h2>
+			<ol type="1" id="b2ec774b-d3c9-4263-a8e6-e034c429416a" class="numbered-list" start="1">
+				<li>A large part of the paper is based on predicting the operation mode/generating repair
+					recommendations which comes under the domain of predictive maintenance.</li>
+			</ol>
+			<ol type="1" id="6a68b348-f2ca-4b0b-854c-dec00597c53e" class="numbered-list" start="2">
+				<li>Three common types of maintenance:<ul id="c91a1189-73a8-4165-ba88-13fd12372e7b"
+						class="bulleted-list">
+						<li style="list-style-type:disc">Reactive maintenance involves repairing the equipment after it
+							fails. In this case there will be costs related to downtime of the equipment.</li>
+					</ul>
+					<ul id="e80bdb50-f369-4319-8601-3bfc86150f01" class="bulleted-list">
+						<li style="list-style-type:disc">Preventive maintenance involves having a repair schedule so as
+							to prevent the machines from breaking down. It also has costs related to the need for
+							frequent repairs/checks even without a real need of maintenance</li>
+					</ul>
+					<ul id="043fce28-8ae5-4609-b395-d0a0d1464a2b" class="bulleted-list">
+						<li style="list-style-type:disc">Predictive maintenance is able to tell when there is a need to
+							schedule maintenance so as to prevent downtime.</li>
+					</ul>
+				</li>
+			</ol>
+			<div id="7a668144-b535-49a6-b94b-d16abfaf7b04" class="column-list">
+				<div id="c9a56fc4-8dff-41c7-a57d-633f6b890375" style="width:100%" class="column">
+					<figure id="dbc6306b-53f2-4cf9-b4a2-216ee82c4845" class="image"><a
+							href="Review_Images/image5.png"><img
+								style="width:376px"
+								src="Review_Images/image5.png" /></a>
+					</figure>
+				</div>
+				<div id="f68bdd81-4b70-48c2-9830-e985cc7868be" style="width:100%" class="column">
+					<figure id="29110205-bb64-47e6-8672-77f5b4bfe25c" class="image"><a
+							href="Review_Images/image15.png"><img
+								style="width:386px"
+								src="Review_Images/image15.png" /></a>
+					</figure>
+				</div>
+				<div id="55ac590a-76b0-4da3-86c5-0c626353134f" style="width:100%" class="column">
+					<figure id="97b9329c-ba4b-40f3-a0f9-236ab66972ed" class="image"><a
+							href="Review_Images/image4.png"><img
+								style="width:369px"
+								src="Review_Images/image4.png" /></a>
+					</figure>
+				</div>
+			</div>
+			<ol type="1" id="c9f16bd8-a390-41f5-9e92-795f975a011b" class="numbered-list" start="3">
+				<li>The use of thermogram images [3] to look for potential component failure can have multiple uses
+					like:<ul id="86a701ac-ac00-42ea-957b-381bad69612e" class="bulleted-list">
+						<li style="list-style-type:disc">When monitoring rotating equipment, such as motors, pumps,
+							drives, and compressors, thermal imaging is especially useful since overheating often
+							precedes imminent failure.</li>
+					</ul>
+					<ul id="25057d13-f3d3-4186-8525-18f529d8155a" class="bulleted-list">
+						<li style="list-style-type:disc">Hoses, pipelines, and valves are essential for timely fluid
+							delivery to processes. In valves and tubes, leaks, stiction, or excessive friction can be
+							found with the use of thermal imaging sensors.</li>
+					</ul>
+					<ul id="1eba3060-a575-44a2-80e7-c832491641cd" class="bulleted-list">
+						<li style="list-style-type:disc">To prevent computers from overheating in data centres, cooling
+							is essential. Server racks, interior HVAC (heating, ventilation, and air conditioning)
+							valves, and condensers are all monitored by sensors. Additionally, they may spot unusually
+							cool areas that can point to a problem, such an imbalance in the HVAC system.</li>
+					</ul>
+				</li>
+			</ol>
+			<ol type="1" id="2f76aa95-cfda-4fac-9d68-8689ccc00f8c" class="numbered-list" start="4">
+				<li>One possible extension of the paper may be to replace the image with sensor data so that such a
+					system may be able to carry out predictive maintenance for hard to reach/unreachable components.
+				</li>
+			</ol>
+			<ol type="1" id="10a15ea6-9a95-4a76-ab12-5dfdd3be88d3" class="numbered-list" start="5">
+				<li>Another possible extension may involve suggesting the most environmentally friendly repair methods
+					and cost friendly schedule given the conditions of the equipment. This would probably involve
+					collecting and integrating the system with the environmental impact of the various maintenance
+					methods in practice.</li>
+			</ol>
+			<ol type="1" id="8ab92135-58ea-4403-a173-8dbc4be7eba1" class="numbered-list" start="6">
+				<li>The weight estimation component of the system can be evolved to componentwise estimating the weights
+					of airplanes and rockets because it is hard to estimate their weights accurately from the
+					conventional methods. It may be helpful in identifying points where we can adjust the weight of the
+					components to maximize the payload.</li>
+			</ol>
+			<ol type="1" id="33cbc012-4e13-47d7-b21b-b7bf87453cbf" class="numbered-list" start="7">
+				<li>It has been used to measure the payloads of earth moving equipment which are used to move payloads
+					in construction sites.[4]</li>
+			</ol>
+			<h2 id="18cc34f8-4308-463c-b2c5-c25d2bde8858" class=""><strong>Positives of the paper</strong></h2>
+			<ol type="1" id="3bb1573a-99e6-452a-9f2f-4de05a12f819" class="numbered-list" start="1">
+				<li><strong>Unobstructed Evaluation:</strong> Existing systems do not provide diagnostics of the given
+					lined equipment in the real-time mode without stopping its exploitation[3].</li>
+			</ol>
+			<ol type="1" id="cd65483b-36f8-456a-bff1-2819d96f7f28" class="numbered-list" start="2">
+				<li><strong>Complete Evaluation:</strong> Modern automated systems are unable to provide complete
+					complex (qualitative and quantitative) automated evaluation of the lining condition, which leads to
+					a low level of objectivity and quality of the decisions taken while exploiting the equipment [3]
+				</li>
+			</ol>
+			<ol type="1" id="b99311a8-e002-487c-9705-3b12eff3cf0d" class="numbered-list" start="3">
+				<li><strong>Adaptability: </strong>The use of a neural network in this case is justified by the fact
+					that it is easy to adapt this method to any lined equipment (ladle cars, steel ladles, etc.) by
+					training the neural network on the number of outcomes and operational modes that are characteristic
+					for the relevant type of the lined equipment (torpedo ladle cars, steel ladle, etc.)<ul
+						id="1b8b2c59-190d-4795-88be-eddacd691aff" class="bulleted-list">
+						<li style="list-style-type:disc">A neural network based method is adaptable as compared to a
+							hard coded method.[3]</li>
+					</ul>
+				</li>
+			</ol>
+			<ol type="1" id="9d9c8353-0657-4948-9306-95bf7c71de55" class="numbered-list" start="4">
+				<li><strong>Object-Oriented Approach:</strong> The design of the expert system software follows an
+					object-oriented approach, which can lead to modular and maintainable code.</li>
+			</ol>
+			<ol type="1" id="9a712708-8d34-4c6a-b93e-628fcb0dad50" class="numbered-list" start="5">
+				<li><strong>Use of Unified Modeling Language (UML):</strong> The authors employ UML to create an object
+					model of the software, helping to visualize and plan the structure effectively.</li>
+			</ol>
+			<ol type="1" id="041aad60-4106-49ca-8532-5a92ba56d93a" class="numbered-list" start="6">
+				<li><strong>Functional Scope: </strong>The expert system software covers various functions such as
+					inputting data, evaluating the condition of lined equipment, forecasting changes, maintenance
+					recommendations, weight estimation, documentation creation, and knowledge base management.</li>
+			</ol>
+			<ol type="1" id="6adf7cd7-bced-4b94-b11c-21a1ebfe1bbc" class="numbered-list" start="7">
+				<li><strong>Structured Models: </strong>The description mentions the use of multiple models, including
+					the use model, logical model, and implementation model, which helps in creating a comprehensive and
+					organized system.</li>
+			</ol>
+			<ol type="1" id="289d40e0-0ed4-4981-a83a-72e3c0c96dad" class="numbered-list" start="8">
+				<li><strong>Inclusion of Technologist&#x27;s Interface:</strong> The development of a graphical
+					interface for the technologist to input data, calculate results, and display information
+					demonstrates user-centric design.</li>
+			</ol>
+			<ol type="1" id="9f841a50-2ba2-480e-9a3f-9b629f0da5d0" class="numbered-list" start="9">
+				<li><strong>Addressing Measurement Errors: </strong>The development of new systems and technologies to
+					improve diagnostics, monitoring, and evaluation of technical conditions shows a commitment to
+					addressing measurement errors that currently exist in the assessment process.</li>
+			</ol>
+			<h2 id="cae8cff3-c329-48b0-9e3f-5d17d9c3371c" class=""><strong>Loopholes</strong></h2>
+			<ol type="1" id="74a6372c-d1a3-4471-ab08-8e7761af3b39" class="numbered-list" start="1">
+				<li><strong>Incomplete use of &lt;&lt;extends&gt;&gt; : </strong>Use cases with &lt;&lt;extends&gt;&gt;
+					must be specified with extension points which activate those optional use cases which are missing in
+					this UML diagram.</li>
+			</ol>
+			<ol type="1" id="0bdf59d8-0f1c-4c4f-a3e7-0d65ff0d3a2b" class="numbered-list" start="2">
+				<li><strong>Shallow Layering: </strong>Layering is not that deep and most projects are in at most
+					layers. The depth of the hierarchical structure is very small.</li>
+			</ol>
+			<ol type="1" id="486780ba-95dc-4898-abc9-3eddbb3f924d" class="numbered-list" start="3">
+				<li><strong>High Coupling: </strong>There is high coupling between the neural network related classes.
+				</li>
+			</ol>
+			<ol type="1" id="50049d98-f606-4506-be94-29e47e4da8ac" class="numbered-list" start="4">
+				<li><strong>Assumptions: </strong>The system seems to assume that the given data and measurements
+					accurately represent the state of the lined equipment, which might not always be the case.</li>
+			</ol>
+			<ol type="1" id="15c52da7-c2c8-4f35-8dc5-73ac385a9227" class="numbered-list" start="5">
+				<li><strong>Maintenance and Updates:</strong> The paper doesn&#x27;t elaborate on how ongoing
+					maintenance, updates, or expansion of the system will be managed, which is crucial for a long-term
+					software solution.</li>
+			</ol>
+			<ol type="1" id="894a16e1-b675-4aac-a7d0-1543eedc04be" class="numbered-list" start="6">
+				<li><strong>Generalizability:</strong> The paper does not provide insights into how easily the system
+					could be adapted to different types of lined equipment or industries.</li>
+			</ol>
+			<ol type="1" id="4fc372a2-b4c7-4765-89cd-aa109e3df3f1" class="numbered-list" start="7">
+				<li><strong>Limited Validation:</strong> While the software was tested in a specific industrial setting,
+					the scope of testing and the extent of variability in real-world conditions may not be fully
+					represented.</li>
+			</ol>
+			<ol type="1" id="8478d9e2-9301-4dc0-a6ee-625327f5af75" class="numbered-list" start="8">
+				<li><strong>User Feedback and Usability: </strong>There&#x27;s no discussion about user feedback, user
+					experience, or potential usability issues that were encountered during the software&#x27;s testing
+					phase.</li>
+			</ol>
+			<h2 id="5e04d813-52c5-492c-8d09-ad464a948a55" class="">References</h2>
+			<p id="3fd460be-8228-449c-8d8e-c409a268527b" class="">[1] V.A. Yemelyanov, “Image processing method for
+				thermal control of the lined objects” in Naukovyi Visnyk Natsionalnoho Hirnychoho Universytetu, vol. 6,
+				2014, pp. 137-143.</p>
+			<p id="db93c134-1339-4edb-8c0b-974260cac8b0" class="">[2] S. Chernyi, &quot;Methods for ensuring fault
+				tolerance of equipment based on reliability theory&quot;, 2018 IEEE Conference of Russian Young
+				Researchers in Electrical and Electronic Engineering (EIConRus), 2018.</p>
+			<p id="55480204-8934-4cee-8766-4b4652fda1f6" class="">[3] V.A. Yemelyanov, “Image processing method for
+				thermal control of the
+				lined objects” in Naukovyi Visnyk Natsionalnoho Hirnychoho
+				Universytetu, vol. 6, 2014, pp. 137-143.</p>
+			<p id="8d400b5f-1e5d-4a53-92ea-9cabdc223fb5" class="">[4] Mass Estimation of On-road Construction Equipment
+				Based on Modeling Operational Parameters K. Barati and X. Shen</p>
+			<p id="68ed3476-0f7f-450d-8e61-3815d1bdbfef" class="">
+			</p>
+		</div>
+	</article>
+</body>
+
+</html>
