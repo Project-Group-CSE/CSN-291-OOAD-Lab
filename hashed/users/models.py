@@ -9,3 +9,12 @@ class user(models.Model):
     #hashed pass
     def __str__(self):
         return self.username
+    
+class credential(models.Model):
+    #usertoken
+    title = models.CharField(max_length=50, default="")
+    website = models.URLField(max_length=100)
+    #hashed pass
+    #strength
+    def __str__(self):
+        return self.title
