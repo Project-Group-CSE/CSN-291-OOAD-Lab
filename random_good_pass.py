@@ -15,7 +15,7 @@ def get_pass(num):
         s += result[num - 1]
         return s
 
-def check_password_pwned_api(password):
+def check_password_pwned(password):
     # Hash the password using SHA-1 hash algorithm
     sha1_password = hashlib.sha1(password.encode('utf-8')).hexdigest().upper()
     prefix, suffix = sha1_password[:5], sha1_password[5:]
