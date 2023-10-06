@@ -11,8 +11,8 @@ class user(models.Model):
     last_name = models.CharField(max_length=50, blank=True)
     email = models.EmailField(blank=False, unique=True)
     date_joined = models.DateTimeField(default=timezone.now, editable=False)
-    hashed_password = models.CharField(blank=False)
-    hashed_pin = models.CharField(blank=False, editable=False)
+    hashed_password = models.CharField(max_length=200, blank=False)
+    hashed_pin = models.CharField(max_length=200, blank=False, editable=False)
 
     def __str__(self):
         return self.username
@@ -22,7 +22,7 @@ class credential(models.Model):
     user = models.OneToOneField(user, on_delete=models.CASCADE, primary_key=True)
     title = models.CharField(max_length=50, blank=True)
     website = models.URLField(blank=False)
-    hash_pwd = models.CharField(blank=False)
+    hash_pwd = models.CharField(max_length=200,blank=False)
     strength = models.IntegerField(blank=False)
 
     def __str__(self):
