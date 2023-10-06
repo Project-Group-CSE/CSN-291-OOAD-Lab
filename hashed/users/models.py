@@ -1,4 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.db import models
+from django.utils import timezone
+import uuid
 
 class user(models.Model):
     #usertoken
@@ -18,3 +22,16 @@ class credential(models.Model):
     #strength
     def __str__(self):
         return self.title
+
+class User(AbstractBaseUser, PermissionsMixin):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    email = models.EmailField(unique=True)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
+    date_joined = models.DateTimeField(default=timezone.now)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["email","first_name","last_name"]
+
+    def __str__(self):
+        return self.email
