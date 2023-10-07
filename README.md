@@ -32,13 +32,13 @@ This Python utility provides two main functions for password management:
 
 The password_strength function uses the following criteria to judge the strength of a password:
 
-* Very Weak: 1 to 5 characters
+*    Very Weak: 1 to 5 characters
 *    Weak: At least 6 characters, including at least one letter and one digit
 *    Medium: At least 8 characters, including at least one lowercase letter, one uppercase letter, and one digit
 *    Strong: At least 8 characters, including at least one lowercase letter, one uppercase letter, one digit, and one special character (@, #, $, %, ^, &, +, =)
 
 
-Django superuser:
-Username : cse
-Email : cse@iitr.com
+Django superuser:<br>
+Username : cse<br>
+Email : cse@iitr.com<br>
 Pwd : cse
