@@ -1,20 +1,28 @@
 from django.db import models
+from django.utils import timezone
+import uuid
+
 
 class user(models.Model):
-    #usertoken
-    username = models.CharField(max_length=50, default="")
-    f_name = models.CharField(max_length=50, default="")
-    l_name = models.CharField(max_length=50, default="")
-    email = models.EmailField(max_length=30, default="")
-    #hashed pass
+    uid = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True)
+    username = models.CharField(max_length=50, blank=False, unique=True)
+    first_name = models.CharField(max_length=50, blank=True)
+    last_name = models.CharField(max_length=50, blank=True)
+    email = models.EmailField(blank=False, unique=True)
+    date_joined = models.DateTimeField(default=timezone.now)
+    hashed_password = models.CharField(max_length=200, blank=False)
+    hashed_pin = models.CharField(max_length=200, blank=False)
+
     def __str__(self):
         return self.username
-    
+
+
 class credential(models.Model):
-    #usertoken
-    title = models.CharField(max_length=50, default="")
-    website = models.URLField(max_length=100)
-    #hashed pass
-    #strength
+    user = models.OneToOneField(user, on_delete=models.CASCADE, primary_key=True)
+    title = models.CharField(max_length=50, blank=True)
+    website = models.URLField(blank=False)
+    hash_pwd = models.CharField(max_length=200, blank=False)
+    strength = models.IntegerField(blank=False)
+
     def __str__(self):
         return self.title
