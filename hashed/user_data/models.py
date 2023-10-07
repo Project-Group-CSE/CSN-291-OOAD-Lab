@@ -6,8 +6,6 @@ class myUser(AbstractUser):
     email = models.EmailField(blank=False, unique=True)
     hashed_pin = models.CharField(max_length=200, blank=False)
 
-    USERNAME_FIELD = 'email'
-
 
 class credential(models.Model):
     user = models.ForeignKey(myUser, on_delete=models.CASCADE)
