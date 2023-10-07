@@ -18,7 +18,7 @@ class user(models.Model):
 
 
 class credential(models.Model):
-    user = models.OneToOneField(user, on_delete=models.CASCADE, primary_key=True)
+    user = models.ForeignKey(user, on_delete=models.CASCADE)
     title = models.CharField(max_length=50, blank=True)
     website = models.URLField(blank=False)
     hash_pwd = models.CharField(max_length=200, blank=False)
