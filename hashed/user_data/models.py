@@ -12,7 +12,7 @@ class credential(models.Model):
     title = models.CharField(max_length=50, blank=True)
     website = models.URLField(blank=False)
     hash_pwd = models.CharField(max_length=200, blank=False)
-    strength = models.IntegerField(blank=False)
+    strength = models.CharField(max_length=50, blank=False)
 
     def __str__(self):
         return self.title
