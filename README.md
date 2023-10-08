@@ -42,3 +42,13 @@ Django superuser:<br>
 Username : cse<br>
 Email : cse@iitr.com<br>
 Pwd : cse
+
+### Current API Endpoints:
+
+| Endpoint               | Type of Generic View being used      | GET | POST | PUT | DELETE | Auth reqd | Desc                                                   |
+| ---------------------- | ------------------------------------ | --- | ---- | --- | ------ | --------- | ------------------------------------------------------ |
+| hashed/                | Fn-based Get view (not generic view) | Yes | NA   | NA  | NA     | No        | API root                                               |
+| hashed/users/          | ListCreateAPIView                    | Yes | Yes  | NA  | NA     | No        | Show all users and add users                           |
+| hashed/users/profile/  | RetrieveUpdateDestroyAPIView         | Yes | NA   | Yes | Yes    | Yes       | Show details of a particular user, update or delete it |
+| hashed/credentials/    | ListCreateAPIView                    | Yes | Yes  | NA  | NA     | Yes       | Show all creds of a user and add creds                 |
+| hashed/credentials/id/ | RetrieveUpdateDestroyAPIView         | Yes | NA   | Yes | Yes    | Yes       | Show details of a particular cred, update or delete it |
