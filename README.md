@@ -43,6 +43,11 @@ Username : cse<br>
 Email : cse@iitr.com<br>
 Pwd : cse
 
+test user:<br>
+Username :anant<br>
+Email : a@iitr.com<br>
+Pwd : abc
+
 ### Current API Endpoints:
 
 | Endpoint               | Type of Generic View being used      | GET | POST | PUT | DELETE | Auth reqd | Desc                                                   |
