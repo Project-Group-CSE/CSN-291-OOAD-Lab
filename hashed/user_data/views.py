@@ -6,8 +6,13 @@ from .models import myUser, credential
 from .permissions import isOwner
 from .serializers import UserListSerializer, UserDetailSerializer
 from .serializers import CredentialHiddenSerializer, CredentialVisibleSerializer
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+import json
 
-
+from django.http import JsonResponse
 @api_view(["GET"])
 def api_root(request, format=None):
     return Response(
@@ -19,6 +24,25 @@ def api_root(request, format=None):
             ),
         }
     )
+
+
+@csrf_exempt
+def login_view(request):
+   
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        username = data.get('username')
+        password = data.get('password')
+        print(username, password)
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'message': 'Success'})
+        else:
+            return JsonResponse({'message': 'Invalid username or password'})
+    return JsonResponse({'message': 'Method not allowed'}, status=405)
+
+    
 
 
 class CredentialList(generics.ListCreateAPIView):
