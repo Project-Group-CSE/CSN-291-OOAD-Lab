@@ -1,5 +1,4 @@
 ﻿asgiref==3.7.2
-bcrypt==4.0.1
 Brotli==1.0.9
 certifi==2023.7.22
 charset-normalizer==3.2.0
@@ -16,5 +15,3 @@ typing_extensions==4.8.0
 urllib3==2.0.5
 wheel==0.38.4
 win-inet-pton==1.1.0
-cryptography==41.0.3
-
