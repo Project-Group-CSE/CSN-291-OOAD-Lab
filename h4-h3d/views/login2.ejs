@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>HTML5 Login Form with validation Example</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <script src="../hashed-middle/login.js"></script>
 <link rel="stylesheet" href="./style.css">
 <style>
   #login-form-wrap {
@@ -28,7 +29,9 @@
 <!-- partial:index.partial.html -->
 <div id="login-form-wrap">
   <h2>Login</h2>
-  <form id="login-form">
+  <form id="login-form" >
+  
+    
     <p>
     <input type="text" id="username" name="username" placeholder="Username" required><i class="validation"><span></span><span></span></i>
     </p>
@@ -44,6 +47,33 @@
   </div><!--create-account-wrap-->
 </div><!--login-form-wrap-->
 <!-- partial -->
+<script>
+  
+  document.getElementById("login-form").addEventListener("submit", function (event) {
+  event.preventDefault(); // Prevent the default form submission
+
+  var username = document.getElementById("username").value;
+  var password = document.getElementById("password").value;
+
+
+
+ 
+  fetch('http://127.0.0.1:8000/hashed/login/', {
+    method: 'POST',
+    body: JSON.stringify({ username: username, password: password }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      console.log(response.json());
+    })
+    .catch((error) => {
+      // Handle any network or other errors
+    });
+});
+
+</script>
 </div>
 </body>
 </html>

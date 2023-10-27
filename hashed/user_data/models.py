@@ -3,8 +3,9 @@ from django.contrib.auth.models import AbstractUser
 
 
 class myUser(AbstractUser):
+   
     email = models.EmailField(blank=False, unique=True)
-    hashed_pin = models.CharField(max_length=200, blank=False)
+    hashed_pin = models.BinaryField()
 
 
 class credential(models.Model):

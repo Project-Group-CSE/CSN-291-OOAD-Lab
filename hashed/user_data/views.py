@@ -1,16 +1,23 @@
+import uuid
 from rest_framework import generics, status, permissions
 from rest_framework.generics import CreateAPIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+
+from encrypt_hash import *
+from random_good_pass import password_strength
 from .models import myUser, credential
 from .permissions import isOwner
-from .serializers import UserListSerializer, UserDetailSerializer
-from .serializers import PinAuthenticationSerializer,CredentialSerializer#, CredentialVisibleSerializer
-from encrypt_hash import *
-from django.http import HttpResponseRedirect
-from random_good_pass import password_strength
+from .serializers import UserListSerializer, UserDetailSerializer,CredentialSerializer,PinAuthenticationSerializer
 
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+from django.http import JsonResponse
 @api_view(["GET"])
 def api_root(request, format=None):
     return Response(
@@ -22,6 +29,25 @@ def api_root(request, format=None):
             ),
         }
     )
+
+
+@csrf_exempt
+def login_view(request):
+   
+    if request.method == 'POST':
+        data = json.loads(request.body.decode('utf-8'))
+        username = data.get('username')
+        password = data.get('password')
+        print(username, password)
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'message': 'Success'})
+        else:
+            return JsonResponse({'message': 'Invalid username or password'})
+    return JsonResponse({'message': 'Method not allowed'}, status=405)
+
+    
 
 
 class CredentialList(generics.ListCreateAPIView):
@@ -96,14 +122,19 @@ class UserList(generics.ListCreateAPIView):
     queryset = myUser.objects.all()
     serializer_class = UserListSerializer
 
-    def create(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         data = request.data.copy()
+        print(data)
         # manipulate the incoming data here(pin hashing)
-        data["hashed_pin"]=hash_bcrypt(data["hashed_pin"])
+        data["hashed_pin"]=str(hash_bcrypt(data["hashed_pin"]))
         password=data["password"]
         data["password"]="-"
+        data["id"]=str(uuid.uuid4())
+        print(data)
         # data["hashed_pin"]=data["hashed_pin"]+"helo"
         serializer = self.get_serializer(data=data)
+        print(serializer)
+        print(serializer.is_valid())
         if serializer.is_valid():
             user=serializer.save()
             user.set_password(password)#set_password notifies the django framework
