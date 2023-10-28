@@ -58,6 +58,7 @@ class CredentialSerializer(serializers.ModelSerializer):
 
 
 class UserListSerializer(serializers.ModelSerializer):
+   
     first_name = serializers.CharField(write_only=True)
     last_name = serializers.CharField(write_only=True)
     password = serializers.CharField(write_only=True)
