@@ -33,8 +33,10 @@ def api_root(request, format=None):
 
 @csrf_exempt
 def login_view(request):
+    print(request)
    
     if request.method == 'POST':
+       
         data = json.loads(request.body.decode('utf-8'))
         username = data.get('username')
         password = data.get('password')
