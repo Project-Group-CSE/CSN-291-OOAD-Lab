@@ -67,61 +67,28 @@
       <div id="login-form-wrap">
         <h2>Breach Checker</h2>
         <form id="login-form">
+         
+         
+         
           <p>
             <input
               type="text"
-              id="username"
-              name="username"
-              placeholder="id"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              placeholder="Title"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Website"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              placeholder="Website Username"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="text"
-              id="email"
-              name="email"
+              id="password"
+              name="password"
               placeholder="Password"
               required
             /><i class="validation"><span></span><span></span></i>
           </p>
 
           <p>
-            <h5 id="result">Result Here</h5>
+            <h5 id="result"></h5>
           </p>
           <p>
-<button class="button-22" role="button">Show Result</button>
+<button id="button" class="button-22" role="button">Show Result</button>
           </p>
         </form>
         <div id="create-account-wrap">
-          <p>Insert the Info to add the user</p>
+          
           <p></p>
         </div>
 
@@ -129,5 +96,40 @@
       </div>
       
     </div>
+    <script>
+       document.getElementById("button").addEventListener("click", function (event) {
+  event.preventDefault();
+
+  
+  var password = document.getElementById("password").value;
+
+
+
+  fetch('http://127.0.0.1:8000/hashed/checkbreach/', {
+    method: 'POST',
+    body: JSON.stringify({password: password }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+       
+      if (response.status === 200) {
+      return response.json();  
+    } else {
+      alert('Password breach check failed :(');
+      throw new Error('Password breach check failed');
+    }
+    })
+    .then((data) => {
+   
+  console.log(data);
+   document.getElementById("result").innerHTML = data.message;
+ })
+    .catch((error) => {
+
+    });
+});
+    </script>
   </body>
 </html>

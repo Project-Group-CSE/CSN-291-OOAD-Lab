@@ -1,97 +1,110 @@
 <%- include('navbar'); -%>
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>HTML5 Login Form with validation Example</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
-    />
-    <link rel="stylesheet" href="./style.css" />
-    <style>
-      #login-form-wrap {
-        background-color: #fff;
-        width: 35%;
-        margin: 30px auto;
-        text-align: center;
-        padding: 20px 0 0 0;
-        border-radius: 4px;
-        box-shadow: 0px 30px 50px 0px rgba(0, 0, 0, 0.2);
-        margin-top: 30px;
-      }
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Login Form with validation Example</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="./style.css">
+<style>
+  #login-form-wrap {
+    background-color: #fff;
+    width: 35%;
+    margin: 30px auto;
+    text-align: center;
+    padding: 20px 0 0 0;
+    border-radius: 4px;
+    box-shadow: 0px 30px 50px 0px rgba(0, 0, 0, 0.2);
+    margin-top: 30px;
+  }
+  
+    .login_block {
+      margin-top: 10%;
+  
+  }
+</style>
+</head>
+<body>
+  <div class="login_block"> 
+<!-- partial:index.partial.html -->
+<div id="login-form-wrap">
+  <h2>Register</h2>
+  <form id="login-form">
+    <p>
+        <input type="text" id="fname" name="fname" placeholder="First Name" required><i class="validation"><span></span><span></span></i>
+        </p>
+        <p>
+          <input type="text" id="lname" name="lname" placeholder="Last Name" required><i class="validation"><span></span><span></span></i>
+          </p>
+        <p>
+        <input type="email" id="email" name="email" placeholder="Email Address" required><i class="validation"><span></span><span></span></i>
+        </p>
+    <p>
+    <input type="text" id="username" name="username" placeholder="Username" required><i class="validation"><span></span><span></span></i>
+    </p>
+    <p>
+    <input type="password" id="password" name="password" placeholder="Create Password" required><i class="validation"><span></span><span></span></i>
+    </p>
+    <p>
+        <input type="password" id="cpassword" name="cpassword" placeholder="Repeat Password" required><i class="validation"><span></span><span></span></i>
+        </p>
+        <p>
+          <input type="password" id="pin" name="pin" placeholder="4-6 Digit Security Pin " required pattern="\d{4,6}"><i class="validation"><span></span><span></span></i>
+          </p>
+    <p>
+    <input type="submit" id="login" value="Login">
+    </p>
+  </form>
+  <div id="create-account-wrap">
+    <p>Already have an account? <a href="/login">Login</a><p>
+  </div><!--create-account-wrap-->
+</div><!--login-form-wrap-->
+<!-- partial -->
+</div>
+<script>
+  document.getElementById("login-form").addEventListener("submit", function (event) {
+    event.preventDefault(); 
+    var fname= document.getElementById("fname").value;
+    var lname= document.getElementById("lname").value;
+    var username = document.getElementById("username").value;
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+    var pin = document.getElementById("pin").value;
 
-      .login_block {
-        margin-top: 10%;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="login_block">
-      <!-- partial:index.partial.html -->
-      <div id="login-form-wrap">
-        <h2>Register</h2>
-        <form id="login-form">
-          <p>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Name"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email Address"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Username"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Create Password"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Repeat Password"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input type="submit" id="login" value="Register" />
-          </p>
-        </form>
-        <div id="create-account-wrap">
-          <p>Already have an account? <a href="/login">Login</a></p>
-          <p></p>
-        </div>
+    var userData = {
+      first_name:fname,
+      last_name:lname,
+      username: username,
+      email: email,
+      hashed_pin: pin,
+      password: password,
+    };
 
-        <!--create-account-wrap-->
-      </div>
-      <!--login-form-wrap-->
-      <!-- partial -->
-    </div>
-  </body>
+    fetch('http://127.0.0.1:8000/hashed/users/', {
+      method: 'POST',
+      body: JSON.stringify(userData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response)=> {
+        if (response.status ==201) {
+          alert('User registered successfully!');
+          window.location.href = 'http://localhost:3000/login';
+         
+        } else {
+          alert('User registration failed :(');
+        }
+      })
+     
+      .catch((error) => {
+        console.error(error); 
+      });
+  });
+</script>
+</body>
 </html>
+
+
 
 <%- include('footer'); -%>
