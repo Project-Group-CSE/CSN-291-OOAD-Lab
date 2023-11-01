@@ -3,7 +3,7 @@ import base64
 from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
 from Crypto import Random
-from pwd_features import password_strength
+from user_data.pwd_features import password_strength
 import hashlib
 
 #for pin
