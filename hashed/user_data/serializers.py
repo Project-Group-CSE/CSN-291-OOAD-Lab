@@ -30,31 +30,31 @@ class CredentialSerializer(serializers.ModelSerializer):
 
 
 
-# class CredentialVisibleSerializer(serializers.ModelSerializer):
-#     user_name = serializers.SerializerMethodField()
-#     password = serializers.SerializerMethodField()
-#     hash_pwd = serializers.CharField(write_only=True)
+class CredentialVisibleSerializer(serializers.ModelSerializer):
+    user_name = serializers.SerializerMethodField()
+    password = serializers.SerializerMethodField()
+    hash_pwd = serializers.CharField(write_only=True)
 
-#     class Meta:
-#         model = credential
-#         fields = [
-#             "id",
-#             "user_name",
-#             "title",
-#             "website",
-#             "password",
-#             "hash_pwd",
-#             "strength",
-#         ]
-#         read_only_fields = ["user_name", "password"]
+    class Meta:
+        model = credential
+        fields = [
+            "id",
+            "user_name",
+            "title",
+            "website",
+            "password",
+            "hash_pwd",
+            "strength",
+        ]
+        read_only_fields = ["user_name", "password"]
 
-#     def get_user_name(self, obj):
-#         return obj.user.username
+    def get_user_name(self, obj):
+        return obj.user.username
 
-#     def get_password(self, obj):
-#         data = obj.hash_pwd
-#         # will contain decryption logic
-#         return data
+    # def get_password(self, obj):
+    #     data = obj.hash_pwd
+    #     # will contain decryption logic
+    #     return data
 
 
 class UserListSerializer(serializers.ModelSerializer):
@@ -107,5 +107,5 @@ class UserDetailSerializer(serializers.ModelSerializer):
             for credential in credentials
         ]  # returning the list of titles of every credential in the set
 
-class PinAuthenticationSerializer(serializers.Serializer):
-    pin = serializers.CharField(max_length=200, required=True)
+# class PinAuthenticationSerializer(serializers.Serializer):
+    # pin = serializers.CharField(max_length=200, required=True)

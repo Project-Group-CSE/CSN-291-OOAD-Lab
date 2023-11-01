@@ -234,6 +234,20 @@
         /* text-decoration: underline; */
         line-height: 4;
     }
+    .breachResult {
+      text-align: center;
+      margin-block: 31px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      
+  }
+  #bresult {
+    letter-spacing: 5px;
+    color: brown;
+    text-decoration: underline;
+    margin: 15px;
+}
     </style>
 </head>
 <body>
@@ -281,29 +295,33 @@
                   <span class="padding-bottom--15">Enter Your Password Here</span>
                   <form id="stripe-login">
                     <div class="field padding-bottom--24">
-                      <label for="email">Password</label>
-                      <input type="text" name="email">
+                      <label for="text">Password</label>
+                      <input type="email" name="email">
                     </div>
                     <div class="field padding-bottom--24">
                       <div class="grid--50-50">
-                        <label for="password">Result</label>
+                        <label for="password">Strength</label>
                         <div class="reset-pass">
                          
                         </div>
                       </div>
                       <input type="text" name="result">
                     </div>
-                    <div class="field field-checkbox padding-bottom--24 flex-flex align-center">
-                      <label for="checkbox">
-                        <input type="checkbox" name="checkbox"> Stay signed in for a week
-                      </label>
-                    </div>
+                   
                     <div class="field padding-bottom--24">
                       <input type="submit" name="submit" value="Continue">
                     </div>
                     
                   </form>
+
+                  
                 </div>
+              </div>
+              <div class="breachResult">
+                <h1 id="bresult">Breach Result</h1>
+                <h3>Oh no — pwned!</h3>
+                <h2>This password has been seen 70,709 times before</h2>
+                <p>This password has previously appeared in a data breach and should never be used. If you've ever used it anywhere before, change it!</p>
               </div>
 </body>
 </html>
