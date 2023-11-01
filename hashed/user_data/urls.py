@@ -10,6 +10,8 @@ urlpatterns = [
     path("users/profile/", views.UserDetail.as_view(), name="user_detail"),
     # path("users/pinAutentications",views.PinAuthenticationView.as_view(),name="user_pin_authentication"),
     path("login/",views.login_view,name="login_view"),
+    path('randompass/',views.get_random_password,name="random_password"),
+    path('mempass/',views.get_mem_password,name="mem_password"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

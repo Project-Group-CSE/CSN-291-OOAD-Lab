@@ -7,7 +7,7 @@ from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 
 from encrypt_hash import *
-from pwd_features import password_strength
+from user_data.pwd_features import get_pass, get_random_pass, password_strength
 from .models import myUser, credential
 from .permissions import isOwner
 from .serializers import (
@@ -41,8 +41,7 @@ def api_root(request, format=None):
 
 @csrf_exempt
 def login_view(request):
-    print(request)
-
+   
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
         username = data.get("username")
@@ -53,11 +52,33 @@ def login_view(request):
             login(request, user)
             token = secrets.token_hex(16)
             user.session_token = token
+            user.save()
             return JsonResponse({"message": "Success", "token": token})
         else:
             return JsonResponse({"message": "Invalid username or password"})
     return JsonResponse({"message": "Method not allowed"}, status=405)
 
+@csrf_exempt
+def get_mem_password(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+        
+        num = int(data.get("num"))
+        caps = data.get("caps")
+        cryptify = data.get("cryptify")
+        password=get_pass(num,caps,cryptify)
+        
+        return JsonResponse({"password": password})
+@csrf_exempt
+def get_random_password(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+        
+        length = int(data.get("length"))
+        nos = data.get("nos")
+        symbols = data.get("symbols")
+        password=get_random_pass(length,nos,symbols)
+        return JsonResponse({"password": password})
 
 class CredentialList(generics.ListCreateAPIView):
     serializer_class = CredentialSerializer
@@ -184,14 +205,14 @@ class UserList(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         data = request.data.copy()
-        print(data)
+      
         # manipulate the incoming data here(pin hashing)
         data["hashed_pin"] = str(hash_bcrypt(data["hashed_pin"]))
 
         password = data["password"]
         data["password"] = "-"
         data["id"] = str(uuid.uuid4())
-        print(data)
+       
         # data["hashed_pin"]=data["hashed_pin"]+"helo"
         serializer = self.get_serializer(data=data)
         print(serializer)
@@ -249,3 +270,4 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 #                 {"detail": "Invalid PIN. Please try again."},
 #                 status=status.HTTP_401_UNAUTHORIZED,
 #             )
+

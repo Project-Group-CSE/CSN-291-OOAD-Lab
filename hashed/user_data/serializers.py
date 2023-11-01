@@ -74,6 +74,7 @@ class UserListSerializer(serializers.ModelSerializer):
             "last_name",
             "password",
             "hashed_pin",
+            "session_token"
         ]
 
 

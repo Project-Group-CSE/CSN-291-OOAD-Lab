@@ -71,6 +71,7 @@ def get_pass(num, caps, cryptify):
         s = ""
         for i in range(num - 1):
             if caps == True:
+                
                 result[i] = result[i].capitalize()
             s += result[i] + "-"
         if caps == True:
