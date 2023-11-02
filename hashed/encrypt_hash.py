@@ -11,10 +11,10 @@ def hash_bcrypt(unhashed):
     """
     return the hash of the user pin/passsword
     """
-    hashed= str(unhashed).encode('utf-8')
+    hashed= unhashed.encode('utf-8')
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(hashed, salt)
-    return hashed
+    return hashed   
 
 
 
@@ -37,8 +37,11 @@ def check_pin(pin_to_check, hash_pin):
     """
     # Ensure PIN is bytes
     pwd_to_check = pin_to_check.encode('utf-8')
+    
     # Ensure hash_pin is bytes
-    hash_pin = hash_pin.encode('utf-8')
+    # hash_pin = hash_pin.encode('utf-8')
+    
+    
     
     if bcrypt.checkpw(pwd_to_check, hash_pin):
         return True

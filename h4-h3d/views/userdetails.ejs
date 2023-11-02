@@ -33,5 +33,32 @@
     }
   }
 </style>
-<button class="button-43" role="button">Add User</button>
+<script>
+  
+    document.addEventListener("DOMContentLoaded", function () {
+        
+        fetch('http://127.0.0.1:8000/hashed/users/profile/?session_token=' + localStorage.getItem('token'), {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      
+      return response.json();
+    })
+    .then((data)=>{
+      
+      if(!data.exists){
+        window.location.href ="http://localhost:3000/login";
+      }
+
+    })
+    .catch((error) => {
+
+    });
+       })
+  
+</script>
+<!-- <button class="button-43" role="button">Add User</button> -->
 <%- include ("adduser"); -%> <%- include ("credentials"); -%>
