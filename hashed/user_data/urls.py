@@ -12,6 +12,7 @@ urlpatterns = [
     path("login/",views.login_view,name="login_view"),
     path('randompass/',views.get_random_password,name="random_password"),
     path('mempass/',views.get_mem_password,name="mem_password"),
+    path('passworddetail/',views.get_password_detail,name="password_pawn"),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

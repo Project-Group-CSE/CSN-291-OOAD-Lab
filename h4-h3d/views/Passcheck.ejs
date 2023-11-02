@@ -248,6 +248,31 @@
     text-decoration: underline;
     margin: 15px;
 }
+#sresult {
+    letter-spacing: 5px;
+    color: mediumturquoise;
+    text-decoration: underline;
+    margin: 15px;
+}
+.Strong {
+  color: green; 
+}
+
+.Medium {
+  color: orange; 
+}
+
+.Weak {
+  color: red; 
+}
+
+.Poor {
+  color: darkred; 
+}
+
+.Invalid {
+  color: gray; 
+}
     </style>
 </head>
 <body>
@@ -296,20 +321,12 @@
                   <form id="stripe-login">
                     <div class="field padding-bottom--24">
                       <label for="text">Password</label>
-                      <input type="email" name="email">
-                    </div>
-                    <div class="field padding-bottom--24">
-                      <div class="grid--50-50">
-                        <label for="password">Strength</label>
-                        <div class="reset-pass">
-                         
-                        </div>
-                      </div>
-                      <input type="text" name="result">
+                      <input id='password' type="text" name="text" required>
                     </div>
                    
+                   
                     <div class="field padding-bottom--24">
-                      <input type="submit" name="submit" value="Continue">
+                      <input id="button" type="button" name="submit" value="Continue">
                     </div>
                     
                   </form>
@@ -319,9 +336,81 @@
               </div>
               <div class="breachResult">
                 <h1 id="bresult">Breach Result</h1>
+                <div id="breached" >
                 <h3>Oh no — pwned!</h3>
-                <h2>This password has been seen 70,709 times before</h2>
+                <h2 id="message"></h2>
                 <p>This password has previously appeared in a data breach and should never be used. If you've ever used it anywhere before, change it!</p>
               </div>
+              <div id="notbreached">
+                <h3>Good Job!!</h3>
+                <h2>This password has never been seen before</h2>
+              </div>
+              </div>
+              </div>
+            <div id="strengthResult" class="breachResult">
+              <h1 id="sresult">Strength Result</h1>
+              <h3>The password strength is</h3>
+              <h2 id="strength"></h2>
+            </div>
+            <script>
+              const inputPassword =document.getElementById("password");
+              const bresult=document.getElementById("bresult");
+              const breached=document.getElementById("breached");
+              const notbreached=document.getElementById("notbreached");
+              const strengthResult=document.getElementById("strengthResult");
+              const sresult=document.getElementById("sresult");
+              const strength=document.getElementById("strength");
+              const buttonSubmit=document.getElementById("button");
+              document.addEventListener("DOMContentLoaded", function () {
+                bresult.style.display="none";
+              breached.style.display="none";
+              notbreached.style.display="none";
+               strengthResult.style.display="none";
+              })
+              buttonSubmit.addEventListener("click",function(){
+                console.log("heelo");
+                fetch('http://127.0.0.1:8000/hashed/passworddetail/', {
+      method: 'POST',
+      body: JSON.stringify({password:inputPassword.value}),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response)=> {
+       
+        if (response.status ==200) {
+          return response.json();
+          
+         
+        } else {
+          alert('Password check failed :(');
+        }
+      }).then((data)=>{
+        return data;}).
+      then((data)=>{
+              bresult.style.display="block";
+              if(data.pawned=="The password has not been found in any known breaches."){
+                notbreached.style.display="block";
+              }
+              else{
+                breached.style.display="block";
+              document.getElementById("message").textContent = data.pawned;
+              }
+              
+
+              strengthResult.style.display="block";
+              
+              strength.textContent=data.strength;
+              strength.className=data.strength;
+
+      })
+     
+      .catch((error) => {
+        console.error(error); 
+      });
+              })
+            
+            </script>
 </body>
+
 </html>

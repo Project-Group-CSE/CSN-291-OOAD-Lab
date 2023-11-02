@@ -5,9 +5,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework.views import APIView
-
+from django.utils.decorators import method_decorator
 from encrypt_hash import *
-from user_data.pwd_features import get_pass, get_random_pass, password_strength
+from user_data.pwd_features import check_password_pwned, get_pass, get_random_pass, password_strength
 from .models import myUser, credential
 from .permissions import isOwner
 from .serializers import (
@@ -79,13 +79,35 @@ def get_random_password(request):
         symbols = data.get("symbols")
         password=get_random_pass(length,nos,symbols)
         return JsonResponse({"password": password})
+    
+@csrf_exempt
+def get_password_detail(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+        
+        password=data.get("password")
+        pawned=check_password_pwned(password)
+        strength=password_strength(password)
+        return JsonResponse({"pawned": pawned,"strength":strength})
 
 class CredentialList(generics.ListCreateAPIView):
     serializer_class = CredentialSerializer
     # permission_classes = (permissions.IsAuthenticated,)
 
+
+    # def get(self, request, *args, **kwargs):
+    #     data = json.loads(request.body.decode("utf-8"))
+    #     print(data)
+    #     token = data.get("session_token")
+    #     user = myUser.objects.get(session_token=token)
+        
+    #     return JsonResponse({"exits":user is not None})
+   
+    
+    
     def get_object(self):
         token = self.request.query_params.get("session_token")
+        
         user = myUser.objects.get(session_token=token)
         return user
 
@@ -116,14 +138,22 @@ class CredentialList(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         # Handle POST request to create a new credential(encrypt and decrypt)
         entered_pin = request.data.get("pin")
-        instance = self.get_object()
+        token = request.data.get("session_token")
+        
+        instance = myUser.objects.get(session_token=token)
+        
+        print(entered_pin)
+        print(instance.hashed_pin)
         if check_pin(entered_pin, instance.hashed_pin):
+            
             data = request.data.copy()
             password = data["hash_pwd"]
             password_encoded = encrypt_password(
                 SHA256_hash(entered_pin), password, encode=True
             )
+            
             data["hash_pwd"] = password_encoded
+            data["id"]=str(uuid.uuid4())
             serializer = self.get_serializer(data=data)
             if serializer.is_valid():
                 serializer.save(user=self.request.user)  # Save the new credential
@@ -204,11 +234,16 @@ class UserList(generics.ListCreateAPIView):
     serializer_class = UserListSerializer
 
     def post(self, request, *args, **kwargs):
+        queryset = myUser.objects.all()
+    serializer_class = UserListSerializer
+
+    def post(self, request, *args, **kwargs):
         data = request.data.copy()
+        print(data)
       
         # manipulate the incoming data here(pin hashing)
-        data["hashed_pin"] = str(hash_bcrypt(data["hashed_pin"]))
-
+        data["hashed_pin"] = (hash_bcrypt(data["hashed_pin"]))
+        print(data)
         password = data["password"]
         data["password"] = "-"
         data["id"] = str(uuid.uuid4())
@@ -224,19 +259,20 @@ class UserList(generics.ListCreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserDetailSerializer
     # permission_classes = (permissions.IsAuthenticated,)
 
-    def get_object(self):
-        token = self.request["session_token"]
+    def get(self, request, *args, **kwargs):
+        
+        token = self.request.query_params.get("session_token")
         user = myUser.objects.get(session_token=token)
-        return user
+        return JsonResponse({"exists":user is not None})
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
         data = request.data.copy()
+        
         # manipulate for passwords
         password = data["password"]
         data["password"] = "-"
