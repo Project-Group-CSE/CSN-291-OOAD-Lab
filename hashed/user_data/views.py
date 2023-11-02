@@ -7,7 +7,7 @@ from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 
 from encrypt_hash import *
-from user_data.pwd_features import get_pass, get_random_pass, password_strength
+from user_data.pwd_features import check_password_pwned, get_pass, get_random_pass, password_strength
 from .models import myUser, credential
 from .permissions import isOwner
 from .serializers import (
@@ -79,6 +79,16 @@ def get_random_password(request):
         symbols = data.get("symbols")
         password=get_random_pass(length,nos,symbols)
         return JsonResponse({"password": password})
+    
+@csrf_exempt
+def get_password_detail(request):
+    if request.method == "POST":
+        data = json.loads(request.body.decode("utf-8"))
+        
+        password=data.get("password")
+        pawned=check_password_pwned(password)
+        strength=password_strength(password)
+        return JsonResponse({"pawned": pawned,"strength":strength})
 
 class CredentialList(generics.ListCreateAPIView):
     serializer_class = CredentialSerializer
