@@ -158,14 +158,18 @@
     body: JSON.stringify(data),
   })
     .then((response) => {
-      console.log(response);
-      return response.json();
-    })
-    .then((data)=>{
+     if (response.status==201){
+      document.getElementById("title").value = "";
+        document.getElementById("website").value = "";
+        document.getElementById("name").value = "";
+        document.getElementById("username").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("pin").value = "";
+      location.reload();
+     }
       
-      
-
     })
+   
     .catch((error) => {
 
     });
