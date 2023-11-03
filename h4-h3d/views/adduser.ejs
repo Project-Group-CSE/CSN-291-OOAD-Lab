@@ -63,21 +63,13 @@
     <div class="login_block">
       <div id="login-form-wrap">
         <h2>Add User</h2>
-        <form id="login-form">
+        <div id="login-form">
+         
           <p>
             <input
               type="text"
-              id="username"
-              name="username"
-              placeholder="id"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="text"
-              id="email"
-              name="email"
+              id="title"
+              name="title"
               placeholder="Title"
               required
             /><i class="validation"><span></span><span></span></i>
@@ -85,8 +77,17 @@
           <p>
             <input
               type="text"
-              id="username"
-              name="username"
+              id="name"
+              name="name"
+              placeholder="Username"
+              required
+            /><i class="validation"><span></span><span></span></i>
+          </p>
+          <p>
+            <input
+              type="text"
+              id="website"
+              name="website"
               placeholder="Website"
               required
             /><i class="validation"><span></span><span></span></i>
@@ -94,31 +95,37 @@
           <p>
             <input
               type="text"
-              id="email"
-              name="email"
+              id="username"
+              name="username"
               placeholder="Website Username"
               required
             /><i class="validation"><span></span><span></span></i>
           </p>
           <p>
             <input
-              type="text"
-              id="email"
-              name="email"
+              type="password"
+              id="password"
+              name="password"
               placeholder="Password"
               required
             /><i class="validation"><span></span><span></span></i>
           </p>
-
           <p>
-            <h5 id="result">Result Here</h5>
+            <input
+              type="password"
+              id="pin"
+              name="pin"
+              placeholder="Pin"
+              required
+            /><i class="validation"><span></span><span></span></i>
           </p>
+          
           <p>
-<button class="button-22" role="button">Add User</button>
+<button id="button" class="button-22" role="button">Add User</button>
           </p>
         </form>
         <div id="create-account-wrap">
-          <p>Insert the Info to add the user</p>
+          
           <p></p>
         </div>
 
@@ -126,5 +133,44 @@
       </div>
       
     </div>
+    <script>
+      document.getElementById("button").addEventListener("click", function(){
+        const title = document.getElementById("title").value;
+        const website = document.getElementById("website").value;
+        const username = document.getElementById("name").value;
+        const websiteUsername =document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const pin=document.getElementById("pin").value;
+        const data={
+          title:title,
+          user_name:username,
+          website_username:websiteUsername,
+          website:website,
+          hash_pwd:password,
+          pin:pin,
+          session_token:localStorage.getItem('token'),
+        };
+        fetch('http://127.0.0.1:8000/hashed/credentials/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      console.log(response);
+      return response.json();
+    })
+    .then((data)=>{
+      
+      
+
+    })
+    .catch((error) => {
+
+    });
+       })
+    
+    </script>
   </body>
 </html>

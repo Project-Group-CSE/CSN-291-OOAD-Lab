@@ -113,7 +113,7 @@ def password_strength(password):
     elif re.match(weak_pattern, password):
         return "Weak"
     elif re.match(very_weak_pattern, password):
-        return "Very Weak"
+        return "Poor"
     else:
         return "Invalid"
 

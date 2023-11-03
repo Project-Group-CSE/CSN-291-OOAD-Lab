@@ -63,8 +63,34 @@
       <!--login-form-wrap-->
       <!-- partial -->
     </div>
+    <script>
+       document.addEventListener("DOMContentLoaded", function () {
+        
+        fetch('http://127.0.0.1:8000/hashed/users/profile/?session_token=' + localStorage.getItem('token'), {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      
+      return response.json();
+    })
+    .then((data)=>{
+      console.log(data);
+
+    })
+    .catch((error) => {
+
+    });
+       })
+      
+
+    </script>
   </body>
   <script>
+   
+    
      document.getElementById("login-form").addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -85,7 +111,8 @@
       return response.json();
     })
     .then((data)=>{
-      console.log(data);
+      localStorage.setItem('token',data.token);
+      window.location.href ="http://localhost:3000/features/userdetails";  
     })
     .catch((error) => {
 
