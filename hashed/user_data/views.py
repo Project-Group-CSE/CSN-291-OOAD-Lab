@@ -7,7 +7,12 @@ from rest_framework.reverse import reverse
 from rest_framework.views import APIView
 from django.utils.decorators import method_decorator
 from encrypt_hash import *
-from user_data.pwd_features import check_password_pwned, get_pass, get_random_pass, password_strength
+from user_data.pwd_features import (
+    check_password_pwned,
+    get_pass,
+    get_random_pass,
+    password_strength,
+)
 from .models import myUser, credential
 from .permissions import isOwner
 from .serializers import (
@@ -41,7 +46,6 @@ def api_root(request, format=None):
 
 @csrf_exempt
 def login_view(request):
-   
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
         username = data.get("username")
@@ -58,61 +62,63 @@ def login_view(request):
             return JsonResponse({"message": "Invalid username or password"})
     return JsonResponse({"message": "Method not allowed"}, status=405)
 
+
 @csrf_exempt
 def get_mem_password(request):
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
-        
+
         num = int(data.get("num"))
         caps = data.get("caps")
         cryptify = data.get("cryptify")
-        password=get_pass(num,caps,cryptify)
-        
+        password = get_pass(num, caps, cryptify)
+
         return JsonResponse({"password": password})
+
+
 @csrf_exempt
 def get_random_password(request):
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
-        
+
         length = int(data.get("length"))
         nos = data.get("nos")
         symbols = data.get("symbols")
-        password=get_random_pass(length,nos,symbols)
+        password = get_random_pass(length, nos, symbols)
         return JsonResponse({"password": password})
-    
+
+
 @csrf_exempt
 def get_password_detail(request):
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
-        
-        password=data.get("password")
-        pawned=check_password_pwned(password)
-        strength=password_strength(password)
-        return JsonResponse({"pawned": pawned,"strength":strength})
+
+        password = data.get("password")
+        pawned = check_password_pwned(password)
+        strength = password_strength(password)
+        return JsonResponse({"pawned": pawned, "strength": strength})
+
 
 class CredentialList(generics.ListCreateAPIView):
     serializer_class = CredentialSerializer
     # permission_classes = (permissions.IsAuthenticated,)
-
 
     # def get(self, request, *args, **kwargs):
     #     data = json.loads(request.body.decode("utf-8"))
     #     print(data)
     #     token = data.get("session_token")
     #     user = myUser.objects.get(session_token=token)
-        
-    #     return JsonResponse({"exits":user is not None})
-   
-    
-    
-    def get_object(self):
-        token = self.request.query_params.get("session_token")
-        
-        user = myUser.objects.get(session_token=token)
-        return user
 
-    def get_queryset(self):
-        owner = self.request.user
+    #     return JsonResponse({"exits":user is not None})
+
+
+    def get_queryset( self, *args, **kwargs):
+       
+        token = self.request.GET.get("session_token")
+        
+
+        owner = myUser.objects.get(session_token=token)
+        print(credential.objects.all())
         queryset = credential.objects.filter(user=owner)
         return queryset
 
@@ -139,26 +145,24 @@ class CredentialList(generics.ListCreateAPIView):
         # Handle POST request to create a new credential(encrypt and decrypt)
         entered_pin = request.data.get("pin")
         token = request.data.get("session_token")
-        
+
         instance = myUser.objects.get(session_token=token)
-        
-        print(entered_pin)
-        print(instance.hashed_pin)
+
+      
         if check_pin(entered_pin, instance.hashed_pin):
-            
             data = request.data.copy()
             password = data["hash_pwd"]
-            password_encoded = encrypt_password(
-                SHA256_hash(entered_pin), password, encode=True
-            )
-            
+            password_encoded = encrypt_password(entered_pin, password, encode=True)
+            data.pop("pin", None)
+            data.pop("session_token", None)
             data["hash_pwd"] = password_encoded
-            data["id"]=str(uuid.uuid4())
+            data["strength"] = password_strength(password)
             serializer = self.get_serializer(data=data)
+            # print(serializer)
             if serializer.is_valid():
-                serializer.save(user=self.request.user)  # Save the new credential
+                serializer.save(user=instance)  # Save the new credential
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-
+            # print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(
@@ -168,7 +172,8 @@ class CredentialList(generics.ListCreateAPIView):
 
 
 class CredentialDetail(APIView):
-    permission_classes = [isOwner,]
+    
+
     def get_object(self):
         token = self.request.query_params.get("session_token")
         user = myUser.objects.get(session_token=token)
@@ -182,17 +187,22 @@ class CredentialDetail(APIView):
         # This is where you'd return a form for entering the password
         return Response("Please enter your PIN.")
 
-    def post(self, request, pk, format=None):
+    @method_decorator(csrf_exempt)
+    def post(self, request, format=None):
+       
         entered_pin = request.data.get("pin")
-        instance = self.get_object()
+        token = request.data.get("session_token")
+        pk=request.data.get("cred_id")
+        instance = myUser.objects.get(session_token=token)
         if check_pin(entered_pin, instance.hashed_pin):
-            key = SHA256_hash(entered_pin)
-            cred = self.get_cred(pk)
-            serializer = CredentialVisibleSerializer(cred)
-            data = serializer.data.copy()
-            data["password"] = decrypt_password(key, data["hash_pwd"])
-            data["strength"] = password_strength(data["password"])
-            del data["hash_pwd"]
+            
+            key = entered_pin
+            cred = credential.objects.get(id=pk)
+            data={}
+            
+            data["password"] = decrypt_password(key, cred.hash_pwd)
+            # data["strength"] = password_strength(data["password"])
+           
             return Response(data)
         else:
             return Response(
@@ -208,9 +218,7 @@ class CredentialDetail(APIView):
             serializer = CredentialVisibleSerializer(cred)
             data = serializer.data.copy()
             password = data["hash_pwd"]
-            password_encoded = encrypt_password(
-                SHA256_hash(entered_pin), password, encode=True
-            )
+            password_encoded = encrypt_password(entered_pin, password, encode=True)
             data["hash_pwd"] = password_encoded
             serializer = CredentialVisibleSerializer(cred, data=data)
             if serializer.is_valid():
@@ -235,19 +243,20 @@ class UserList(generics.ListCreateAPIView):
 
     def post(self, request, *args, **kwargs):
         queryset = myUser.objects.all()
+
     serializer_class = UserListSerializer
 
     def post(self, request, *args, **kwargs):
         data = request.data.copy()
         print(data)
-      
+
         # manipulate the incoming data here(pin hashing)
-        data["hashed_pin"] = (hash_bcrypt(data["hashed_pin"]))
+        data["hashed_pin"] = hash_bcrypt(data["hashed_pin"])
         print(data)
         password = data["password"]
         data["password"] = "-"
         data["id"] = str(uuid.uuid4())
-       
+
         # data["hashed_pin"]=data["hashed_pin"]+"helo"
         serializer = self.get_serializer(data=data)
         print(serializer)
@@ -259,20 +268,20 @@ class UserList(generics.ListCreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserDetailSerializer
     # permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, *args, **kwargs):
-        
         token = self.request.query_params.get("session_token")
         user = myUser.objects.get(session_token=token)
-        return JsonResponse({"exists":user is not None})
+        return JsonResponse({"exists": user is not None})
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
         data = request.data.copy()
-        
+
         # manipulate for passwords
         password = data["password"]
         data["password"] = "-"
@@ -305,5 +314,3 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 #             return Response(
 #                 {"detail": "Invalid PIN. Please try again."},
 #                 status=status.HTTP_401_UNAUTHORIZED,
-#             )
-

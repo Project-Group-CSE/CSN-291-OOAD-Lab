@@ -388,6 +388,10 @@
       }).then((data)=>{
         return data;}).
       then((data)=>{
+        bresult.style.display="none";
+              breached.style.display="none";
+              notbreached.style.display="none";
+               strengthResult.style.display="none"; 
               bresult.style.display="block";
               if(data.pawned=="The password has not been found in any known breaches."){
                 notbreached.style.display="block";

@@ -44,21 +44,18 @@
     },
   })
     .then((response) => {
-      
-      return response.json();
-    })
-    .then((data)=>{
-      
-      if(!data.exists){
-        window.location.href ="http://localhost:3000/login";
-      }
 
+      if (response.status==500){
+        window.location.href ="http://localhost:3000/login";  
+      }
     })
+   
     .catch((error) => {
 
     });
        })
   
 </script>
-<!-- <button class="button-43" role="button">Add User</button> -->
-<%- include ("adduser"); -%> <%- include ("credentials"); -%>
+
+<%- include ("credentials"); -%>
+<%- include ("adduser"); -%> 
