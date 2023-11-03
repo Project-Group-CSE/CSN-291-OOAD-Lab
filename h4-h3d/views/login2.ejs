@@ -112,7 +112,7 @@
     })
     .then((data)=>{
       localStorage.setItem('token',data.token);
-
+      window.location.href ="http://localhost:3000/features/userdetails";  
     })
     .catch((error) => {
 

@@ -77,6 +77,15 @@
           <p>
             <input
               type="text"
+              id="name"
+              name="name"
+              placeholder="Username"
+              required
+            /><i class="validation"><span></span><span></span></i>
+          </p>
+          <p>
+            <input
+              type="text"
               id="website"
               name="website"
               placeholder="Website"
@@ -128,12 +137,14 @@
       document.getElementById("button").addEventListener("click", function(){
         const title = document.getElementById("title").value;
         const website = document.getElementById("website").value;
-        const username =document.getElementById("username").value;
+        const username = document.getElementById("name").value;
+        const websiteUsername =document.getElementById("username").value;
         const password = document.getElementById("password").value;
         const pin=document.getElementById("pin").value;
         const data={
           title:title,
           user_name:username,
+          website_username:websiteUsername,
           website:website,
           hash_pwd:password,
           pin:pin,

@@ -15,7 +15,7 @@ class CredentialSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = credential
-        fields = ["id", "user_name", "title", "website", "hash_pwd","website_username"]#, "strength"
+        fields = ["id", "user_name", "title", "website", "hash_pwd","website_username","strength"]
         read_only_fields = ["user_name"]
 
     def get_user_name(self, obj):
