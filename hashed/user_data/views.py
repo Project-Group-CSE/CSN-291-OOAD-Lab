@@ -174,18 +174,7 @@ class CredentialList(generics.ListCreateAPIView):
 class CredentialDetail(APIView):
     
 
-    def get_object(self):
-        token = self.request.query_params.get("session_token")
-        user = myUser.objects.get(session_token=token)
-        return user
 
-    def get_cred(self, pk):
-        cred = credential.objects.get(id=pk)
-        return cred
-
-    def get(self, request, pk, format=None):
-        # This is where you'd return a form for entering the password
-        return Response("Please enter your PIN.")
 
     @method_decorator(csrf_exempt)
     def post(self, request, format=None):
@@ -236,10 +225,9 @@ class CredentialDetail(APIView):
             data.pop("password",None)
             data.pop("session_token",None)
             data["user_name"]=cred.user
-            print(data)
+           
             serializer = CredentialVisibleSerializer(cred,data=data)
-            print(serializer)
-            print(serializer.is_valid())
+            
             if serializer.is_valid():
                 serializer.save()
                 return Response(status=status.HTTP_201_CREATED)
@@ -295,18 +283,20 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
         token = self.request.query_params.get("session_token")
         user = myUser.objects.get(session_token=token)
         return JsonResponse({"exists": user is not None})
-
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
+    @method_decorator(csrf_exempt)
+    def post(self, request, *args, **kwargs):
+        token = request.data.get("session_token")
+        instance = myUser.objects.get(session_token=token)
         data = request.data.copy()
 
         # manipulate for passwords
-        password = data["password"]
-        data["password"] = "-"
+        # password = data["password"]
+        # data["password"] = "-"
         serializer = self.get_serializer(instance, data=data, partial=True)
+        print(serializer)
         if serializer.is_valid():
-            user = serializer.save()
-            user.set_password(password)
+            user = serializer.save()    
+            # user.set_password(password)
             user.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
