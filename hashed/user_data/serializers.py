@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import myUser, credential
 from encrypt_hash import *
 
-
+    
 class CredentialSerializer(serializers.ModelSerializer):
     user_name = (
         serializers.SerializerMethodField()
@@ -15,7 +15,7 @@ class CredentialSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = credential
-        fields = ["id", "user_name", "title", "website", "hash_pwd","website_username"]#, "strength"
+        fields = ["id", "user_name", "title", "website", "hash_pwd","website_username","strength"]
         read_only_fields = ["user_name"]
 
     def get_user_name(self, obj):
@@ -74,6 +74,7 @@ class UserListSerializer(serializers.ModelSerializer):
             "last_name",
             "password",
             "hashed_pin",
+            "session_token"
         ]
 
 
