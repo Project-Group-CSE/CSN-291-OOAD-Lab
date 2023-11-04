@@ -1,180 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>HTML5 Login Form with validation Example</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
-    />
-    <link rel="stylesheet" href="./style.css" />
-    <style>
-      #login-form-wrap {
-        background-color: #fff;
-        width: 35%;
-        margin: 30px auto;
-        text-align: center;
-        padding: 20px 0 0 0;
-        border-radius: 17px;
-        box-shadow: 0px 30px 50px 0px rgba(0, 0, 0, 0.2);
-        margin-top: 30px;
-      }
 
-      .login_block {
-        margin-top: 10%;
-      }
-      .button-22 {
-        align-items: center;
-        appearance: button;
-        background-color: #0276FF;
-        border-radius: 8px;
-        border-style: none;
-        box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
-        box-sizing: border-box;
-        color: #fff;
-        cursor: pointer;
-        display: flex;
-        flex-direction: row;
-        flex-shrink: 0;
-        font-family: "RM Neue",sans-serif;
-        font-size: 100%;
-        line-height: 1.15;
-        margin: 0;
-        padding: 10px 21px;
-        text-align: center;
-        text-transform: none;
-        transition: color .13s ease-in-out,background .13s ease-in-out,opacity .13s ease-in-out,box-shadow .13s ease-in-out;
-        user-select: none;
-        -webkit-user-select: none;
-        touch-action: manipulation;
-        margin: auto;
-      }
-      
-      .button-22:active {
-        background-color: #006AE8;
-      }
-      
-      .button-22:hover {
-        background-color: #1C84FF;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="login_block">
-      <div id="login-form-wrap">
-        <h2>Add User</h2>
-        <div id="login-form">
-         
-          <p>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              placeholder="Title"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Username"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="text"
-              id="website"
-              name="website"
-              placeholder="Website"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              placeholder="Website Username"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          <p>
-            <input
-              type="password"
-              id="pin"
-              name="pin"
-              placeholder="Pin"
-              required
-            /><i class="validation"><span></span><span></span></i>
-          </p>
-          
-          <p>
-<button id="button" class="button-22" role="button">Add User</button>
-          </p>
-        </form>
+<head>
+  <meta charset="UTF-8" />
+  <title>HTML5 Login Form with validation Example</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" />
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    #login-form-wrap {
+      background-color: #fff;
+      width: 35%;
+      margin: 30px auto;
+      text-align: center;
+      padding: 20px 0 0 0;
+      border-radius: 17px;
+      box-shadow: 0px 30px 50px 0px rgba(0, 0, 0, 0.2);
+      margin-top: 30px;
+    }
+
+    .login_block {
+      margin-top: 10%;
+    }
+
+    .button-22 {
+      align-items: center;
+      appearance: button;
+      background-color: #0276FF;
+      border-radius: 8px;
+      border-style: none;
+      box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+      box-sizing: border-box;
+      color: #fff;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      flex-shrink: 0;
+      font-family: "RM Neue", sans-serif;
+      font-size: 100%;
+      line-height: 1.15;
+      margin: 0;
+      padding: 10px 21px;
+      text-align: center;
+      text-transform: none;
+      transition: color .13s ease-in-out, background .13s ease-in-out, opacity .13s ease-in-out, box-shadow .13s ease-in-out;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      margin: auto;
+    }
+
+    .button-22:active {
+      background-color: #006AE8;
+    }
+
+    .button-22:hover {
+      background-color: #1C84FF;
+    }
+    
+  </style>
+</head>
+
+<body>
+  <div class="login_block">
+    <div id="login-form-wrap">
+      <h2>Add Password</h2>
+      <div id="login-form">
+
+        <p>
+          <input type="text" id="title" name="title" placeholder="Title" required /><i
+            class="validation"><span></span><span></span></i>
+        </p>
+        <p>
+          <input type="text" id="name" name="name" placeholder="Username" required /><i
+            class="validation"><span></span><span></span></i>
+        </p>
+        <p>
+          <input type="text" id="website" name="website" placeholder="Website" required /><i
+            class="validation"><span></span><span></span></i>
+        </p>
+        <p>
+          <input type="text" id="username" name="username" placeholder="Website Username" required /><i
+            class="validation"><span></span><span></span></i>
+        </p>
+        <p>
+          <input type="password" id="password" name="password" placeholder="Password" required /><i
+            class="validation"><span></span><span></span></i>
+        </p>
+        <p>
+          <input type="password" id="pin" name="pin" placeholder="Pin" required /><i
+            class="validation"><span></span><span></span></i>
+        </p>
+
+        <p>
+          <button id="button" class="button-22" role="button">Add Password</button>
+        </p>
         <div id="create-account-wrap">
-          
+
           <p></p>
         </div>
 
-        
+
       </div>
-      
+
     </div>
     <script>
-      document.getElementById("button").addEventListener("click", function(){
+      document.getElementById("button").addEventListener("click", function () {
         const title = document.getElementById("title").value;
         const website = document.getElementById("website").value;
         const username = document.getElementById("name").value;
-        const websiteUsername =document.getElementById("username").value;
+        const websiteUsername = document.getElementById("username").value;
         const password = document.getElementById("password").value;
-        const pin=document.getElementById("pin").value;
-        const data={
-          title:title,
-          user_name:username,
-          website_username:websiteUsername,
-          website:website,
-          hash_pwd:password,
-          pin:pin,
-          session_token:localStorage.getItem('token'),
+        const pin = document.getElementById("pin").value;
+        const data = {
+          title: title,
+          user_name: username,
+          website_username: websiteUsername,
+          website: website,
+          hash_pwd: password,
+          pin: pin,
+          session_token: localStorage.getItem('token'),
         };
         fetch('http://127.0.0.1:8000/hashed/credentials/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  })
-    .then((response) => {
-     if (response.status==201){
-      document.getElementById("title").value = "";
-        document.getElementById("website").value = "";
-        document.getElementById("name").value = "";
-        document.getElementById("username").value = "";
-        document.getElementById("password").value = "";
-        document.getElementById("pin").value = "";
-      location.reload();
-     }
-      
-    })
-   
-    .catch((error) => {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => {
+            if (response.status == 201) {
+              document.getElementById("title").value = "";
+              document.getElementById("website").value = "";
+              document.getElementById("name").value = "";
+              document.getElementById("username").value = "";
+              document.getElementById("password").value = "";
+              document.getElementById("pin").value = "";
+              location.reload();
+            }
 
-    });
-       })
-    
+          })
+
+          .catch((error) => {
+
+          });
+      })
+
     </script>
-  </body>
+</body>
+
 </html>
