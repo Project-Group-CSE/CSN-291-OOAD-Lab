@@ -387,6 +387,10 @@ div#strengthdiv {
                strengthResult.style.display="none";
               })
               buttonSubmit.addEventListener("click",function(){
+                if (inputPassword.value==""){
+                  alert("Please Enter Password!!");
+                  return;
+                }
                 console.log("heelo");
                 fetch('http://127.0.0.1:8000/hashed/passworddetail/', {
       method: 'POST',

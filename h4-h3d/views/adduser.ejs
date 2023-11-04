@@ -66,7 +66,7 @@
         }
         input.inputfield {
         width: 22rem;
-        height: 50px;
+        height: 50px
       }
     
   </style>
@@ -87,11 +87,11 @@
             class="validation"><span></span><span></span></i>
         </p>
         <p>
-          <input type="text" id="website" name="website" placeholder="Website" required class="inputfield"/><i
+          <input type="email" id="website" name="website" placeholder="Website" required class="inputfield"/><i
             class="validation"><span></span><span></span></i>
         </p>
         <p>
-          <input type="text" id="username" name="username" placeholder="Website Username" required class="inputfield"/><i
+          <input type="text" id="user" name="user" placeholder="Website Username" required class="inputfield"/><i
             class="validation"><span></span><span></span></i>
         </p>
         <p>
@@ -116,13 +116,23 @@
 
     </div>
     <script>
+      
       document.getElementById("button").addEventListener("click", function () {
         const title = document.getElementById("title").value;
-        const website = document.getElementById("website").value;
+        var website = document.getElementById("website").value;
         const username = document.getElementById("name").value;
-        const websiteUsername = document.getElementById("username").value;
+        const websiteUsername = document.getElementById("user").value;
         const password = document.getElementById("password").value;
         const pin = document.getElementById("pin").value;
+        if (!website.startsWith('http://') && !website.startsWith('https://')) {
+          website = 'https://' + website;
+    }
+
+   
+    if (!website.includes('www.')) {
+      website = website.replace('://', '://www.');
+    }
+
         const data = {
           title: title,
           user_name: username,
@@ -144,10 +154,17 @@
               document.getElementById("title").value = "";
               document.getElementById("website").value = "";
               document.getElementById("name").value = "";
-              document.getElementById("username").value = "";
+              document.getElementById("user").value = "";
               document.getElementById("password").value = "";
               document.getElementById("pin").value = "";
               location.reload();
+            }
+            if(response.status==401){
+              alert("Invalid PIN. Please try again.");
+              document.getElementById("password").value = "";
+              document.getElementById("pin").value = "";
+              return;
+
             }
 
           })
@@ -155,7 +172,7 @@
           .catch((error) => {
 
           });
-      })
+      });
 
     </script>
 </body>

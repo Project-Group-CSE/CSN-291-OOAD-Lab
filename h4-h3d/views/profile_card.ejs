@@ -110,30 +110,61 @@
         </div>
 
         <div class="rowsofinfo">
-          <div class="cell" data-title="Username">Username</div>
-          <div class="cell" data-title="Email"></div>
+          <div class="cell" >Username</div>
+          <div id ="user" class="cell" ></div>
         </div>
 
         <div class="rowsofinfo">
-          <div class="cell" data-title="Username">First Name</div>
-          <div class="cell" data-title="Email">
-
-          </div>
+          <div class="cell">First Name</div>
+          <div id="fname" class="cell" ></div>
         </div>
 
         <div class="rowsofinfo">
-          <div class="cell" data-title="Username">Last Name</div>
-          <div class="cell" data-title="Email"></div>
+          <div class="cell" >Last Name</div>
+          <div  id ="lname" class="cell"></div>
         </div>
 
         <div class="rowsofinfo">
-          <div class="cell" data-title="Username">Email</div>
-          <div class="cell" data-title="Email">
+          <div class="cell" >Email</div>
+          <div id ="email" class="cell" >
             
           </div>
         </div>
 
       </div>
     </div>
+    <script>
+     
+        
+        fetch('http://127.0.0.1:8000/hashed/users/profile/?session_token=' + localStorage.getItem('token'), {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+
+      return response.json();
+    }).then((data)=>{
+      if (!data.exists){
+        window.location.href ="http://localhost:3000/login";  
+      }
+      else{
+        console.log(data);
+        
+        document.getElementById('user').textContent =data.user;
+        document.getElementById('fname').textContent =data.firstname;
+        document.getElementById('lname').textContent =data.lastname;
+        
+        document.getElementById('email').textContent =data.email;
+      }
+
+    })
+   
+    .catch((error) => {
+
+    });
+       
+    </script>
   </body>
 </html>

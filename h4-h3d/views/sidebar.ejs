@@ -189,13 +189,18 @@
 
           <ul class="logout">
             <li>
-              <a href="#">
+              <a id="logout" href="/login">
                 <i class="fa fa-power-off fa-2x"></i>
                 <span class="nav-text1"> Logout </span>
               </a>
             </li>
           </ul>
         </nav>
+        <script>
+          document.getElementById("logout").addEventListener("click", function(){
+            localStorage.clear();
+          })
+        </script>
       </body>
     </html>
   </body>

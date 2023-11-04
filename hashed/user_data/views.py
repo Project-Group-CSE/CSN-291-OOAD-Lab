@@ -23,7 +23,7 @@ from .serializers import (
 )
 
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -50,16 +50,16 @@ def login_view(request):
         data = json.loads(request.body.decode("utf-8"))
         username = data.get("username")
         password = data.get("password")
-        print(username, password)
+        
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             token = secrets.token_hex(16)
             user.session_token = token
             user.save()
-            return JsonResponse({"message": "Success", "token": token})
+            return JsonResponse({"message": "Successfully Logged In", "token": token})
         else:
-            return JsonResponse({"message": "Invalid username or password"})
+            return JsonResponse({"message": "Invalid Username or Password"},status=status.HTTP_400_BAD_REQUEST)
     return JsonResponse({"message": "Method not allowed"}, status=405)
 
 
@@ -195,7 +195,7 @@ class CredentialDetail(APIView):
             return Response(data)
         else:
             return Response(
-                {"detail": "Invalid PIN. Please try again."},
+                {},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
@@ -219,6 +219,7 @@ class CredentialDetail(APIView):
             
                 password_encoded = encrypt_password(entered_pin, password, encode=True)
                 data["hash_pwd"] = password_encoded
+                data["strength"]=password_strength(password)
             else:
                 data["hash_pwd"] = password
             data.pop("modified",None)
@@ -230,18 +231,19 @@ class CredentialDetail(APIView):
             
             if serializer.is_valid():
                 serializer.save()
-                return Response(status=status.HTTP_201_CREATED)
+                return Response({"strength":data["strength"]},status=status.HTTP_201_CREATED)
            
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(
-                {"detail": "Invalid PIN. Please try again."},
+                {},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
     def delete(self, request, format=None):
         pk=request.data.get("cred_id")
-        cred = self.get_cred(pk)
+        cred = credential.objects.all().get(id=pk)
+    
         cred.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -254,24 +256,25 @@ class UserList(generics.ListCreateAPIView):
     
     def post(self, request, *args, **kwargs):
         data = request.data.copy()
-        print(data)
+      
 
         # manipulate the incoming data here(pin hashing)
         data["hashed_pin"] = hash_bcrypt(data["hashed_pin"])
-        print(data)
+    
         password = data["password"]
         data["password"] = "-"
         data["id"] = str(uuid.uuid4())
 
         # data["hashed_pin"]=data["hashed_pin"]+"helo"
         serializer = self.get_serializer(data=data)
-        print(serializer)
-        print(serializer.is_valid())
+        # print(serializer)
+        # print(serializer.is_valid())
         if serializer.is_valid():
             user = serializer.save()
             user.set_password(password)  # set_password notifies the django framework
             user.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -281,8 +284,13 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def get(self, request, *args, **kwargs):
         token = self.request.query_params.get("session_token")
-        user = myUser.objects.get(session_token=token)
-        return JsonResponse({"exists": user is not None})
+      
+        try:
+            user = myUser.objects.get(session_token=token)
+            return JsonResponse({"exists": user is not None,"user": user.username,"firstname":user.first_name,"lastname":user.last_name,"email":user.email})
+        except myUser.DoesNotExist:
+            user = None
+            return JsonResponse({"exists": user is not None})
     @method_decorator(csrf_exempt)
     def post(self, request, *args, **kwargs):
         token = request.data.get("session_token")
