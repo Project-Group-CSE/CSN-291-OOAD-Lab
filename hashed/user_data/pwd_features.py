@@ -71,7 +71,6 @@ def get_pass(num, caps, cryptify):
         s = ""
         for i in range(num - 1):
             if caps == True:
-                
                 result[i] = result[i].capitalize()
             s += result[i] + "-"
         if caps == True:
@@ -101,27 +100,29 @@ def check_password_pwned(password):
 
 
 def password_strength(password):
-    very_weak_pattern = r"^.{1,5}$"
     weak_pattern = r"^(?=.*[a-zA-Z])(?=.*\d).{6,}$"
     medium_pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
-    strong_pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=]).{8,}$"
+    strong_pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\w\s]).{8,}$"
+    possibly_strong = r"^.{20,}$"
 
     if re.match(strong_pattern, password):
         return "Strong"
+    elif re.match(possibly_strong, password):
+        return "Possibly strong due to length"
     elif re.match(medium_pattern, password):
         return "Medium"
     elif re.match(weak_pattern, password):
         return "Weak"
-    elif re.match(very_weak_pattern, password):
-        return "Poor"
     else:
-        return "Invalid"
+        return "Poor"
 
 
 # sample code
 # nos = True
 # symbols = True
-# print(get_random_pass(6, nos, symbols))
+# val = get_random_pass(8, nos, symbols)
+# print(val)
 # caps = True
 # cryptify = True
-# print(get_pass(5, caps, cryptify))
+# newVal = get_pass(5, caps, cryptify)
+# print(newVal)
