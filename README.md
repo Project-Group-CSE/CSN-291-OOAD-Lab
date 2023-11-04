@@ -1,59 +1,75 @@
-# CSN 291 OOAD Lab Group Activity
+# CSN 291 OOAD Lab Group Project
 
-## Group Members (in alphabetical order):
+## Group Members (in alphabetical order)
 
-1. Anant Jain
-2. Dhas Aryan Satish
-3. Divij Rawal
-4. Pratyaksh Bhalla
-5. Parit Gupta
-6. Roopam Taneja
+| S.No. | Name              | Enrollment no |
+| ----- | ----------------- | ------------- |
+| 1.    | Anant Jain        | 22114005      |
+| 2.    | Dhas Aryan Satish | 22117046      |
+| 3.    | Divij Rawal       | 22114031      |
+| 4.    | Parit Gupta       | 22117100      |
+| 5.    | Pratyaksh Bhalla  | 22115119      |
+| 6.    | Roopam Taneja     | 22125030      |
 
+## Requirements
+- [Nodejs](https://nodejs.org/en/download)
+- [Python](https://www.python.org/downloads/)
 
-# Introduction
+## Installation
 
-This Python utility provides two main functions for password management:
+1. **Clone the repository and go to project directory**
+   ```shell
+   git clone https://github.com/Project-Group-CSE/CSN-291-OOAD-Lab.git
+   cd CSN-291-OOAD-Lab
+   ```
 
-   1. check_password_pwned: This function checks if a given password has been involved in any known data breaches using the "Have I Been Pwned" API. It does so by hashing the password using SHA-1 and searching the database for breaches.
+2. **Create a virtual environment**
+   ```shell
+    python -m venv env
+   ```
 
-2. password_strength: This function evaluates the strength  of a password based on predefined criteria,     categorizing it as very weak, weak, medium, or strong.
+3. **Activate the virtual environment**
+    - On Windows, run:
+      ```shell
+        .\env\Scripts\activate
+      ```
+    - On Unix or MacOS, run:
+      ```shell
+        source env/bin/activate
+      ```
 
-# Usage
+4. **Install the dependencies**
+   ```shell
+    pip install -r requirements.txt
+   ```
+ 
+5. **Do necessary migrations**
+   ```shell
+    cd hashed
+    python manage.py makemigrations
+    python manage.py migrate
+   ```
 
-### 1. check_password_pwned
+6. **Open another terminal and install node dependencies**
+   ```shell
+    cd ..\h4-h3d\
+    npm install
+   ```
 
-* This function checks if a password has been pawned in known data breaches.
+## Running the project
 
-### 2. password_strength
+1. **Start Django server**
+   ```shell
+    cd hashed
+    python manage.py runserver
+   ```
 
-* This function evaluates the strength of a password based on predefined patterns. 
+2. **Start node server**
+   ```shell
+    cd ..\h4-h3d\
+    npm start
+   ```
 
-#### *Password Strength Criteria*
-
-The password_strength function uses the following criteria to judge the strength of a password:
-
-*    Very Weak: 1 to 5 characters
-*    Weak: At least 6 characters, including at least one letter and one digit
-*    Medium: At least 8 characters, including at least one lowercase letter, one uppercase letter, and one digit
-*    Strong: At least 8 characters, including at least one lowercase letter, one uppercase letter, one digit, and one special character (@, #, $, %, ^, &, +, =)
-
-
-Django superuser:<br>
-Username : cse<br>
-Email : cse@iitr.com<br>
-Pwd : cse
-
-test user:<br>
-Username :anant<br>
-Email : a@iitr.com<br>
-Pwd : abc
-
-### Current API Endpoints:
-
-| Endpoint               | Type of Generic View being used      | GET | POST | PUT | DELETE | Auth reqd | Desc                                                   |
-| ---------------------- | ------------------------------------ | --- | ---- | --- | ------ | --------- | ------------------------------------------------------ |
-| hashed/                | Fn-based Get view (not generic view) | Yes | NA   | NA  | NA     | No        | API root                                               |
-| hashed/users/          | ListCreateAPIView                    | Yes | Yes  | NA  | NA     | No        | Show all users and add users                           |
-| hashed/users/profile/  | RetrieveUpdateDestroyAPIView         | Yes | NA   | Yes | Yes    | Yes       | Show details of a particular user, update or delete it |
-| hashed/credentials/    | ListCreateAPIView                    | Yes | Yes  | NA  | NA     | Yes       | Show all creds of a user and add creds                 |
-| hashed/credentials/id/ | RetrieveUpdateDestroyAPIView         | Yes | NA   | Yes | Yes    | Yes       | Show details of a particular cred, update or delete it |
+3. **Go to home page**:
+   
+   Type localhost:3000 in browser window to reach home page of our application.

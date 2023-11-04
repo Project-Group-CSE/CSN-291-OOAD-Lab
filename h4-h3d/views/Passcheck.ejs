@@ -273,6 +273,19 @@
 .Invalid {
   color: gray; 
 }
+
+div#strengthdiv {
+    border: 2px solid;
+    border-radius: 6px;
+    opacity: 0.7;
+}
+
+.round-div {
+    width: 100px;
+    height: 100px;
+    background-color: #1a1f36;
+    border-radius: 50%;
+}
     </style>
 </head>
 <body>
@@ -323,10 +336,16 @@
                       <label for="text">Password</label>
                       <input id='password' type="text" name="text" required>
                     </div>
-                   
+                    <div class="field padding-bottom--12">
+                      <label for="text">Strength</label>
+                    </div>
+                    <div class="field padding-bottom--24 padding-top--24" style="border: 1px solid #1a1f36;border-radius: 3%; margin-bottom: 5%;">
+                      <!-- Your content here -->
+                    </div>
                    
                     <div class="field padding-bottom--24">
-                      <input id="button" type="button" name="submit" value="Continue">
+                      <input id="button" type="button" name="submit" value="Continue" style="background-color: #3EB2FD;
+                      background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%); color:white;">
                     </div>
                     
                   </form>

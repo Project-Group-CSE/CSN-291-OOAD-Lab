@@ -66,7 +66,8 @@
 }
 
 .button-22:active {
-  background-color: #006AE8;
+  background-color: #3EB2FD;
+          background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%);
 }
 
 .button-22:hover {
@@ -101,6 +102,10 @@
       .login_block {
         margin-top: 10%;
       }
+      input.inputfield {
+        width: 22rem;
+        height: 50px;
+      }
     </style>
   </head>
   <body>
@@ -114,6 +119,7 @@
               id="fname"
               name="fname"
               placeholder="First Name"
+              class="inputfield"
               
             /><i class="validation"><span></span><span></span></i>
           </p>
@@ -123,6 +129,7 @@
               id="lname"
               name="lname"
               placeholder="Last Name"
+              class="inputfield"
              
             /><i class="validation"><span></span><span></span></i>
           </p>
@@ -132,6 +139,7 @@
               id="email"
               name="email"
               placeholder="Email"
+              class="inputfield"
              
             /><i class="validation"><span></span><span></span></i>
           </p>
@@ -184,4 +192,4 @@ body: JSON.stringify(data),}).then((response)=>{console.log(response)}).catch();
   </body>
 </html>
 
-
+<%- include('profile_card'); -%>

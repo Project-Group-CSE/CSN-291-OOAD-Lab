@@ -82,6 +82,8 @@ def get_pass(num, caps, cryptify):
 
 
 def check_password_pwned(password):
+    if len(password)==0:
+        return "No password entered"
     # Hash the password using SHA-1 hash algorithm
     sha1_password = hashlib.sha1(password.encode("utf-8")).hexdigest().upper()
     prefix, suffix = sha1_password[:5], sha1_password[5:]
@@ -105,7 +107,9 @@ def password_strength(password):
     strong_pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\w\s]).{8,}$"
     possibly_strong = r"^.{20,}$"
 
-    if re.match(strong_pattern, password):
+    if len(password)==0:
+        return "Invalid"
+    elif re.match(strong_pattern, password):
         return "Strong"
     elif re.match(possibly_strong, password):
         return "Possibly strong due to length"

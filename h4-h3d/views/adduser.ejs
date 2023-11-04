@@ -22,40 +22,52 @@
       margin-top: 10%;
     }
 
-    .button-22 {
-      align-items: center;
-      appearance: button;
-      background-color: #0276FF;
-      border-radius: 8px;
-      border-style: none;
-      box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
-      box-sizing: border-box;
-      color: #fff;
-      cursor: pointer;
-      display: flex;
-      flex-direction: row;
-      flex-shrink: 0;
-      font-family: "RM Neue", sans-serif;
-      font-size: 100%;
-      line-height: 1.15;
-      margin: 0;
-      padding: 10px 21px;
-      text-align: center;
-      text-transform: none;
-      transition: color .13s ease-in-out, background .13s ease-in-out, opacity .13s ease-in-out, box-shadow .13s ease-in-out;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: manipulation;
-      margin: auto;
-    }
+    .button-21 {
+          align-items: center;
+          appearance: none;
+          background-color: #3EB2FD;
+          background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%);
+          background-size: calc(100% + 20px) calc(100% + 20px);
+          border-radius: 100px;
+          border-width: 0;
+          box-shadow: none;
+          box-sizing: border-box;
+          color: #FFFFFF;
+          cursor: pointer;
+          display: inline-flex;
+          font-family: CircularStd, sans-serif;
+          font-size: 1rem;
+          height: auto;
+          justify-content: center;
+          line-height: 1.5;
+          padding: 6px 20px;
+          position: relative;
+          text-align: center;
+          text-decoration: none;
+          transition: background-color .2s, background-position .2s;
+          user-select: none;
+          -webkit-user-select: none;
+          touch-action: manipulation;
+          vertical-align: top;
+          white-space: nowrap;
+        }
 
-    .button-22:active {
-      background-color: #006AE8;
-    }
+        .button-21:active,
+        .button-21:focus {
+          outline: none;
+        }
 
-    .button-22:hover {
-      background-color: #1C84FF;
-    }
+        .button-21:hover {
+          background-position: -20px -20px;
+        }
+
+        .button-21:focus:not(:active) {
+          box-shadow: rgba(40, 170, 255, 0.25) 0 0 0 .125em;
+        }
+        input.inputfield {
+        width: 22rem;
+        height: 50px;
+      }
     
   </style>
 </head>
@@ -63,36 +75,36 @@
 <body>
   <div class="login_block">
     <div id="login-form-wrap">
-      <h2>Add Password</h2>
+      <h2>Add Credentials</h2>
       <div id="login-form">
 
         <p>
-          <input type="text" id="title" name="title" placeholder="Title" required /><i
+          <input type="text" id="title" name="title" placeholder="Title" required class="inputfield"/><i
             class="validation"><span></span><span></span></i>
         </p>
         <p>
-          <input type="text" id="name" name="name" placeholder="Username" required /><i
+          <input type="text" id="name" name="name" placeholder="Username" required class="inputfield"/><i
             class="validation"><span></span><span></span></i>
         </p>
         <p>
-          <input type="text" id="website" name="website" placeholder="Website" required /><i
+          <input type="text" id="website" name="website" placeholder="Website" required class="inputfield"/><i
             class="validation"><span></span><span></span></i>
         </p>
         <p>
-          <input type="text" id="username" name="username" placeholder="Website Username" required /><i
+          <input type="text" id="username" name="username" placeholder="Website Username" required class="inputfield"/><i
             class="validation"><span></span><span></span></i>
         </p>
         <p>
-          <input type="password" id="password" name="password" placeholder="Password" required /><i
+          <input type="password" id="password" name="password" placeholder="Password" required class="inputfield"/><i
             class="validation"><span></span><span></span></i>
         </p>
         <p>
-          <input type="password" id="pin" name="pin" placeholder="Pin" required /><i
+          <input type="password" id="pin" name="pin" placeholder="Pin" required class="inputfield"/><i
             class="validation"><span></span><span></span></i>
         </p>
 
         <p>
-          <button id="button" class="button-22" role="button">Add Password</button>
+          <button id="button" class="button-21" role="button">Add Credential</button>
         </p>
         <div id="create-account-wrap">
 

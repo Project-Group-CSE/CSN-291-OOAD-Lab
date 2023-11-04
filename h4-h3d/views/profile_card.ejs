@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .wrapper1 {
+        margin: 0 auto;
+        padding: 40px;
+        max-width: 1400px;
+      }
+
+      .table1 {
+        margin: 0 0 40px 0;
+        width: 100%;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 02);
+        display: table;
+      }
+      @media screen and (max-width: 580px) {
+        .table {
+          display: block;
+        }
+      }
+
+      .rowsofinfo {
+        display: table-row;
+        background: #f6f6f6;
+      }
+      .rowsofinfo:nth-of-type(odd) {
+        background: #e9e9e9;
+      }
+      .rowsofinfo.header {
+        font-weight: 900;
+        color: #ffffff;
+        background: #ea6153;
+      }
+      .rowsofinfo.green {
+        background: #27ae60;
+      }
+      .rowsofinfo.blue {
+        background-color: #3EB2FD;
+          background-image: linear-gradient(1deg, #4F58FD, #149BF3 99%);
+      }
+      @media screen and (max-width: 580px) {
+        .rowsofinfo {
+          padding: 14px 0 7px;
+          display: block;
+        }
+        .rowsofinfo.header {
+          padding: 0;
+          height: 6px;
+        }
+        .rowsofinfo.header .cell {
+          display: none;
+        }
+        .rowsofinfo .cell {
+          margin-bottom: 10px;
+        }
+        .rowsofinfo .cell:before {
+          margin-bottom: 3px;
+          content: attr(data-title);
+          min-width: 98px;
+          font-size: 10px;
+          line-height: 10px;
+          font-weight: bold;
+          text-transform: uppercase;
+          color: 0.969696;
+          display: block;
+        }
+      }
+
+      .cell {
+        padding: 6px 12px;
+        display: table-cell;
+      }
+      @media screen and (max-width: 580px) {
+        .cell {
+          padding: 2px 16px;
+          display: block;
+        }
+      }
+
+      .table1 {
+        margin: 12px 0 40px 0;
+        width: 100%;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 02);
+        display: table;
+        height: 367px;
+      }
+
+      .wrapper1 {
+        margin: 0 auto;
+        padding: 40px;
+        /* max-width: 1400px; */
+        height: 300px;
+        margin-left: 68px;
+        width: 700px
+
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper1" >
+      <div class="table1">
+        <div class="rowsofinfo header blue">
+          <div class="cell" style="text-align:center;"><h3>Profile</h3></div>
+          <div class="cell">
+            
+          </div>
+        </div>
+
+        <div class="rowsofinfo">
+          <div class="cell" data-title="Username">Username</div>
+          <div class="cell" data-title="Email"></div>
+        </div>
+
+        <div class="rowsofinfo">
+          <div class="cell" data-title="Username">First Name</div>
+          <div class="cell" data-title="Email">
+
+          </div>
+        </div>
+
+        <div class="rowsofinfo">
+          <div class="cell" data-title="Username">Last Name</div>
+          <div class="cell" data-title="Email"></div>
+        </div>
+
+        <div class="rowsofinfo">
+          <div class="cell" data-title="Username">Email</div>
+          <div class="cell" data-title="Email">
+            
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+</html>
