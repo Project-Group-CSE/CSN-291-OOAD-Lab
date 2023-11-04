@@ -162,7 +162,7 @@ class CredentialList(generics.ListCreateAPIView):
             if serializer.is_valid():
                 serializer.save(user=instance)  # Save the new credential
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-            # print(serializer.errors)
+            print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(
@@ -174,18 +174,7 @@ class CredentialList(generics.ListCreateAPIView):
 class CredentialDetail(APIView):
     
 
-    def get_object(self):
-        token = self.request.query_params.get("session_token")
-        user = myUser.objects.get(session_token=token)
-        return user
 
-    def get_cred(self, pk):
-        cred = credential.objects.get(id=pk)
-        return cred
-
-    def get(self, request, pk, format=None):
-        # This is where you'd return a form for entering the password
-        return Response("Please enter your PIN.")
 
     @method_decorator(csrf_exempt)
     def post(self, request, format=None):
@@ -210,20 +199,39 @@ class CredentialDetail(APIView):
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
-    def put(self, request, pk, format=None):
-        instance = self.get_object()
+ 
+    def put(self, request, format=None):
+
         entered_pin = request.data.get("pin")
+        token = request.data.get("session_token")
+        pk=request.data.get("cred_id")
+        instance = myUser.objects.get(session_token=token)
+        
+        
+        password=request.data.get("password")
+        modified=request.data.get("modified")
         if check_pin(entered_pin, instance.hashed_pin):
-            cred = self.get_cred(pk)
-            serializer = CredentialVisibleSerializer(cred)
-            data = serializer.data.copy()
-            password = data["hash_pwd"]
-            password_encoded = encrypt_password(entered_pin, password, encode=True)
-            data["hash_pwd"] = password_encoded
-            serializer = CredentialVisibleSerializer(cred, data=data)
+            cred = credential.objects.get(id=pk)
+            data=request.data.copy()
+
+            if modified:
+
+            
+                password_encoded = encrypt_password(entered_pin, password, encode=True)
+                data["hash_pwd"] = password_encoded
+            else:
+                data["hash_pwd"] = password
+            data.pop("modified",None)
+            data.pop("password",None)
+            data.pop("session_token",None)
+            data["user_name"]=cred.user
+           
+            serializer = CredentialVisibleSerializer(cred,data=data)
+            
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data)
+                return Response(status=status.HTTP_201_CREATED)
+           
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(
@@ -231,7 +239,8 @@ class CredentialDetail(APIView):
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
-    def delete(self, request, pk, format=None):
+    def delete(self, request, format=None):
+        pk=request.data.get("cred_id")
         cred = self.get_cred(pk)
         cred.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -241,11 +250,8 @@ class UserList(generics.ListCreateAPIView):
     queryset = myUser.objects.all()
     serializer_class = UserListSerializer
 
-    def post(self, request, *args, **kwargs):
-        queryset = myUser.objects.all()
-
-    serializer_class = UserListSerializer
-
+    
+    
     def post(self, request, *args, **kwargs):
         data = request.data.copy()
         print(data)
@@ -277,18 +283,20 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
         token = self.request.query_params.get("session_token")
         user = myUser.objects.get(session_token=token)
         return JsonResponse({"exists": user is not None})
-
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
+    @method_decorator(csrf_exempt)
+    def post(self, request, *args, **kwargs):
+        token = request.data.get("session_token")
+        instance = myUser.objects.get(session_token=token)
         data = request.data.copy()
 
         # manipulate for passwords
-        password = data["password"]
-        data["password"] = "-"
+        # password = data["password"]
+        # data["password"] = "-"
         serializer = self.get_serializer(instance, data=data, partial=True)
+        print(serializer)
         if serializer.is_valid():
-            user = serializer.save()
-            user.set_password(password)
+            user = serializer.save()    
+            # user.set_password(password)
             user.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

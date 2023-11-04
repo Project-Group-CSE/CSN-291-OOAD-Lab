@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import myUser, credential
 from encrypt_hash import *
 
-
+    
 class CredentialSerializer(serializers.ModelSerializer):
     user_name = (
         serializers.SerializerMethodField()
