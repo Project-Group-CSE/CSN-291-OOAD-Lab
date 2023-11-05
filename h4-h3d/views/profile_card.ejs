@@ -94,7 +94,8 @@
         /* max-width: 1400px; */
         height: 300px;
         margin-left: 68px;
-        width: 700px
+        width: 700px;
+        margin-top: 100px;
 
       }
     </style>
@@ -150,7 +151,7 @@
         window.location.href ="http://localhost:3000/login";  
       }
       else{
-        console.log(data);
+        
         
         document.getElementById('user').textContent =data.user;
         document.getElementById('fname').textContent =data.firstname;
