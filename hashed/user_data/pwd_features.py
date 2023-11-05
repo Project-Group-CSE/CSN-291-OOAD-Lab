@@ -83,7 +83,7 @@ def get_pass(num, caps, cryptify):
 
 def check_password_pwned(password):
     if len(password)==0:
-        return "No password entered"
+        return "No Password Entered"
     # Hash the password using SHA-1 hash algorithm
     sha1_password = hashlib.sha1(password.encode("utf-8")).hexdigest().upper()
     prefix, suffix = sha1_password[:5], sha1_password[5:]

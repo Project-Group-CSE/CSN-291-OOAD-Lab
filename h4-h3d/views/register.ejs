@@ -62,8 +62,8 @@
           <p>
             <input
               type="text"
-              id="username"
-              name="username"
+              id="user"
+              name="user"
               placeholder="Username"
               required
             /><i class="validation"><span></span><span></span></i>
@@ -91,8 +91,9 @@
               type="password"
               id="pin"
               name="pin"
-              placeholder="Pin"
+              placeholder="Numeric Pin of Minimum 4 Length"
               required
+              pattern="[0-9]{4,}"
             /><i class="validation"><span></span><span></span></i>
           </p>
           <p>
@@ -118,19 +119,28 @@
     event.preventDefault(); 
     var fname= document.getElementById("fname").value;
     var lname= document.getElementById("lname").value;
-    var username = document.getElementById("username").value;
+    var user = document.getElementById("user").value;
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
+    var cpassword = document.getElementById("cpassword").value;
     var pin = document.getElementById("pin").value;
+    if (password !== cpassword) {
+      document.getElementById("password").value="";
+      document.getElementById("cpassword").value="";
+      document.getElementById("pin").value="";
+      alert('Passwords do not match.');
+      return;
+    }
 
     var userData = {
       first_name:fname,
       last_name:lname,
-      username: username,
+      username: user,
       email: email,
       hashed_pin: pin,
       password: password,
     };
+    console.log(userData);
 
     fetch('http://127.0.0.1:8000/hashed/users/', {
       method: 'POST',
@@ -145,7 +155,7 @@
           window.location.href = 'http://localhost:3000/login';
          
         } else {
-          alert('User registration failed :(');
+          alert('User already exists!');
         }
       })
      

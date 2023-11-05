@@ -178,6 +178,12 @@
                 <span class="nav-text1"> User Profile </span>
               </a>
             </li>
+            <li class="has-subnav">
+              <a href="/features/dashboard">
+                <i class="fa fa-comments fa-2x"></i>
+                <span class="nav-text1"> User Dashboard </span>
+              </a>
+            </li>
             
             <li class="has-subnav">
               <a href="/features/password_generator">
@@ -189,13 +195,18 @@
 
           <ul class="logout">
             <li>
-              <a href="#">
+              <a id="logout" href="/login">
                 <i class="fa fa-power-off fa-2x"></i>
                 <span class="nav-text1"> Logout </span>
               </a>
             </li>
           </ul>
         </nav>
+        <script>
+          document.getElementById("logout").addEventListener("click", function(){
+            localStorage.clear();
+          })
+        </script>
       </body>
     </html>
   </body>

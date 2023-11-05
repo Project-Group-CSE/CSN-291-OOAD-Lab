@@ -34,9 +34,14 @@ app.get("/features/userdetails", (req, res) => {
   res.render("userdetails");
 });
 
+app.get("/features/dashboard", (req, res) => {
+  res.render("userdashboard");
+});
+
 app.get("/features/CheckPassword", (req, res) => {
   res.render("check_Password");
 });
+
 
 app.get("/features/Breach_Checker", (req, res) => {
   res.render("breach_checker");
