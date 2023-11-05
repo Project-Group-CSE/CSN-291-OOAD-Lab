@@ -82,7 +82,7 @@ def get_pass(num, caps, cryptify):
 
 
 def check_password_pwned(password):
-    if len(password)==0:
+    if len(password) == 0:
         return "No Password Entered"
     # Hash the password using SHA-1 hash algorithm
     sha1_password = hashlib.sha1(password.encode("utf-8")).hexdigest().upper()
@@ -103,19 +103,26 @@ def check_password_pwned(password):
 
 def password_strength(password):
     weak_pattern = r"^(?=.*[a-zA-Z])(?=.*\d).{6,}$"
+    weak2 = r"^(?=.*[a-zA-Z])(?=.*[\W]).{6,}$"
     medium_pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
-    strong_pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\w\s]).{8,}$"
+    medium2 = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,}$"
+    medium3 = r"^(?=.*[a-zA-Z])(?=.*[\W])(?=.*\d).{8,}$"
+    strong_pattern = r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W]).{8,}$"
     possibly_strong = r"^.{20,}$"
 
-    if len(password)==0:
+    if len(password) == 0:
         return "Invalid"
     elif re.match(strong_pattern, password):
         return "Strong"
     elif re.match(possibly_strong, password):
         return "Possibly strong due to length"
-    elif re.match(medium_pattern, password):
+    elif (
+        re.match(medium_pattern, password)
+        or re.match(medium2, password)
+        or re.match(medium3, password)
+    ):
         return "Medium"
-    elif re.match(weak_pattern, password):
+    elif re.match(weak_pattern, password) or re.match(weak2, password):
         return "Weak"
     else:
         return "Poor"
