@@ -256,6 +256,8 @@
 }
 .Strong {
   color: green; 
+
+ 
 }
 
 .Medium {
@@ -286,6 +288,15 @@ div#strengthdiv {
     background-color: #1a1f36;
     border-radius: 50%;
 }
+#strengthdisplay {
+  height: 40px; /* Set a fixed height for the box */
+  padding: 1%;
+  padding-left: 5%;
+            
+            border: 1px solid #1a1f36;
+            border-radius: 3%;
+            
+        }
     </style>
 </head>
 <body>
@@ -339,8 +350,8 @@ div#strengthdiv {
                     <div class="field padding-bottom--12">
                       <label for="text">Strength</label>
                     </div>
-                    <div class="field padding-bottom--24 padding-top--24" style="border: 1px solid #1a1f36;border-radius: 3%; margin-bottom: 5%;">
-                      <!-- Your content here -->
+                    <div id="strengthdisplay" style="border: 1px solid #1a1f36;border-radius: 3%; margin-bottom: 5%;">
+                      N/A
                     </div>
                    
                     <div class="field padding-bottom--24">
@@ -366,32 +377,26 @@ div#strengthdiv {
               </div>
               </div>
               </div>
-            <div id="strengthResult" class="breachResult">
-              <h1 id="sresult">Strength Result</h1>
-              <h3>The password strength is</h3>
-              <h2 id="strength"></h2>
-            </div>
+          
             <script>
               const inputPassword =document.getElementById("password");
               const bresult=document.getElementById("bresult");
               const breached=document.getElementById("breached");
               const notbreached=document.getElementById("notbreached");
-              const strengthResult=document.getElementById("strengthResult");
-              const sresult=document.getElementById("sresult");
-              const strength=document.getElementById("strength");
+              
               const buttonSubmit=document.getElementById("button");
               document.addEventListener("DOMContentLoaded", function () {
                 bresult.style.display="none";
               breached.style.display="none";
               notbreached.style.display="none";
-               strengthResult.style.display="none";
+           
               })
               buttonSubmit.addEventListener("click",function(){
                 if (inputPassword.value==""){
                   alert("Please Enter Password!!");
                   return;
                 }
-                console.log("heelo");
+                
                 fetch('http://127.0.0.1:8000/hashed/passworddetail/', {
       method: 'POST',
       body: JSON.stringify({password:inputPassword.value}),
@@ -414,7 +419,7 @@ div#strengthdiv {
         bresult.style.display="none";
               breached.style.display="none";
               notbreached.style.display="none";
-               strengthResult.style.display="none"; 
+            
               bresult.style.display="block";
               if(data.pawned=="The password has not been found in any known breaches."){
                 notbreached.style.display="block";
@@ -425,10 +430,10 @@ div#strengthdiv {
               }
               
 
-              strengthResult.style.display="block";
-              
-              strength.textContent=data.strength;
-              strength.className=data.strength;
+          
+              document.getElementById("strengthdisplay").textContent=data.strength;
+              document.getElementById("strengthdisplay").classList.remove("Strong", "Medium", "Weak", "Poor", "Invalid");
+document.getElementById("strengthdisplay").classList.add(data.strength);
 
       })
      
