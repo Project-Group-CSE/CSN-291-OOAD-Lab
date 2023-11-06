@@ -128,12 +128,4 @@ def password_strength(password):
         return "Poor"
 
 
-# sample code
-# nos = True
-# symbols = True
-# val = get_random_pass(8, nos, symbols)
-# print(val)
-# caps = True
-# cryptify = True
-# newVal = get_pass(5, caps, cryptify)
-# print(newVal)
+
