@@ -117,62 +117,68 @@
     </div>
     <script>
       
-      document.getElementById("button").addEventListener("click", function () {
-        const title = document.getElementById("title").value;
-        var website = document.getElementById("website").value;
-        const username = document.getElementById("name").value;
-        const websiteUsername = document.getElementById("user").value;
-        const password = document.getElementById("password").value;
-        const pin = document.getElementById("pin").value;
-        if (!website.startsWith('http://') && !website.startsWith('https://')) {
-          website = 'https://' + website;
-    }
+     // Add a click event listener to a button with the id 'button'
+document.getElementById("button").addEventListener("click", function () {
+  // Get values from various input fields in the form
+  const title = document.getElementById("title").value;
+  let website = document.getElementById("website").value; // Initialize 'website' variable
+  const username = document.getElementById("name").value;
+  const websiteUsername = document.getElementById("user").value;
+  const password = document.getElementById("password").value;
+  const pin = document.getElementById("pin").value;
 
-   
-    if (!website.includes('www.')) {
-      website = website.replace('://', '://www.');
-    }
+  // Ensure 'website' starts with 'http://' or 'https://'
+  if (!website.startsWith('http://') && !website.startsWith('https://')) {
+    website = 'https://' + website;
+  }
 
-        const data = {
-          title: title,
-          user_name: username,
-          website_username: websiteUsername,
-          website: website,
-          hash_pwd: password,
-          pin: pin,
-          session_token: localStorage.getItem('token'),
-        };
-        fetch('http://127.0.0.1:8000/hashed/credentials/', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        })
-          .then((response) => {
-            if (response.status == 201) {
-              document.getElementById("title").value = "";
-              document.getElementById("website").value = "";
-              document.getElementById("name").value = "";
-              document.getElementById("user").value = "";
-              document.getElementById("password").value = "";
-              document.getElementById("pin").value = "";
-              location.reload();
-            }
-            if(response.status==401){
-              alert("Invalid PIN. Please try again.");
-              document.getElementById("password").value = "";
-              document.getElementById("pin").value = "";
-              return;
+  // Ensure 'website' includes 'www.'
+  if (!website.includes('www.')) {
+    website = website.replace('://', '://www.');
+  }
 
-            }
+  // Prepare data for sending to the server
+  const data = {
+    title: title,
+    user_name: username,
+    website_username: websiteUsername,
+    website: website,
+    hash_pwd: password,
+    pin: pin,
+    session_token: localStorage.getItem('token'),
+  };
 
-          })
-
-          .catch((error) => {
-
-          });
-      });
+  // Send a POST request to the server to create a new record
+  fetch('http://127.0.0.1:8000/hashed/credentials/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      if (response.status == 201) {
+        // If the response status is 201 (Created), reset the input fields and reload the page
+        document.getElementById("title").value = "";
+        document.getElementById("website").value = "";
+        document.getElementById("name").value = "";
+        document.getElementById("user").value = "";
+        document.getElementById("password").value = "";
+        document.getElementById("pin").value = "";
+        location.reload();
+      }
+      if (response.status == 401) {
+        // If the response status is 401 (Unauthorized), show an alert and clear password and PIN fields
+        alert("Invalid PIN. Please try again.");
+        document.getElementById("password").value = "";
+        document.getElementById("pin").value = "";
+        return;
+      }
+    })
+    .catch((error) => {
+      // Handle any errors that occur during the request
+    });
+});
 
     </script>
 </body>
