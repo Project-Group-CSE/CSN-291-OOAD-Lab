@@ -1,6 +1,5 @@
 import uuid
-from rest_framework import generics, status, permissions
-from rest_framework.generics import CreateAPIView
+from rest_framework import generics, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -14,17 +13,13 @@ from user_data.pwd_features import (
     password_strength,
 )
 from .models import myUser, credential
-from .permissions import isOwner
 from .serializers import (
     UserListSerializer,
     UserDetailSerializer,
     CredentialSerializer,
     CredentialVisibleSerializer,
 )
-
 from django.contrib.auth import authenticate, login
-from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 import json
 import secrets
@@ -101,16 +96,7 @@ def get_password_detail(request):
 
 class CredentialList(generics.ListCreateAPIView):
     serializer_class = CredentialSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
-
-    # def get(self, request, *args, **kwargs):
-    #     data = json.loads(request.body.decode("utf-8"))
-    #     print(data)
-    #     token = data.get("session_token")
-    #     user = myUser.objects.get(session_token=token)
-
-    #     return JsonResponse({"exits":user is not None})
-
+    
 
     def get_queryset( self, *args, **kwargs):
        
@@ -118,28 +104,11 @@ class CredentialList(generics.ListCreateAPIView):
         
 
         owner = myUser.objects.get(session_token=token)
-        print(credential.objects.all())
+       
         queryset = credential.objects.filter(user=owner)
         return queryset
 
-    # def list(self, request, *args, **kwargs):
-    #     # Get the PIN from the request or any other source
-    #     pinauth = request.session.get("pin_authenticated", None)
-    #     if pinauth:
-    #         pin = request.session.get("pin", None)
-    #         key = SHA256_hash(pin)
-    #         serializer = self.get_serializer(self.get_queryset(), many=True)
-    #         data = serializer.data.copy()
-    #         for credential in data:
-    #             credential["password"] = decrypt_password(key, credential["hash_pwd"])
-    #             credential["strength"] = password_strength(credential["password"])
-    #             del credential["hash_pwd"]
-    #         # error=1/0
-    #         # print(data)
-    #         return Response(serializer.data)
-    #     else:
-    #         redirect = reverse("user_pin_authentication")
-    #         return HttpResponseRedirect(redirect)
+    
 
     def create(self, request, *args, **kwargs):
         # Handle POST request to create a new credential(encrypt and decrypt)
@@ -158,7 +127,7 @@ class CredentialList(generics.ListCreateAPIView):
             data["hash_pwd"] = password_encoded
             data["strength"] = password_strength(password)
             serializer = self.get_serializer(data=data)
-            # print(serializer)
+            
             if serializer.is_valid():
                 serializer.save(user=instance)  # Save the new credential
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -190,7 +159,7 @@ class CredentialDetail(APIView):
             data={}
             
             data["password"] = decrypt_password(key, cred.hash_pwd)
-            # data["strength"] = password_strength(data["password"])
+            
            
             return Response(data)
         else:
@@ -265,10 +234,9 @@ class UserList(generics.ListCreateAPIView):
         data["password"] = "-"
         data["id"] = str(uuid.uuid4())
 
-        # data["hashed_pin"]=data["hashed_pin"]+"helo"
+       
         serializer = self.get_serializer(data=data)
-        # print(serializer)
-        # print(serializer.is_valid())
+        
         if serializer.is_valid():
             user = serializer.save()
             user.set_password(password)  # set_password notifies the django framework
@@ -280,7 +248,7 @@ class UserList(generics.ListCreateAPIView):
 
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserDetailSerializer
-    # permission_classes = (permissions.IsAuthenticated,)
+    
 
     def get(self, request, *args, **kwargs):
         token = self.request.query_params.get("session_token")
@@ -297,36 +265,14 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
         instance = myUser.objects.get(session_token=token)
         data = request.data.copy()
 
-        # manipulate for passwords
-        # password = data["password"]
-        # data["password"] = "-"
+       
         serializer = self.get_serializer(instance, data=data, partial=True)
-        print(serializer)
+        
         if serializer.is_valid():
             user = serializer.save()    
-            # user.set_password(password)
+            
             user.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-# class PinAuthenticationView(CreateAPIView):
-#     permission_classes = [permissions.IsAuthenticated]
-#     serializer_class = PinAuthenticationSerializer
-
-#     def create(self, request, *args, **kwargs):
-#         serializer = self.get_serializer(data=request.data)
-#         serializer.is_valid(raise_exception=True)
-
-#         entered_pin = serializer.validated_data["pin"]
-#         user = request.user
-
-#         if check_pin(entered_pin, user.hashed_pin):
-#             request.session["pin_authenticated"] = True
-#             request.session["pin"] = entered_pin
-#             redirect = reverse("credential_list")
-#             return HttpResponseRedirect(redirect)
-#         else:
-#             return Response(
-#                 {"detail": "Invalid PIN. Please try again."},
-#                 status=status.HTTP_401_UNAUTHORIZED,
