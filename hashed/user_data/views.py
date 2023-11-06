@@ -26,8 +26,10 @@ import secrets
 from django.http import JsonResponse
 
 
+# API root view
 @api_view(["GET"])
 def api_root(request, format=None):
+    # Returns a list of all users, user profile and credentials of a particular user
     return Response(
         {
             "List of all users": reverse("user_list", request=request, format=format),
@@ -39,13 +41,15 @@ def api_root(request, format=None):
     )
 
 
+# Login view
 @csrf_exempt
 def login_view(request):
+    # Handles POST request for user login
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
         username = data.get("username")
         password = data.get("password")
-        
+
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
@@ -54,12 +58,17 @@ def login_view(request):
             user.save()
             return JsonResponse({"message": "Successfully Logged In", "token": token})
         else:
-            return JsonResponse({"message": "Invalid Username or Password"},status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse(
+                {"message": "Invalid Username or Password"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
     return JsonResponse({"message": "Method not allowed"}, status=405)
 
 
+# View to get memorable password
 @csrf_exempt
 def get_mem_password(request):
+    # Handles POST request to get memorable password
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
 
@@ -71,8 +80,10 @@ def get_mem_password(request):
         return JsonResponse({"password": password})
 
 
+# View to get random password
 @csrf_exempt
 def get_random_password(request):
+    # Handles POST request to get random password
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
 
@@ -83,8 +94,10 @@ def get_random_password(request):
         return JsonResponse({"password": password})
 
 
+# View to get password details
 @csrf_exempt
 def get_password_detail(request):
+    # Handles POST request to get password details
     if request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
 
@@ -94,22 +107,18 @@ def get_password_detail(request):
         return JsonResponse({"pawned": pawned, "strength": strength})
 
 
+# Class based view for credentials
 class CredentialList(generics.ListCreateAPIView):
     serializer_class = CredentialSerializer
-    
 
-    def get_queryset( self, *args, **kwargs):
-       
+    # Method to get queryset
+    def get_queryset(self, *args, **kwargs):
         token = self.request.GET.get("session_token")
-        
-
         owner = myUser.objects.get(session_token=token)
-       
         queryset = credential.objects.filter(user=owner)
         return queryset
 
-    
-
+    # Method to create new credential
     def create(self, request, *args, **kwargs):
         # Handle POST request to create a new credential(encrypt and decrypt)
         entered_pin = request.data.get("pin")
@@ -117,7 +126,7 @@ class CredentialList(generics.ListCreateAPIView):
 
         instance = myUser.objects.get(session_token=token)
 
-      
+        # Check if entered pin is correct
         if check_pin(entered_pin, instance.hashed_pin):
             data = request.data.copy()
             password = data["hash_pwd"]
@@ -127,9 +136,9 @@ class CredentialList(generics.ListCreateAPIView):
             data["hash_pwd"] = password_encoded
             data["strength"] = password_strength(password)
             serializer = self.get_serializer(data=data)
-            
+
             if serializer.is_valid():
-                serializer.save(user=instance)  # Save the new credential
+                serializer.save(user=instance)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -140,27 +149,23 @@ class CredentialList(generics.ListCreateAPIView):
             )
 
 
+# Class based view for credential details
 class CredentialDetail(APIView):
-    
-
-
-
+    # Method to handle POST request
     @method_decorator(csrf_exempt)
     def post(self, request, format=None):
-       
         entered_pin = request.data.get("pin")
         token = request.data.get("session_token")
-        pk=request.data.get("cred_id")
+        pk = request.data.get("cred_id")
         instance = myUser.objects.get(session_token=token)
+
+        # Check if entered pin is correct
         if check_pin(entered_pin, instance.hashed_pin):
-            
             key = entered_pin
             cred = credential.objects.get(id=pk)
-            data={}
-            
+            data = {}
+            # Decrypt password
             data["password"] = decrypt_password(key, cred.hash_pwd)
-            
-           
             return Response(data)
         else:
             return Response(
@@ -168,40 +173,33 @@ class CredentialDetail(APIView):
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
- 
+    # Method to handle PUT request
     def put(self, request, format=None):
-
         entered_pin = request.data.get("pin")
         token = request.data.get("session_token")
-        pk=request.data.get("cred_id")
+        pk = request.data.get("cred_id")
         instance = myUser.objects.get(session_token=token)
-        
-        
-        password=request.data.get("password")
-        modified=request.data.get("modified")
+        password = request.data.get("password")
+        modified = request.data.get("modified")
         if check_pin(entered_pin, instance.hashed_pin):
             cred = credential.objects.get(id=pk)
-            data=request.data.copy()
-
+            data = request.data.copy()
             if modified:
-
-            
                 password_encoded = encrypt_password(entered_pin, password, encode=True)
                 data["hash_pwd"] = password_encoded
-                data["strength"]=password_strength(password)
+                data["strength"] = password_strength(password)
             else:
                 data["hash_pwd"] = password
-            data.pop("modified",None)
-            data.pop("password",None)
-            data.pop("session_token",None)
-            data["user_name"]=cred.user
-           
-            serializer = CredentialVisibleSerializer(cred,data=data)
-            
+            data.pop("modified", None)
+            data.pop("password", None)
+            data.pop("session_token", None)
+            data["user_name"] = cred.user
+            serializer = CredentialVisibleSerializer(cred, data=data)
             if serializer.is_valid():
                 serializer.save()
-                return Response({"strength":data["strength"]},status=status.HTTP_201_CREATED)
-           
+                return Response(
+                    {"strength": data["strength"]}, status=status.HTTP_201_CREATED
+                )
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(
@@ -209,34 +207,27 @@ class CredentialDetail(APIView):
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
+    # Method to handle DELETE request
     def delete(self, request, format=None):
-        pk=request.data.get("cred_id")
+        pk = request.data.get("cred_id")
         cred = credential.objects.all().get(id=pk)
-    
         cred.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+# Class based view for user list
 class UserList(generics.ListCreateAPIView):
     queryset = myUser.objects.all()
     serializer_class = UserListSerializer
 
-    
-    
+    # Method to handle POST request
     def post(self, request, *args, **kwargs):
         data = request.data.copy()
-      
-
-        # manipulate the incoming data here(pin hashing)
         data["hashed_pin"] = hash_bcrypt(data["hashed_pin"])
-    
         password = data["password"]
         data["password"] = "-"
         data["id"] = str(uuid.uuid4())
-
-       
         serializer = self.get_serializer(data=data)
-        
         if serializer.is_valid():
             user = serializer.save()
             user.set_password(password)  # set_password notifies the django framework
@@ -246,33 +237,37 @@ class UserList(generics.ListCreateAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# Class based view for user details
 class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserDetailSerializer
-    
 
+    # Method to handle GET request
     def get(self, request, *args, **kwargs):
         token = self.request.query_params.get("session_token")
-      
         try:
             user = myUser.objects.get(session_token=token)
-            return JsonResponse({"exists": user is not None,"user": user.username,"firstname":user.first_name,"lastname":user.last_name,"email":user.email})
+            return JsonResponse(
+                {
+                    "exists": user is not None,
+                    "user": user.username,
+                    "firstname": user.first_name,
+                    "lastname": user.last_name,
+                    "email": user.email,
+                }
+            )
         except myUser.DoesNotExist:
             user = None
             return JsonResponse({"exists": user is not None})
+
+    # Method to handle POST request
     @method_decorator(csrf_exempt)
     def post(self, request, *args, **kwargs):
         token = request.data.get("session_token")
         instance = myUser.objects.get(session_token=token)
         data = request.data.copy()
-
-       
         serializer = self.get_serializer(instance, data=data, partial=True)
-        
         if serializer.is_valid():
-            user = serializer.save()    
-            
+            user = serializer.save()
             user.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
