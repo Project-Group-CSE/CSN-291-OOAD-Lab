@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import myUser, credential
 from encrypt_hash import *
 
+ 
 
 # Serializer for Credential model
 class CredentialSerializer(serializers.ModelSerializer):
@@ -25,6 +26,7 @@ class CredentialSerializer(serializers.ModelSerializer):
     def get_user_name(self, obj):
         return obj.user.username
 
+class CredentialVisibleSerializer(serializers.ModelSerializer):
     # Serializer for Credential model with visible password
     # Define fields that get the username and password of the user associated with a credential
     user_name = serializers.SerializerMethodField()
@@ -50,6 +52,31 @@ class CredentialSerializer(serializers.ModelSerializer):
     def get_user_name(self, obj):
         return obj.user.username
 
+class CredentialVisibleSerializer(serializers.ModelSerializer):
+    user_name = serializers.SerializerMethodField()
+    password = serializers.SerializerMethodField()
+    hash_pwd = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = credential
+        fields = [
+            "id",
+            "user_name",
+            "title",
+            "website",
+            "password",
+            "hash_pwd",
+            "strength",
+        ]
+        read_only_fields = ["user_name", "password"]
+
+    def get_user_name(self, obj):
+        return obj.user.username
+
+    # def get_password(self, obj):
+    #     data = obj.hash_pwd
+    #     # will contain decryption logic
+    #     return data
 
 # Serializer for UserList model
 class UserListSerializer(serializers.ModelSerializer):
