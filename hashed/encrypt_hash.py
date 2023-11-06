@@ -3,15 +3,10 @@ import base64
 from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
 from Crypto import Random
-from user_data.pwd_features import password_strength
-import hashlib
 
 
-# for pin
 def hash_bcrypt(unhashed):
-    """
-    return the hash of the user pin/passsword
-    """
+    # return bcrypt hash of the user pin/passsword
     hashed = unhashed.encode("utf-8")
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(hashed, salt)
@@ -19,23 +14,8 @@ def hash_bcrypt(unhashed):
     return hashed
 
 
-# def SHA256_hash(input_string):
-#     # Create a new SHA-256 hash object
-#     sha256 = hashlib.sha256()
-
-#     # Update the hash with the input string (UTF-8 encoded)
-#     sha256.update(input_string.encode('utf-8'))
-
-
-#     hash_value = sha256.hexdigest()
-
-#     return hash_value
-
-
 def check_pin(pin_to_check, hash_pin):
-    """
-    Check if the given PIN matches the hashed PIN.
-    """
+    # Check if the given pin matches the stored pin.
     pwd_to_check = pin_to_check.encode("utf-8")
     hash_pin = hash_pin.encode("utf-8")
 
@@ -46,10 +26,7 @@ def check_pin(pin_to_check, hash_pin):
 
 
 def encrypt_password(key, password, encode=True):
-    """
-    encrypt password according to AES algorithm
-    """
-    # strength=password_strength(password)
+    # encrypt password according to AES algorithm
 
     key_bytes = key.encode("utf-8")  # Encode the key as bytes
     password_bytes = password.encode("utf-8")  # Encode the password as bytes
@@ -73,6 +50,8 @@ def encrypt_password(key, password, encode=True):
 
 
 def decrypt_password(key, source, decode=True):
+    # decrypt password according to AES algorithm
+
     if decode:
         source = base64.b64decode(source.encode("latin-1"))
 
