@@ -176,31 +176,39 @@ class CredentialDetail(APIView):
 
     # Method to handle PUT request
     def put(self, request, format=None):
+
         entered_pin = request.data.get("pin")
         token = request.data.get("session_token")
-        pk = request.data.get("cred_id")
+        pk=request.data.get("cred_id")
         instance = myUser.objects.get(session_token=token)
-        password = request.data.get("password")
-        modified = request.data.get("modified")
+        
+        
+        password=request.data.get("password")
+        modified=request.data.get("modified")
         if check_pin(entered_pin, instance.hashed_pin):
             cred = credential.objects.get(id=pk)
-            data = request.data.copy()
+            data=request.data.copy()
+
             if modified:
+
+            
                 password_encoded = encrypt_password(entered_pin, password, encode=True)
                 data["hash_pwd"] = password_encoded
-                data["strength"] = password_strength(password)
+                data["strength"]=password_strength(password)
             else:
                 data["hash_pwd"] = password
-            data.pop("modified", None)
-            data.pop("password", None)
-            data.pop("session_token", None)
-            data["user_name"] = cred.user
-            serializer = CredentialVisibleSerializer(cred, data=data)
+                data["strength"]= cred.strength
+            data.pop("modified",None)
+            data.pop("password",None)
+            data.pop("session_token",None)
+            data["user_name"]=cred.user
+           
+            serializer = CredentialVisibleSerializer(cred,data=data)
+            print(serializer)
             if serializer.is_valid():
                 serializer.save()
-                return Response(
-                    {"strength": data["strength"]}, status=status.HTTP_201_CREATED
-                )
+                return Response({"strength":data["strength"]},status=status.HTTP_201_CREATED)
+            print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(

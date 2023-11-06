@@ -44,6 +44,7 @@ class CredentialVisibleSerializer(serializers.ModelSerializer):
             "password",
             "hash_pwd",
             "strength",
+            "website_username",
         ]
         # Define the fields that are read only
         read_only_fields = ["user_name", "password"]
@@ -52,31 +53,6 @@ class CredentialVisibleSerializer(serializers.ModelSerializer):
     def get_user_name(self, obj):
         return obj.user.username
 
-class CredentialVisibleSerializer(serializers.ModelSerializer):
-    user_name = serializers.SerializerMethodField()
-    password = serializers.SerializerMethodField()
-    hash_pwd = serializers.CharField(write_only=True)
-
-    class Meta:
-        model = credential
-        fields = [
-            "id",
-            "user_name",
-            "title",
-            "website",
-            "password",
-            "hash_pwd",
-            "strength",
-        ]
-        read_only_fields = ["user_name", "password"]
-
-    def get_user_name(self, obj):
-        return obj.user.username
-
-    # def get_password(self, obj):
-    #     data = obj.hash_pwd
-    #     # will contain decryption logic
-    #     return data
 
 # Serializer for UserList model
 class UserListSerializer(serializers.ModelSerializer):
