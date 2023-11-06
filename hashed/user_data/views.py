@@ -17,7 +17,8 @@ from .serializers import (
     UserListSerializer,
     UserDetailSerializer,
     CredentialSerializer,
-    CredentialVisibleSerializer,
+    CredentialVisibleSerializer
+
 )
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
@@ -136,7 +137,7 @@ class CredentialList(generics.ListCreateAPIView):
             data["hash_pwd"] = password_encoded
             data["strength"] = password_strength(password)
             serializer = self.get_serializer(data=data)
-
+            
             if serializer.is_valid():
                 serializer.save(user=instance)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
