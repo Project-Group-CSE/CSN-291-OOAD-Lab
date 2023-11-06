@@ -137,34 +137,34 @@
     <script>
      
         
-        fetch('http://127.0.0.1:8000/hashed/users/profile/?session_token=' + localStorage.getItem('token'), {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+      // Send a GET request to retrieve user profile data
+fetch('http://127.0.0.1:8000/hashed/users/profile/?session_token=' + localStorage.getItem('token'), {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+  .then((response) => {
+    // Parse the response as JSON
+    return response.json();
   })
-    .then((response) => {
+  .then((data) => {
+    // Check if the user profile exists
+    if (!data.exists) {
+      // If the profile doesn't exist, redirect to the login page
+      window.location.href = "http://localhost:3000/login";
+    } else {
+      // If the profile exists, update the user information in the DOM
+      document.getElementById('user').textContent = data.user;
+      document.getElementById('fname').textContent = data.firstname;
+      document.getElementById('lname').textContent = data.lastname;
+      document.getElementById('email').textContent = data.email;
+    }
+  })
+  .catch((error) => {
+    // Handle any errors that occur during the request
+  });
 
-      return response.json();
-    }).then((data)=>{
-      if (!data.exists){
-        window.location.href ="http://localhost:3000/login";  
-      }
-      else{
-        
-        
-        document.getElementById('user').textContent =data.user;
-        document.getElementById('fname').textContent =data.firstname;
-        document.getElementById('lname').textContent =data.lastname;
-        
-        document.getElementById('email').textContent =data.email;
-      }
-
-    })
-   
-    .catch((error) => {
-
-    });
        
     </script>
   </body>

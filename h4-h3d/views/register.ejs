@@ -115,52 +115,63 @@
 
 <%- include('footer'); -%>
 <script>
-  document.getElementById("login-form").addEventListener("submit", function (event) {
-    event.preventDefault(); 
-    var fname= document.getElementById("fname").value;
-    var lname= document.getElementById("lname").value;
-    var user = document.getElementById("user").value;
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
-    var cpassword = document.getElementById("cpassword").value;
-    var pin = document.getElementById("pin").value;
-    if (password !== cpassword) {
-      document.getElementById("password").value="";
-      document.getElementById("cpassword").value="";
-      document.getElementById("pin").value="";
-      alert('Passwords do not match.');
-      return;
-    }
+  // Add an event listener for the form submission
+document.getElementById("login-form").addEventListener("submit", function (event) {
+  // Prevent the default form submission behavior
+  event.preventDefault();
 
-    var userData = {
-      first_name:fname,
-      last_name:lname,
-      username: user,
-      email: email,
-      hashed_pin: pin,
-      password: password,
-    };
-    console.log(userData);
+  // Get values from form inputs
+  var fname = document.getElementById("fname").value;
+  var lname = document.getElementById("lname").value;
+  var user = document.getElementById("user").value;
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
+  var cpassword = document.getElementById("cpassword").value;
+  var pin = document.getElementById("pin").value;
 
-    fetch('http://127.0.0.1:8000/hashed/users/', {
-      method: 'POST',
-      body: JSON.stringify(userData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+  // Check if the password and confirm password match
+  if (password !== cpassword) {
+    // Clear password and confirm password fields, and the PIN field
+    document.getElementById("password").value = "";
+    document.getElementById("cpassword").value = "";
+    document.getElementById("pin").value = "";
+    alert('Passwords do not match.');
+    return;
+  }
+
+  // Create a user data object
+  var userData = {
+    first_name: fname,
+    last_name: lname,
+    username: user,
+    email: email,
+    hashed_pin: pin,
+    password: password,
+  };
+
+  // Send a POST request to create a new user account
+  fetch('http://127.0.0.1:8000/hashed/users/', {
+    method: 'POST',
+    body: JSON.stringify(userData),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      if (response.status == 201) {
+        // User registration was successful
+        alert('User registered successfully!');
+        // Redirect the user to the login page
+        window.location.href = 'http://localhost:3000/login';
+      } else {
+        // User already exists or another error occurred
+        alert('User already exists!');
+      }
     })
-      .then((response)=> {
-        if (response.status ==201) {
-          alert('User registered successfully!');
-          window.location.href = 'http://localhost:3000/login';
-         
-        } else {
-          alert('User already exists!');
-        }
-      })
-     
-      .catch((error) => {
-        console.error(error); 
-      });
-  });
+    .catch((error) => {
+      // Handle any errors that occur during the request
+      console.error(error);
+    });
+});
+
 </script>

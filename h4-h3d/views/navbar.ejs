@@ -556,38 +556,48 @@
     </div>
 
     <script>
-       document.addEventListener("DOMContentLoaded", function(){
-        var login=document.getElementById("login");
-        var username=document.getElementById("username");
-        login.style.display="none";
-        username.style.display="none";
-        fetch('http://127.0.0.1:8000/hashed/users/profile/?session_token=' + localStorage.getItem('token'), {
+      // Add an event listener when the DOM content is loaded
+document.addEventListener("DOMContentLoaded", function () {
+  // Get references to the 'login' and 'username' elements
+  var login = document.getElementById("login");
+  var username = document.getElementById("username");
+
+  // Hide the 'login' and 'username' elements initially
+  login.style.display = "none";
+  username.style.display = "none";
+
+  // Send a GET request to the server to retrieve user profile data based on the session token
+  fetch('http://127.0.0.1:8000/hashed/users/profile/?session_token=' + localStorage.getItem('token'), {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((response) => {
-
+      // Parse the response as JSON
       return response.json();
-    }).then((data)=>{
-      console.log(data);
-      if (!data.exists){
-        username.style.display="none";
-        login.style.display="block"; 
-      }
-      else{
-        username.style.display="block";
-        username.textContent=data.user;
-        login.style.display="none"; 
-      }
-      
     })
-   
-    .catch((error) => {
+    .then((data) => {
+      // Log the retrieved data for debugging
+      console.log(data);
 
+      // Check if the 'exists' property in the data is falsy
+      if (!data.exists) {
+        // If it's falsy, the user profile does not exist, so display the login element
+        username.style.display = "none";
+        login.style.display = "block";
+      } else {
+        // If the user profile exists, display the username and hide the login element
+        username.style.display = "block";
+        username.textContent = data.user;
+        login.style.display = "none";
+      }
+    })
+    .catch((error) => {
+      // Handle any errors that occur during the request
     });
-      })
+});
+
 
       (function ($) {
         "use strict";

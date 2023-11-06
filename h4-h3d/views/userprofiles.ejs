@@ -174,65 +174,71 @@
 </html>
 
 <script>
-
-  document.addEventListener("DOMContentLoaded", function () {
-      
-      fetch('http://127.0.0.1:8000/hashed/users/profile/?session_token=' + localStorage.getItem('token'), {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-})
-  .then((response) => {
-
-    return response.json();
-  }).then((data)=>{
-    if (!data.exists){
-      window.location.href ="http://localhost:3000/login";  
-    }
-
+// Add an event listener for the DOM content to be loaded
+document.addEventListener("DOMContentLoaded", function () {
+  // Send a GET request to retrieve user profile data
+  fetch('http://127.0.0.1:8000/hashed/users/profile/?session_token=' + localStorage.getItem('token'), {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   })
- 
-  .catch((error) => {
+    .then((response) => {
+      // Parse the response as JSON
+      return response.json();
+    })
+    .then((data) => {
+      // Check if the user profile exists
+      if (!data.exists) {
+        // If the profile doesn't exist, redirect to the login page
+        window.location.href = "http://localhost:3000/login";
+      }
+    })
+    .catch((error) => {
+      // Handle any errors that occur during the request
+    });
+});
 
-  });
-     })
+// Add an event listener for a button click
+document.getElementById("button").addEventListener("click", function (event) {
+  // Get values from input fields
+  const fname = document.getElementById("fname").value;
+  const lname = document.getElementById("lname").value;
+  const email = document.getElementById("email").value;
 
+  // Create a data object with session token and updated profile information
+  const data = { session_token: localStorage.getItem('token') };
 
-  document.getElementById("button").addEventListener("click", function(event){
-    
- 
-    const fname=document.getElementById("fname").value;
-    const lname=document.getElementById("lname").value;
-    const email=document.getElementById("email").value;
-    data={session_token:localStorage.getItem('token')};
-    if (fname){
-      data['first_name']=fname;
-    }
-    if (lname){
-      data["last_name"]=lname;
-    }
-    
-    if (email){
-      data["email"]=email;
-    }
-    console.log(data);
-    
-    
+  if (fname) {
+    data['first_name'] = fname;
+  }
+  if (lname) {
+    data['last_name'] = lname;
+  }
+  if (email) {
+    data['email'] = email;
+  }
 
-fetch("http://127.0.0.1:8000/hashed/users/profile/",
-{method: 'POST',
-headers: {
-'Content-Type': 'application/json',
-},
-body: JSON.stringify(data),}).then((response)=>{
-  document.getElementById("fname").value="";
-  document.getElementById("lname").value="";
-  document.getElementById("email").value="";
-  alert('Succefully changed!!');
-
-
-}).catch();
+  // Send a POST request to update the user's profile
+  fetch("http://127.0.0.1:8000/hashed/users/profile/", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
   })
+    .then((response) => {
+      // Clear input fields
+      document.getElementById("fname").value = "";
+      document.getElementById("lname").value = "";
+      document.getElementById("email").value = "";
+      // Show a success message
+      alert('Successfully changed profile information!');
+    })
+    .catch((error) => {
+      // Handle any errors that occur during the request
+    });
+});
+
    
   </script>

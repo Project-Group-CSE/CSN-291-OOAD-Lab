@@ -380,68 +380,76 @@ div#strengthdiv {
               </div>
           
             <script>
-              const inputPassword =document.getElementById("password");
-              const bresult=document.getElementById("bresult");
-              const breached=document.getElementById("breached");
-              const notbreached=document.getElementById("notbreached");
-              
-              const buttonSubmit=document.getElementById("button");
-              document.addEventListener("DOMContentLoaded", function () {
-                bresult.style.display="none";
-              breached.style.display="none";
-              notbreached.style.display="none";
-           
-              })
-              buttonSubmit.addEventListener("click",function(){
-                if (inputPassword.value==""){
-                  alert("Please Enter Password!!");
-                  return;
-                }
-                
-                fetch('http://127.0.0.1:8000/hashed/passworddetail/', {
-      method: 'POST',
-      body: JSON.stringify({password:inputPassword.value}),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+           // Get references to DOM elements
+const inputPassword = document.getElementById("password");
+const bresult = document.getElementById("bresult");
+const breached = document.getElementById("breached");
+const notbreached = document.getElementById("notbreached");
+const buttonSubmit = document.getElementById("button");
+
+// Add an event listener when the DOM content is loaded
+document.addEventListener("DOMContentLoaded", function () {
+  // Hide the 'bresult', 'breached', and 'notbreached' elements initially
+  bresult.style.display = "none";
+  breached.style.display = "none";
+  notbreached.style.display = "none";
+});
+
+// Add a click event listener to the button
+buttonSubmit.addEventListener("click", function () {
+  // Check if the password input is empty
+  if (inputPassword.value == "") {
+    alert("Please Enter Password!!");
+    return;
+  }
+
+  // Send a POST request to the server to check the password
+  fetch('http://127.0.0.1:8000/hashed/passworddetail/', {
+    method: 'POST',
+    body: JSON.stringify({ password: inputPassword.value }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => {
+      // Check the response status
+      if (response.status == 200) {
+        // If the response status is 200 (OK), parse the response as JSON
+        return response.json();
+      } else {
+        // If the response status is not 200, show an alert for password check failure
+        alert('Password check failed :(');
+      }
     })
-      .then((response)=> {
-       
-        if (response.status ==200) {
-          return response.json();
-          
-         
-        } else {
-          alert('Password check failed :(');
-        }
-      }).then((data)=>{
-        return data;}).
-      then((data)=>{
-        bresult.style.display="none";
-              breached.style.display="none";
-              notbreached.style.display="none";
-            
-              bresult.style.display="block";
-              if(data.pawned=="The password has not been found in any known breaches."){
-                notbreached.style.display="block";
-              }
-              else{
-                breached.style.display="block";
-              document.getElementById("message").textContent = data.pawned;
-              }
-              
+    .then((data) => {
+      // Hide the 'bresult', 'breached', and 'notbreached' elements
+      bresult.style.display = "none";
+      breached.style.display = "none";
+      notbreached.style.display = "none";
 
-          
-              document.getElementById("strengthdisplay").textContent=data.strength;
-              document.getElementById("strengthdisplay").classList.remove("Strong", "Medium", "Weak", "Poor", "Invalid");
-document.getElementById("strengthdisplay").classList.add(data.strength);
+      // Display the 'bresult' element
+      bresult.style.display = "block";
 
-      })
-     
-      .catch((error) => {
-        console.error(error); 
-      });
-              })
+      if (data.pawned == "The password has not been found in any known breaches.") {
+        // If the password is not breached, display the 'notbreached' element
+        notbreached.style.display = "block";
+      } else {
+        // If the password is breached, display the 'breached' element and show the message
+        breached.style.display = "block";
+        document.getElementById("message").textContent = data.pawned;
+      }
+
+      // Update the strength display and apply a CSS class based on the strength
+      document.getElementById("strengthdisplay").textContent = data.strength;
+      document.getElementById("strengthdisplay").classList.remove("Strong", "Medium", "Weak", "Poor", "Invalid");
+      document.getElementById("strengthdisplay").classList.add(data.strength);
+    })
+    .catch((error) => {
+      // Handle any errors that occur during the request
+      console.error(error);
+    });
+});
+
             
             </script>
 </body>

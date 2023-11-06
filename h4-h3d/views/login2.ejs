@@ -91,15 +91,16 @@
   <script>
    
    
-     document.getElementById("login-form").addEventListener("submit", function (event) {
-      
+// Add a submit event listener to a form with the id 'login-form'
+document.getElementById("login-form").addEventListener("submit", function (event) {
+  // Prevent the default form submission behavior
   event.preventDefault();
 
+  // Get the user and password values from input fields
   var user = document.getElementById("user").value;
   var password = document.getElementById("password").value;
 
- 
-    
+  // Send a POST request to the server for user login
   fetch('http://127.0.0.1:8000/hashed/login/', {
     method: 'POST',
     body: JSON.stringify({ username: user, password: password }),
@@ -108,25 +109,37 @@
     },
   })
     .then((response) => {
+      // Log the response for debugging
       console.log(response);
-      if (response.status==400){
+
+      // Check if the response status is 400 (Bad Request)
+      if (response.status == 400) {
+        // If the response status is 400, show an alert for invalid username or password
         alert('Invalid Username or Password');
-        document.getElementById("password").value="";
+
+        // Clear the password field
+        document.getElementById("password").value = "";
+
         return;
-            }
+      }
+
+      // If the response status is not 400, parse the response as JSON
       return response.json();
     })
-    .then((data)=> {
+    .then((data) => {
+      // Log the data for debugging
       console.log(data);
-      localStorage.setItem('token',data.token);
-   
-        window.location.href ="http://localhost:3000/features/userdetails";  
-   
-      
+
+      // Store the user's session token in local storage
+      localStorage.setItem('token', data.token);
+
+      // Redirect the user to a new page (replace the URL with the desired destination)
+      window.location.href = "http://localhost:3000/features/userdetails";
     })
     .catch((error) => {
-
+      // Handle any errors that occur during the request
     });
 });
+
   </script>
 </html>

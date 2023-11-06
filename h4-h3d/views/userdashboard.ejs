@@ -6,27 +6,30 @@
 </head>
 <script>
   
-    document.addEventListener("DOMContentLoaded", function () {
-        
-        fetch('http://127.0.0.1:8000/hashed/users/profile/?session_token=' + localStorage.getItem('token'), {
+    // Add an event listener for the DOM content to be loaded
+document.addEventListener("DOMContentLoaded", function () {
+  // Send a GET request to retrieve user profile data
+  fetch('http://127.0.0.1:8000/hashed/users/profile/?session_token=' + localStorage.getItem('token'), {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((response) => {
-
+      // Parse the response as JSON
       return response.json();
-    }).then((data)=>{
-      if (!data.exists){
-        window.location.href ="http://localhost:3000/login";  
-      }
-
     })
-   
+    .then((data) => {
+      // Check if the user profile exists
+      if (!data.exists) {
+        // If the profile doesn't exist, redirect to the login page
+        window.location.href = "http://localhost:3000/login";
+      }
+    })
     .catch((error) => {
-
+      // Handle any errors that occur during the request
     });
-       })
+});
+
   
 </script>
